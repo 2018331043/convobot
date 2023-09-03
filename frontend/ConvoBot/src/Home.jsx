@@ -14,13 +14,13 @@ export default function Home(){
                         <Typography className='home-body-first-left-name'>Convo<span className='home-span-1'>Bot</span></Typography>
                     </div>
                     <div className='home-body-first-right'>
-                        <Button variant="outlined" className='home-body-first-right-button-1'>Sign-In</Button>
-                        <Button variant="text" className='home-body-first-right-button-1'>Register</Button>
+                        <Button variant="text" className='home-body-first-right-button-1'>Sign in</Button>
+                        <Button variant="outlined" className='home-body-first-right-button-1'>Sign up</Button>
                     </div>
                 </div>
                 <div className='home-body-second'>
                     <div  className='home-body-second-left'>
-                    <Typography className='home-body-second-left-title'>Elevate Business Operations with <span className='home-span-1'>AI Chat</span></Typography>
+                    <Typography className='home-body-second-left-title'>Elevate Business Operations with <span className='home-span-1'>AI Chatbots</span></Typography>
                     </div>
                     <div className='home-body-second-right'>
 
