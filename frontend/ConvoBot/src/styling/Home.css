@@ -1,0 +1,110 @@
+.home-body-first-right-button-1{
+  color: rgba(255, 189, 6, 0.849) !important;
+  border-color: rgba(255, 189, 6, 0.849) !important;
+  margin-right: 5px !important;
+  /* margin-left: auto !important; */
+}
+
+.home-span-1{
+  color: rgba(255, 189, 6, 0.849);
+  font-weight: 700;
+}
+
+.home-body-first-right{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 47%;
+  justify-content: flex-end;
+}
+
+.home-body-first-left-name{
+  color: white;
+  font-size: 20px !important;
+  margin-left:10px !important;
+  margin-top:4px !important;
+  letter-spacing: 3px !important;
+}
+
+.home-body-first-left img{
+  height: 40px;
+  width: 40px;
+  margin-left: 20px;
+}
+.home-body-first-left{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+}
+
+.home-body-second-left-title{
+  color: white;
+  font-size: 70px !important;
+  margin-left: 50px !important;
+  
+}
+.home-body-second-left{
+  width: 70%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg,rgba(0, 0, 0, 0.514),rgba(0, 0, 0, 0.185));
+}
+
+.home-body-second-right{
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg,rgba(0, 0, 0, 0.185),rgba(0, 0, 0, 0));
+}
+
+.home-body-second{
+  width: 100vw;
+  height: calc(100vh - 80px);
+  display: flex;
+}
+
+.home-body-first{
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 80px;
+  /* background: rgba(255, 255, 255, 0.052); */
+}
+
+.home-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height:100vh;
+    width: 100vw;
+    background-size: cover;
+    animation: change 30s linear infinite alternate-reverse;
+}
+
+@keyframes change{
+    0%{
+      background: url(../assets/convo4.jpg);
+      background-repeat: no-repeat;
+      background-size: 110% 110%;
+    }
+    /* 50%{
+      background: url(../assets/image2.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    } */
+    40%{
+      background: url(../assets/convo4.jpg);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }80%{
+      background: url(../assets/convo4.jpg);
+      background-repeat: no-repeat;
+      background-size: 110% 110%;
+    }100%{
+      background: url(../assets/convo4.jpg);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+  }
