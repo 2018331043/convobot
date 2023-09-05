@@ -3,8 +3,19 @@ import logo from '../src/assets/bot.png'
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box'
 import './styling/Home.css'
+import { useEffect, useState } from 'react';
 
 export default function Home(){
+    const signUpButtonClicked = ()=>{
+        window.location.assign('/signup')
+    }
+    const signInButtonClicked = ()=>{
+        window.location.assign('/signin')
+    }
+
+    useEffect(()=>{
+        
+    },[])
     return (
         <>
             <div className='home-body'>
@@ -14,8 +25,8 @@ export default function Home(){
                         <Typography className='home-body-first-left-name'>Convo<span className='home-span-1'>Bot</span></Typography>
                     </div>
                     <div className='home-body-first-right'>
-                        <Button variant="text" className='home-body-first-right-button-1'>Sign in</Button>
-                        <Button variant="outlined" className='home-body-first-right-button-1'>Sign up</Button>
+                        <Button variant="text" onClick={signInButtonClicked} className='home-body-first-right-button-1'>Sign in</Button>
+                        <Button variant="outlined" onClick={signUpButtonClicked} className='home-body-first-right-button-1'>Sign up</Button>
                     </div>
                 </div>
                 <div className='home-body-second'>
