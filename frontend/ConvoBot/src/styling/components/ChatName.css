@@ -1,0 +1,24 @@
+.chatname-body{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 60px;
+    width: 220px;
+    margin-left: 15px;
+    margin-bottom: 8px;
+    height: fit-content;
+}
+
+.chatname-body img{
+    height: 21px;
+    width: 21px;
+    margin: 5px;
+}
+
+.chatname-body-text{
+    color: white !important;
+    font-size: 14px !important;
+    margin-top: 3px !important;
+    font-weight: 100 !important;
+    margin-left: 10px !important;
+}

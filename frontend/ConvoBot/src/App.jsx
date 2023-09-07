@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Home from './Home.jsx'
-import SignUp from './SignUp.jsx'
-import SignIn from "./SignIn.jsx"
+import Home from '../src/layouts/Home.jsx'
+import SignUp from './layouts/SignUp.jsx'
+import SignIn from "./layouts/SignIn.jsx"
+import Dashboard from "./layouts/dashboard.jsx"
 
 export default function App(){
   return (
@@ -11,6 +12,7 @@ export default function App(){
           <Route path="/" element={<Home/>}/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/signin" element={<SignIn/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
       </BrowserRouter>
     </>

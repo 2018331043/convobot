@@ -1,0 +1,101 @@
+.sidebar-body-chats-container{
+    width: 100%;
+    margin-top: 15px;
+    height: calc(100vh - 325px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* background: red; */
+}
+
+.sidebar-body-chats-container::-webkit-scrollbar { /* WebKit */
+    /* width: 0;
+    height: 0; */
+    width: 10px;
+    height: 10px !important;
+    border-radius: 1500px;
+}
+.sidebar-body-chats-container::-webkit-scrollbar-thumb {
+  background: rgba(75, 77, 73, 0.252);
+  border-radius: 1500px;
+}
+.sidebar-body-chats-title{
+    margin-top: 30px !important;
+    width: auto;
+    margin-right: 45px !important;
+    font-size: 16px !important;
+    letter-spacing: 1.5px !important;
+    /* margin-left: 30px !important; */
+    text-align: left;
+    color: rgba(255, 255, 255, 0.689);
+    font-weight: 600 !important;
+    /* border: solid; */
+    padding: 7px 5px 5px 30px !important;
+    /* padding-left: 25px !important; */
+   /* border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background: rgba(255, 255, 255, 0.107);*/
+    font-style: italic;
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+}
+
+.sidebar-body-title img{
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+}
+
+.sidebar-span-1{
+    color: rgba(255, 189, 6, 0.849);
+    font-weight: 700;
+}
+
+.sidebar-body-title-name{
+    color: rgb(255, 255, 255);
+    font-size: 20px !important;
+    margin-left:10px !important;
+    margin-top:4px !important;
+    letter-spacing: 3px !important;
+}
+
+.sidebar-body-chats{
+    margin-top: 50px;
+}
+
+/* .sidebar-body-addchat-button:hover{
+    border-width: 3px !important;
+} */
+
+.sidebar-body-addchat-button{
+    background: rgba(255, 189, 6, 0.781)!important;
+    /* background: rgb(255, 255, 255) !important; */
+    color: rgba(0, 0, 0, 0.849) !important;
+    /* color: rgb(0, 0, 0) !important; */
+    /* border-color: rgba(0, 0, 0, 0.849) !important; */
+    border: none !important;
+    margin-right: 5px !important;
+    height: 60px;
+    width: 230px;
+    margin-left: 10px !important;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.sidebar-body-addchat{
+    margin-top: 40px;
+}
+
+.sidebar-body-title{
+    display: flex;
+    height: 80px;
+    align-items: center;
+}
+
+.sidebar-body{
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: rgb(32, 33, 35);
+}

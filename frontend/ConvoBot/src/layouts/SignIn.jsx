@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import Avatar from '@mui/material/Avatar';
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -6,10 +7,25 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Container from "@mui/material/Container";
-import './styling/SignIn.css'
+import '../styling/SignIn.css'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+
+function Copyright(props) {
+    return (
+      <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        {'Copyright © '}
+        <Link color="inherit" href="/">
+          convobot
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
+  
 
 export default function SignIn() {
     const customTheme = createTheme({
@@ -19,7 +35,9 @@ export default function SignIn() {
           },
           // You can also customize other colors like secondary, error, etc.
         },
-      });      
+      });
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -45,6 +63,9 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
+        <Avatar sx={{ m: 1, bgcolor: 'rgb(255, 189, 6)' }}>
+            <LockOutlinedIcon />
+          </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -95,6 +116,7 @@ export default function SignIn() {
           </Grid>
         </Box>
       </Box>
+      <Copyright sx={{ mt: 5 }} />
     </Container>
     </ThemeProvider>
   )
