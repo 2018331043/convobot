@@ -3,6 +3,7 @@ package com.arcane.convobot.service;
 import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.request.ChatCompletionRequest;
 import com.arcane.convobot.pojo.request.ChatbotCreationRequest;
+import com.arcane.convobot.pojo.response.ChatCompletionResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.repo.ChatbotRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,18 +33,15 @@ public class ChatbotService {
         callOpenAIAPIToGenerateText(request.getPrompt());
         return new GenericResponseREST("Chatbot Created");
     }
-    public String callOpenAIAPIToGenerateText(String prompt) {
-//        String apiUrl = "https://api.openai.com/v1/chat/completions"; // Replace with the appropriate OpenAI API URL
-        String apiUrl = "https://api.openai.com/v1/chat/completions"; // Replace with the appropriate OpenAI API URL
+    public ChatCompletionResponse callOpenAIAPIToGenerateText(String prompt) {
+        String apiUrl = "https://api.openai.com/v1/chat/completions";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + apiKey);
 
-        // Build the request body
         ChatCompletionRequest requestBody = new ChatCompletionRequest(prompt,"gpt-3.5-turbo",null);
 
-        // Build the API request
         URI uri = UriComponentsBuilder.fromHttpUrl(apiUrl).build().toUri();
         RequestEntity<ChatCompletionRequest> requestEntity = RequestEntity
                 .post(uri)
@@ -52,7 +50,7 @@ public class ChatbotService {
                 .body(requestBody);
 
         // Make the API call
-        String response = restTemplate.exchange(requestEntity, String.class).getBody();
+        ChatCompletionResponse response = restTemplate.exchange(requestEntity, ChatCompletionResponse.class).getBody();
         return response;
     }
 }
