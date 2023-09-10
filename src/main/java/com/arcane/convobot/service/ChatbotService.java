@@ -40,27 +40,4 @@ public class ChatbotService {
         chatMessageRepository.save(chatMessage);
         return new GenericResponseREST("Chatbot Updated");
     }
-
-    @Transactional
-    public ChattingResponse chat(ChattingRequest request){
-        //TODO Access Control
-        //TODO make the chat stateful
-        Chatbot chatbot = chatbotRepository.findById(request.getChatbotId()).orElseGet(()->null);
-        chatMessageRepository.save(new ChatMessage(chatbot, "user", request.getInputText()));
-
-        List<ChatCompletionMessage> chatMessages = new ArrayList<>();
-        chatMessages.add(new ChatCompletionMessage("system", chatbot.getPrompt()));
-        chatMessages.add(new ChatCompletionMessage( "user", request.getInputText()));
-
-        ChatCompletionResponse chatCompletionResponse = openAiService.callOpenAIAPIToGenerateText(chatMessages);
-        chatMessageRepository.save(new ChatMessage(chatbot, "assistant",
-                chatCompletionResponse.getChoices().get(0).getMessage().getContent()));
-        return new ChattingResponse(chatCompletionResponse.getChoices().get(0).getMessage().getContent());
-    }
-    @Transactional
-    public AllChatsOfAChatbotResponse getAllChatsOfAChatbot(Integer request){
-        List<ChatMessage> chatMessages = chatMessageRepository
-                .findChatMessagesByChatbotIdOrderByCreationTimeAsc(request);
-        return new AllChatsOfAChatbotResponse(chatMessages);
-    }
 }
