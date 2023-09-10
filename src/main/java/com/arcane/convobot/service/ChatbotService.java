@@ -3,6 +3,7 @@ package com.arcane.convobot.service;
 import com.arcane.convobot.pojo.ChatMessage;
 import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.request.*;
+import com.arcane.convobot.pojo.response.AllChatsOfAChatbotResponse;
 import com.arcane.convobot.pojo.response.ChatCompletionResponse;
 import com.arcane.convobot.pojo.response.ChattingResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
@@ -57,9 +58,9 @@ public class ChatbotService {
         return new ChattingResponse(chatCompletionResponse.getChoices().get(0).getMessage().getContent());
     }
     @Transactional
-    public ChattingResponse getAllChatsOfAChatbot(Integer request){
+    public AllChatsOfAChatbotResponse getAllChatsOfAChatbot(Integer request){
         List<ChatMessage> chatMessages = chatMessageRepository
                 .findChatMessagesByChatbotIdOrderByCreationTimeAsc(request);
-        return null;
+        return new AllChatsOfAChatbotResponse(chatMessages);
     }
 }

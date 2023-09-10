@@ -47,10 +47,10 @@ public class ChatbotREST {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
     }
-    @PostMapping("/get-all-chats")
+    @GetMapping("/get-all-chats")
     public ResponseEntity<GenericResponseREST> getAllChatsOfAChatbot(
 //            @RequestParam String apiKey,
-            @RequestBody Integer chatbotId
+            @RequestParam Integer chatbotId
     ) {
         try {
             return ResponseEntity.ok(chatbotService.getAllChatsOfAChatbot(chatbotId));
