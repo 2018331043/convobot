@@ -27,8 +27,6 @@ public class ChatbotService {
     private final ChatMessageRepository chatMessageRepository;
     private final UserInfoProviderService userInfoProviderService;
     private final RestTemplate restTemplate;
-    @Value("${openapi.apikey}")
-    private String apiKey;
     public GenericResponseREST createChatbot(ChatbotCreationRequest request){
         Chatbot chatbot = new Chatbot(request, userInfoProviderService.getRequestUser().getId());
         Chatbot createdChatbot = chatbotRepository.save(chatbot);
@@ -44,25 +42,5 @@ public class ChatbotService {
         chatMessage.setContent(request.getPrompt());
         chatMessageRepository.save(chatMessage);
         return new GenericResponseREST("Chatbot Updated");
-    }
-    public ChatCompletionResponse callOpenAIAPIToGenerateText(String prompt) {
-        String apiUrl = "https://api.openai.com/v1/chat/completions";
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + apiKey);
-
-        ChatCompletionRequest requestBody = new ChatCompletionRequest(prompt,"gpt-3.5-turbo",null);
-
-        URI uri = UriComponentsBuilder.fromHttpUrl(apiUrl).build().toUri();
-        RequestEntity<ChatCompletionRequest> requestEntity = RequestEntity
-                .post(uri)
-                .headers(headers)
-                .accept(MediaType.APPLICATION_JSON)
-                .body(requestBody);
-
-        // Make the API call
-        ChatCompletionResponse response = restTemplate.exchange(requestEntity, ChatCompletionResponse.class).getBody();
-        return response;
     }
 }
