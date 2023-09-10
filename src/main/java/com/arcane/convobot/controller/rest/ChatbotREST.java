@@ -1,6 +1,7 @@
 package com.arcane.convobot.controller.rest;
 
 
+import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.request.ChatbotCreationRequest;
 import com.arcane.convobot.pojo.request.ChatbotUpdateRequest;
 import com.arcane.convobot.pojo.request.ChattingRequest;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,5 +38,10 @@ public class ChatbotREST {
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
+    }
+    @GetMapping("/get-all-chatbots")
+    public ResponseEntity<List<Chatbot>> getAllChatbots(
+    ) {
+        return ResponseEntity.ok(chatbotService.getAllChatbots());
     }
 }

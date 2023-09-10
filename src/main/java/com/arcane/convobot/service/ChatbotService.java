@@ -40,4 +40,7 @@ public class ChatbotService {
         chatMessageRepository.save(chatMessage);
         return new GenericResponseREST("Chatbot Updated");
     }
+    public List<Chatbot> getAllChatbots(){
+        return chatbotRepository.findChatbotsByOwnerId(userInfoProviderService.getRequestUser().getId());
+    }
 }
