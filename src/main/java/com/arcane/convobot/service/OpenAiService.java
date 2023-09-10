@@ -22,16 +22,16 @@ public class OpenAiService {
     private String apiKey;
     private final RestTemplate restTemplate;
 
-    public ChatCompletionResponse callOpenAIAPIToGenerateText(String prompt){
-        return callOpenAIAPIToGenerateText("https://api.openai.com/v1/chat/completions",prompt, null,"gpt-3.5-turbo");
+    public ChatCompletionResponse callOpenAIAPIToGenerateText(List<ChatCompletionMessage> messages){
+        return callOpenAIAPIToGenerateText("https://api.openai.com/v1/chat/completions", messages,"gpt-3.5-turbo");
     }
 
-    public ChatCompletionResponse callOpenAIAPIToGenerateText(String openAiApiURL, String prompt, List<ChatCompletionMessage> messages, String model) {
+    public ChatCompletionResponse callOpenAIAPIToGenerateText(String openAiApiURL, List<ChatCompletionMessage> messages, String model) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + apiKey);
 
-        ChatCompletionRequest requestBody = new ChatCompletionRequest(prompt,model,messages);
+        ChatCompletionRequest requestBody = new ChatCompletionRequest(model,messages);
 
         URI uri = UriComponentsBuilder.fromHttpUrl(openAiApiURL).build().toUri();
         RequestEntity<ChatCompletionRequest> requestEntity = RequestEntity
