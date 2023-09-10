@@ -36,14 +36,14 @@ public class ChatbotService {
         chatMessageRepository.save(chatMessage);
         return new GenericResponseREST("Chatbot Created");
     }
-    public GenericResponseREST updateChatbotPrompt(ChatbotUpdateRequest request){
+    public GenericResponseREST updateChatbot(ChatbotUpdateRequest request){
         Chatbot chatbot = chatbotRepository.findById(request.getId()).orElseGet(()->null);
         chatbot.setPrompt(request.getPrompt());
         ChatMessage chatMessage = chatMessageRepository
                 .findChatMessageByChatbotIdAndRole(request.getId(), "system").orElseGet(()->null);
         chatMessage.setContent(request.getPrompt());
         chatMessageRepository.save(chatMessage);
-        return new GenericResponseREST("Chatbot Created");
+        return new GenericResponseREST("Chatbot Updated");
     }
     public ChatCompletionResponse callOpenAIAPIToGenerateText(String prompt) {
         String apiUrl = "https://api.openai.com/v1/chat/completions";
