@@ -1,3 +1,16 @@
+.avatar-container {
+    width: 33px; /* Adjust the size as needed */
+    height: 33px; /* Adjust the size as needed */
+    border-radius: 50%; /* Makes it rounded */
+    overflow: hidden; /* Hides any overflow from the rounded container */
+  }
+  
+  .avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire container */
+  }
+
 .nav-body{
     width: 100%;
     height: 80px;
