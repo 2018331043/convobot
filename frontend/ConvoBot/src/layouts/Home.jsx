@@ -31,7 +31,10 @@ export default function Home(){
                 </div>
                 <div className='home-body-second'>
                     <div  className='home-body-second-left'>
-                    <Typography className='home-body-second-left-title'>Elevate Business Operations with <span className='home-span-1'>AI Chatbots</span></Typography>
+                        <div>
+                        <Typography className='home-body-second-left-title'>Elevate Business Operations </Typography>
+                        <Typography className='home-body-second-left-title'>with <span className='home-span-1'>AI Chatbots</span></Typography>
+                        </div>
                     </div>
                     <div className='home-body-second-right'>
 

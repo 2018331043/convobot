@@ -1,3 +1,7 @@
+.chatname-body:hover{
+    background: rgba(255, 255, 255, 0.233);
+}
+
 .chatname-body{
     display: flex;
     align-items: center;
@@ -7,6 +11,7 @@
     margin-left: 15px;
     margin-bottom: 8px;
     height: fit-content;
+    cursor: pointer;
 }
 
 .chatname-body img{
@@ -16,7 +21,7 @@
 }
 
 .chatname-body-text{
-    color: white !important;
+    color: rgba(255, 255, 255, 0.849) !important;
     font-size: 14px !important;
     margin-top: 3px !important;
     font-weight: 100 !important;

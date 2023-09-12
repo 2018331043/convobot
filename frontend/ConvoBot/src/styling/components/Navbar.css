@@ -3,3 +3,25 @@
     height: 80px;
     /* background: red; */
 }
+
+.nav-body-items{
+    margin-left: auto;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    /* background: red; */
+    height: 100%;
+    width: fit-content;
+}
+
+.nav-body-items-name{
+    padding: 10px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.nav-body-items-profileImage{
+    height: 33px !important;
+    width: 33px !important;
+}

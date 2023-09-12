@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from '../src/layouts/Home.jsx'
 import SignUp from './layouts/SignUp.jsx'
 import SignIn from "./layouts/SignIn.jsx"
-import Dashboard from "./layouts/dashboard.jsx"
+import Dashboard from "./layouts/Dashboard.jsx"
 
 export default function App(){
   return (

@@ -1,10 +1,125 @@
 import '../styling/components/ChatbotInfo.css'
+import { Box } from '@mui/material'
+import TextField from '@mui/material/TextField';
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+// import AssistantIcon from '@mui/icons-material/Assistant';
+import { InputAdornment } from '@mui/material';
+import { IconButton } from '@mui/material';
+import AdbIcon from '@mui/icons-material/Adb';
+// import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import BlockIcon from '@mui/icons-material/Block';
+import { Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+// import Tooltip from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useState } from 'react';
 
 export default function ChatbotInfo(){
+  const [openAddChatbot, setOpenAddChatbot] = useState(false);
+
+        const handleClickOpen = () => {
+            setOpenAddChatbot(true);
+        };
+
+        const handleClose = () => {
+            setOpenAddChatbot(false);
+        };
+        
+    const customTheme = createTheme({
+        palette: {
+          primary: {
+            main: "rgb(255, 189, 6)", // Change this to your desired color
+          },
+          // You can also customize other colors like secondary, error, etc.
+        },
+      });
 
     return (
-        <div className='chatbots-body'>
+        <ThemeProvider theme={customTheme}>
+        <div className='chatbotInfo-body'>
+            <div className='chatbotInfo-body-head'>
+                <Typography variant='h6' sx={{marginLeft:'30px',color:'rgba(255,255,255,.9)'}}>Education Chatbot</Typography>
+                <div className='chatbotInfo-body-head-buttons'>
+                <Tooltip title="">
+                  <Button variant="outlined">Auto Prompt</Button>
+                </Tooltip>
+                <Tooltip title="Delete Chatbot">
+                  <Button onClick={handleClickOpen} ><DeleteIcon/></Button>
+                </Tooltip>
+                </div>
+            </div>
+            <div className='chatbotInfo-body-container'>
+            <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            >
+            <div>
+                <TextField
+                className='chatbotInfo-body-container-textfield'
+                id="outlined-multiline-static"
+                label="Base Prompt"
+                multiline
+                rows={7}
+                defaultValue="Write a prompt for your chatbot."
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <IconButton>
+                        <AdbIcon sx={{color:'rgba(0,0,0,.8)'}} />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                />
 
+                <TextField
+                className='chatbotInfo-body-container-textfield'
+                id="outlined-multiline-static"
+                label="Restrictions for the Chatbot"
+                multiline
+                rows={7}
+                defaultValue="Write if there any restrictions for the chatbot"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <IconButton>
+                        <BlockIcon sx={{color:'rgba(0,0,0,.8)'}} />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                />
+            </div>
+            </Box>
+            </div>
+            <div className='chatbotInfo-body-footer'>
+                <Button variant='contained' size='string' className='chatbotInfo-body-footer-button'><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Api</Button>
+            </div>
         </div>
+
+        <Dialog open={openAddChatbot} onClose={handleClose} sx={{background:'rgba(255,255,255,.6)'}}>
+                <DialogTitle sx={{background:'rgba(0,0,0,0.9)',color:'white',marginBottom:'20px'}} >Convo<span className='sidebar-span-1'>Bot</span></DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                    Are you sure you want to delete this Chatbot?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClose}>Ok</Button>
+                </DialogActions>
+            </Dialog>
+        </ThemeProvider>
     )
 }
