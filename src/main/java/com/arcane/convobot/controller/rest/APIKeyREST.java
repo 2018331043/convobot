@@ -25,6 +25,6 @@ public class APIKeyREST {
     @GetMapping("/get-all-api-keys")
     public ResponseEntity<GenericResponseREST> getAllApiKeys(
     ) {
-        return ResponseEntity.ok(apiKeyService.getAllKeysForAUser());
+        return ResponseEntity.ok(apiKeyService.getAllKeysResponseForAUser());
     }
 }

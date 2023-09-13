@@ -22,9 +22,10 @@ public class ChatService {
     private final ChatbotRepository chatbotRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final OpenAiService openAiService;
+    private final APIKeyService apiKeyService;
     @Transactional
-    public ChattingResponse chat(ChattingRequest request){
-        //TODO Access Control
+    public ChattingResponse chat(ChattingRequest request, String apiKey){
+        apiKeyService.checkIfApiIsValid(apiKey);
         //TODO make the chat stateful
         Chatbot chatbot = chatbotRepository.findById(request.getChatbotId()).orElseGet(()->null);
         chatMessageRepository.save(new ChatMessage(chatbot, "user", request.getInputText()));

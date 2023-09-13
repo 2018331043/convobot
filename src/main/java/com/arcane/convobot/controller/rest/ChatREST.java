@@ -16,11 +16,11 @@ public class ChatREST {
     private final ChatService chatService;
     @PostMapping("/post-text")
     public ResponseEntity<GenericResponseREST> chat(
-//            @RequestParam String apiKey,
+            @RequestParam String apiKey,
             @RequestBody ChattingRequest request
     ) {
         try {
-            return ResponseEntity.ok(chatService.chat(request));
+            return ResponseEntity.ok(chatService.chat(request, apiKey));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
