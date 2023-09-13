@@ -30,7 +30,10 @@ public class ChatService {
         chatMessageRepository.save(new ChatMessage(chatbot, "user", request.getInputText()));
 
         List<ChatCompletionMessage> chatMessages = new ArrayList<>();
-        chatMessages.add(new ChatCompletionMessage("system", chatbot.getPrompt()));
+        chatMessages.add(new ChatCompletionMessage(
+                "system",
+                chatbot.getPrompt() + chatbot.getRestriction())
+        );
         chatMessages.add(new ChatCompletionMessage( "user", request.getInputText()));
 
         ChatCompletionResponse chatCompletionResponse = openAiService.callOpenAIAPIToGenerateText(chatMessages);

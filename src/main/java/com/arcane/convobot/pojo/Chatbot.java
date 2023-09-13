@@ -29,11 +29,14 @@ public class Chatbot{
 
     private String prompt;
 
+    private String restriction;
+
     private String name;
 
     public Chatbot(ChatbotCreationRequest request, Integer ownerId){
         this.ownerId = ownerId;
         this.prompt = request.getPrompt();
+        this.restriction = request.getRestriction();
         this.name = request.getChatbotName();
     }
 
