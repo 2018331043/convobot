@@ -4,7 +4,6 @@ package com.arcane.convobot.controller.rest;
 import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.request.ChatbotCreationRequest;
 import com.arcane.convobot.pojo.request.ChatbotUpdateRequest;
-import com.arcane.convobot.pojo.request.ChattingRequest;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.service.ChatbotService;
 import lombok.RequiredArgsConstructor;
