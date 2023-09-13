@@ -18,7 +18,6 @@ public class ChatbotService {
     private final ChatbotRepository chatbotRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final UserInfoProviderService userInfoProviderService;
-    private final OpenAiService openAiService;
     public GenericResponseREST createChatbot(ChatbotCreationRequest request){
         Chatbot chatbot = new Chatbot(request, userInfoProviderService.getRequestUser().getId());
         Chatbot createdChatbot = chatbotRepository.save(chatbot);
@@ -31,10 +30,12 @@ public class ChatbotService {
                 .orElseThrow(()->new RuntimeException("The requested chatbot was not found"));
         chatbot.setPrompt(request.getPrompt());
         chatbot.setRestriction(request.getRestriction());
+
         ChatMessage chatMessage = chatMessageRepository
                 .findChatMessageByChatbotIdAndRole(request.getId(), "system").orElseGet(()->null);
         chatMessage.setContent(request.getPrompt() + request.getRestriction());
         chatMessageRepository.save(chatMessage);
+
         return new GenericResponseREST("Chatbot Updated");
     }
     public List<Chatbot> getAllChatbots(){

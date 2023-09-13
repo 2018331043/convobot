@@ -23,10 +23,22 @@ public class APIKeyService {
         return new GenericResponseREST("Created Api Key Successfully");
     }
 
-    public AllApiKeysResponse getAllKeysForAUser(){
-        List<ApiKey> apiKeyList = apiKeyRepository
-                .findApiKeyByOwnerIdAndStatus(userInfoProviderService.getRequestUser().getId(), ApiKey.STATUS_ACTIVE);
+    public AllApiKeysResponse getAllKeysResponseForAUser(){
+        List<ApiKey> apiKeyList = getAllKeysForAUser();
         return new AllApiKeysResponse(apiKeyList);
+    }
+    public List<ApiKey> getAllKeysForAUser(){
+        return apiKeyRepository
+                .findApiKeyByOwnerIdAndStatus(userInfoProviderService.getRequestUser().getId(), ApiKey.STATUS_ACTIVE);
+
+    }
+    public void checkIfApiIsValid(String requestedKey){
+        List<ApiKey> apiKeyList = getAllKeysForAUser();
+        Boolean isValidApiKey = false;
+        for(ApiKey apiKey : apiKeyList){
+            if(apiKey.getValue().equals(requestedKey)) isValidApiKey = true;
+        }
+        if(!isValidApiKey) throw new RuntimeException("The provided api key is not valid");
     }
 
 }
