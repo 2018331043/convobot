@@ -19,6 +19,8 @@ public class ChatMessage {
 
     private Integer chatbotId;
 
+    private Integer threadId;
+
     private Long creationTime;
 
     private String role;
