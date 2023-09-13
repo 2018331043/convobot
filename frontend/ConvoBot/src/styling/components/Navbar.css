@@ -1,5 +1,40 @@
+.avatar-container {
+    width: 33px; /* Adjust the size as needed */
+    height: 33px; /* Adjust the size as needed */
+    border-radius: 50%; /* Makes it rounded */
+    overflow: hidden; /* Hides any overflow from the rounded container */
+  }
+  
+  .avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire container */
+  }
+
 .nav-body{
     width: 100%;
     height: 80px;
     /* background: red; */
+}
+
+.nav-body-items{
+    margin-left: auto;
+    margin-right: 30px;
+    display: flex;
+    align-items: center;
+    /* background: red; */
+    height: 100%;
+    width: fit-content;
+}
+
+.nav-body-items-name{
+    padding: 10px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+.nav-body-items-profileImage{
+    height: 33px !important;
+    width: 33px !important;
 }
