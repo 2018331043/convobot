@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChattingRequest {
-    private String inputText;
+public class CreateThreadRequest {
+    private String threadName;
     private Integer chatbotId;
-    private Integer threadId;
 }

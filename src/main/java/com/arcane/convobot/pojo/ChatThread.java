@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+//TODO add entity annotations to create database table
 @AllArgsConstructor
 public class ChatThread {
 
@@ -19,4 +20,8 @@ public class ChatThread {
     private String threadName;
 
     private Integer chatbotId;
+    public ChatThread(String threadName, Integer chatbotId){
+        this.threadName = threadName;
+        this.chatbotId = chatbotId;
+    }
 }

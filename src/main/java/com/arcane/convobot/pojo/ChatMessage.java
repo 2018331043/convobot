@@ -29,9 +29,10 @@ public class ChatMessage {
     protected void onCreate() {
         this.creationTime = System.currentTimeMillis();
     }
-    public ChatMessage(Chatbot chatbot, String role, String content){
+    public ChatMessage(Chatbot chatbot, Integer threadId, String role, String content){
         this.chatbotId = chatbot.getId();
         this.role = role;
         this.content = content;
+        this.threadId = threadId;
     }
 }
