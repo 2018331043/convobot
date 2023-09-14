@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Integer> {
     Optional<ChatMessage> findChatMessageByChatbotIdAndRole(Integer chatbotId, String role);
     List<ChatMessage> findChatMessagesByChatbotIdOrderByCreationTimeAsc(Integer chatbotId);
+    List<ChatMessage> findChatMessagesByChatbotIdOrderByCreationTimeDesc(Integer chatbotId);
 }
