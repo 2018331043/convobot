@@ -47,7 +47,7 @@ export default function Chatbox() {
     <ThemeProvider theme={customTheme}>
       <div className="chatbox-container">
         <div className="chatbox-nav">
-          <Typography variant="h6" sx={{ color: 'white', marginLeft: '10px' }}>
+          <Typography sx={{ color: 'white', marginLeft: '10px', fontSize:'17px'}}>
             Convo<span className="chatbox-span-1">Bot</span>
           </Typography>
         </div>
@@ -66,22 +66,21 @@ export default function Chatbox() {
               <Message key={message.id} message={message} />
             ))}
           </Box>
-          <Box sx={{ p: 2, backgroundColor: "background.default", display: 'flex' }}>
+          <Box sx={{ backgroundColor: "background.default", display: 'flex',padding:'15px 3px 10px 3px' }}>
             <TextField
+            className="chatbox-container-textField"
               size="small"
               fullWidth
               placeholder="Type a message"
               variant="outlined"
               value={input}
               onChange={handleInputChange}
-              sx={{ width: '300px' }}
             />
             <Button
               className="chatbox-container-send-button"
               color="primary"
               variant="contained"
               onClick={handleSend}
-              style={{ width: '30px', padding: '0px' }}
             >
               <SendIcon />
             </Button>
@@ -116,7 +115,7 @@ const Message = ({ message }) => {
         <Paper
           variant="outlined"
           sx={{
-            p: 2,
+            padding:'9px 14px' ,
             ml: isBot ? 1 : 0,
             mr: isBot ? 0 : 1,
             backgroundColor: isBot ? "primary.light" : "",

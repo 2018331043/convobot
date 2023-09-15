@@ -13,6 +13,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '../styling/SignUp.css'
+import { useState,useEffect } from 'react';
+import axios from 'axios'
+
+// http://localhost:8080/convobot/api/v1/register
+// private String userName;
+// private String email;
+// private String password;
 
 function Copyright(props) {
   return (
@@ -40,11 +47,61 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    if(data.get('email')!==''&&data.get('password')!==''&& firstName!==''&&lastName!==''){
+      let x = {
+        userName: firstName + " " + lastName,
+        email: data.get('email'),
+        password: data.get('password'),
+      }
+      setUserData(userData => ({
+        ...userData,...x
+      }))
+      console.log(userData)
+    }else{
+      // console.log("wow!")
+    }
+    // console.log({
+    //   userName: firstName + " " + lastName,
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+    
   };
+
+  const [userData,setUserData] = useState({})
+  const [firstName,setFirstName] = useState("")
+  const [lastName,setLastName] = useState("")
+
+  const onFirstNameChange = (e)=>{
+    setFirstName(e.target.value)
+  }
+
+  const onLastNameChange = (e)=>{
+    setLastName(e.target.value)
+  }
+
+  useEffect(()=>{
+    try{
+      axios.post('http://localhost:8080/convobot/api/v1/register',
+        {
+          userName:userData.userName,
+          email:userData.email,
+          password:userData.password,
+        })
+        .then((res)=>{
+          console.log(res)
+        })
+        .catch(
+          (e)=>{
+            console.log(e)
+          }
+        )
+      }catch(err){
+      console.log(err)
+    }
+  },[userData])
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -72,6 +129,7 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  onChange={onFirstNameChange}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -83,6 +141,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                onChange={onLastNameChange}
                   required
                   fullWidth
                   id="lastName"

@@ -1,6 +1,6 @@
 .chatbox-container{
-    height:500px !important;
-    width: 400px !important;
+    height:450px !important;
+    width: 330px !important;
     /* background: black; */
     display: flex;
     flex-direction: column;
@@ -9,6 +9,11 @@
     border-radius: 10px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
+
+.chatbox-container-textField{
+    
+    width: 300px !important;
+}
 .chatbox-container-send-button{
     /* width: 20px !important; */
     padding: 0px 0px !important;
@@ -16,7 +21,7 @@
 }
 
 .chatbox-nav{
-    height:60px;
+    height:50px;
     width: 100%;
     display: flex;
     align-items: center;

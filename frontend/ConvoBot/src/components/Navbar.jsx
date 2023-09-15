@@ -9,10 +9,11 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Tooltip from '@mui/material/Tooltip';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 export default function Navbar(){
         const [anchorEl, setAnchorEl] = useState(null);
-        const [image, setImage] = useState(null);
+        const [image, setImage] = useState(localStorage.getItem('navImage'));
         const handleOpenMenu = (event) => {
           setAnchorEl(event.currentTarget);
         };
@@ -31,12 +32,11 @@ export default function Navbar(){
       
         const handleFileChange = (event) => {
           const selectedFile = event.target.files[0];
-      
           if (selectedFile) {
             // You can display the selected image here.
             // For example, set it as the background image of a div or an img tag.
             const imageUrl = URL.createObjectURL(selectedFile);
-      
+            localStorage.setItem('navImage',imageUrl)
             // Display the selected image (replace 'setImage' with your state management logic)
             setImage(imageUrl);
           }
@@ -45,8 +45,8 @@ export default function Navbar(){
         <div className="nav-body">
             <div className='nav-body-items'>
                 <label htmlFor="contained-button-file">
-                <Tooltip title="Click to Add Profile Image">
-                <IconButton onClick={handleIconClick}>
+                {/* <Tooltip title="Click to Add Profile Image"> */}
+                <IconButton>
                     {
                         image?(<div className="avatar-container">
                         <img src={image} alt="Selected" className="avatar-image" />
@@ -55,7 +55,7 @@ export default function Navbar(){
                       
                     }
                 </IconButton>
-                </Tooltip>
+                {/* </Tooltip> */}
                 </label>
                 <input
                 ref={inputRef}
@@ -81,8 +81,9 @@ export default function Navbar(){
                         open={Boolean(anchorEl)}
                         onClose={handleCloseMenu}
                     >
-                        <MenuItem sx={{width:'130px',justifyContent:'space-between'}} onClick={handleCloseMenu}> Help<HelpOutlineOutlinedIcon/></MenuItem>
-                        <MenuItem sx={{width:'130px',justifyContent:'space-between'}} onClick={handleCloseMenu}>Log Out<LogoutOutlinedIcon/></MenuItem>
+                        <MenuItem sx={{width:'180px',justifyContent:'space-between'}} onClick={handleIconClick} >Upload Photo<AddPhotoAlternateIcon/></MenuItem>
+                        <MenuItem sx={{width:'180px',justifyContent:'space-between'}} > Help<HelpOutlineOutlinedIcon/></MenuItem>
+                        <MenuItem sx={{width:'180px',justifyContent:'space-between'}} >Log Out<LogoutOutlinedIcon/></MenuItem>
                         {/* <MenuItem onClick={handleCloseMenu}>Option 3</MenuItem> */}
                     </Menu>
                 </div>

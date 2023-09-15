@@ -1,5 +1,5 @@
 .chatbotInfo-body-footer-button{
-    margin-left: auto !important;
+    /* margin-left: auto !important; */
     margin-right: 25px !important;
     height: 50px;
     display: flex !important;
@@ -10,6 +10,7 @@
     height: 60px;
     width: 100%;
     display: flex;
+    justify-content: flex-end;
     /* background: red; */
 }
 

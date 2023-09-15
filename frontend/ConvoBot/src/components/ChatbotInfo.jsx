@@ -1,4 +1,5 @@
 import '../styling/components/ChatbotInfo.css'
+import logo from '../assets/bot.png'
 import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
@@ -20,6 +21,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
+import ChatBox from './Chatbox.jsx'
+import Popper from '@mui/material/Popper';
+import Grid from '@mui/material/Grid';
+import Fade from '@mui/material/Fade';
+import Paper from '@mui/material/Paper';
 
 export default function ChatbotInfo(){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
@@ -41,6 +47,15 @@ export default function ChatbotInfo(){
         },
       });
 
+      const [anchorEl, setAnchorEl] = useState(null);
+      const [open, setOpen] = useState(false);
+      const [placement, setPlacement] = useState();
+
+      const handleClick = (newPlacement) => (event) => {
+        setAnchorEl(event.currentTarget);
+        setOpen((prev) => placement !== newPlacement || !prev);
+        setPlacement(newPlacement);
+      };
     return (
         <ThemeProvider theme={customTheme}>
         <div className='chatbotInfo-body'>
@@ -104,8 +119,23 @@ export default function ChatbotInfo(){
             </Box>
             </div>
             <div className='chatbotInfo-body-footer'>
+            <Tooltip title="Tap to chat">
+              <Button onClick={handleClick('top-end') } sx={{borderRadius:'100px',marginRight:'20px'}}>
+                  <img src={logo} style={{height:'40px',width:'40px'}}/>
+              </Button>
+            </Tooltip>
                 <Button variant='contained' size='string' className='chatbotInfo-body-footer-button'><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Api</Button>
             </div>
+            <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+              {({ TransitionProps }) => (
+                <Fade {...TransitionProps} timeout={350}>
+                  <Paper>
+                    <ChatBox/>
+                  </Paper>
+                </Fade>
+              )}
+            </Popper>
+              
         </div>
 
         <Dialog open={openAddChatbot} onClose={handleClose} sx={{background:'rgba(255,255,255,.6)'}}>
@@ -119,7 +149,7 @@ export default function ChatbotInfo(){
                 <Button onClick={handleClose}>Cancel</Button>
                 <Button onClick={handleClose}>Ok</Button>
                 </DialogActions>
-            </Dialog>
+         </Dialog> 
         </ThemeProvider>
     )
 }
