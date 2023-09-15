@@ -47,6 +47,14 @@ export default function Navbar(){
             setImage(imageUrl);
           }
         }
+
+        const logOutButtonClicked = ()=>{
+          localStorageService.setToken("")
+          localStorageService.setUserInfo({})
+          localStorage.setItem("navImage","")
+          window.location.replace('./signin')
+        }
+
         useEffect(() => {
           console.log(userInfo)
           try{
@@ -107,7 +115,7 @@ export default function Navbar(){
                     >
                         <MenuItem sx={{width:'180px',justifyContent:'space-between'}} onClick={handleIconClick} >Upload Photo<AddPhotoAlternateIcon/></MenuItem>
                         <MenuItem sx={{width:'180px',justifyContent:'space-between'}} > Help<HelpOutlineOutlinedIcon/></MenuItem>
-                        <MenuItem sx={{width:'180px',justifyContent:'space-between'}} >Log Out<LogoutOutlinedIcon/></MenuItem>
+                        <MenuItem sx={{width:'180px',justifyContent:'space-between'}} onClick={logOutButtonClicked} >Log Out<LogoutOutlinedIcon/></MenuItem>
                         {/* <MenuItem onClick={handleCloseMenu}>Option 3</MenuItem> */}
                     </Menu>
                 </div>
