@@ -13,8 +13,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class APIKeyService {
-    private ApiKeyRepository apiKeyRepository;
-    private UserInfoProviderService userInfoProviderService;
+    private final ApiKeyRepository apiKeyRepository;
+    private final UserInfoProviderService userInfoProviderService;
 
     public GenericResponseREST generateApiKey(){
         UUID apiKeyUUID = UUID.randomUUID();

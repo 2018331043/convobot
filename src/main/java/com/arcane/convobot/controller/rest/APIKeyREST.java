@@ -16,8 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api-key")
 public class APIKeyREST {
-    private APIKeyService apiKeyService;
-    @GetMapping("/generate-api-key")
+    private final APIKeyService apiKeyService;
+    @PostMapping("/generate-api-key")
     public ResponseEntity<GenericResponseREST> generateApiKey(
     ) {
         return ResponseEntity.ok(apiKeyService.generateApiKey());

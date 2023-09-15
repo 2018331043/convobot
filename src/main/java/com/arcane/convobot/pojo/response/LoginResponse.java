@@ -13,4 +13,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class LoginResponse extends GenericResponseREST {
     private String token;
+    private String userName;
 }
