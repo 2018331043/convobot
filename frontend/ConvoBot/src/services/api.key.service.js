@@ -1,15 +1,11 @@
 import axios from 'axios'
 
-const authService = {
-    signUp(success,error,data){
+const apiKeyService = {
+    apiKey(success,error){
         // console.log(data)
         try{
-            axios.post('http://localhost:8080/convobot/api/v1/auth/register',
-              {
-                userName:data.userName,
-                email:data.email,
-                password:data.password,
-              })
+
+            axios.get('api-key/generate-api-key')
               .then((res)=>{
                 success(res)
               })
@@ -24,7 +20,7 @@ const authService = {
     },
     signIn(success,error,data){
       try{
-        axios.post('  auth/login',
+        axios.post('auth/login',
           {
             email:data.email,
             password:data.password,
@@ -43,4 +39,4 @@ const authService = {
     }
 }
 
-export default authService
+export default apiKeyService

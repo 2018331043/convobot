@@ -5,7 +5,8 @@ import ChatbotInfo from '../components/ChatbotInfo'
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box'
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import apiKeyService from '../services/api.key.service.js'
 
 export default function Dashboard(){
 
@@ -21,6 +22,13 @@ export default function Dashboard(){
           // You can also customize other colors like secondary, error, etc.
         },
       });
+    useEffect(()=>{
+      apiKeyService.apiKey((res)=>{
+        console.log(res)
+      },(e)=>{
+        console.log(e)
+      })
+    },[])
     return (
         <div className="dashboard-body">
             <Sidebar/>

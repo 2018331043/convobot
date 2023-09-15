@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Container from "@mui/material/Container";
 import '../styling/SignIn.css'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import authService from "../services/Auth.Service";
+import localStorageService from '../services/LocalStorageService'
 
 
 function Copyright(props) {
@@ -41,10 +43,22 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // })
+    let emailData = data.get('email')
+    let passwordData = data.get('password')
+    if(emailData!==null&&passwordData!==null){
+      authService.signIn((res)=>{
+        let token = res.data.token
+        localStorageService.setToken(token)
+        localStorageService.setUserInfo({email:emailData,password:passwordData})
+        window.location.replace('./dashboard')
+      },(err)=>{
+        console.log(err)
+      },{email:emailData,password:passwordData})
+    }
   };
 
   return (

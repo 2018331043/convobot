@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '../styling/SignUp.css'
 import { useState,useEffect } from 'react';
-import authService from '../services/auth.service.js';
+import authService from '../services/Auth.Service.js';
 
 // http://localhost:8080/convobot/api/v1/register
 // private String userName;
@@ -84,6 +84,7 @@ export default function SignUp() {
   useEffect(()=>{
     authService.signUp((data)=>{
       console.log(data)
+      window.location.replace('./signin')
     },
     (err)=>{
       console.log(err)
