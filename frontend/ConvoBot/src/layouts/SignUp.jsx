@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '../styling/SignUp.css'
 import { useState,useEffect } from 'react';
-import axios from 'axios'
+import authService from '../services/auth.service.js';
 
 // http://localhost:8080/convobot/api/v1/register
 // private String userName;
@@ -82,24 +82,12 @@ export default function SignUp() {
   }
 
   useEffect(()=>{
-    try{
-      axios.post('http://localhost:8080/convobot/api/v1/register',
-        {
-          userName:userData.userName,
-          email:userData.email,
-          password:userData.password,
-        })
-        .then((res)=>{
-          console.log(res)
-        })
-        .catch(
-          (e)=>{
-            console.log(e)
-          }
-        )
-      }catch(err){
+    authService.signUp((data)=>{
+      console.log(data)
+    },
+    (err)=>{
       console.log(err)
-    }
+    },userData)
   },[userData])
 
 
