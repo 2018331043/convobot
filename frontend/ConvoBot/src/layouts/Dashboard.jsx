@@ -22,13 +22,13 @@ export default function Dashboard(){
           // You can also customize other colors like secondary, error, etc.
         },
       });
-    useEffect(()=>{
-      apiKeyService.apiKey((res)=>{
-        console.log(res)
-      },(e)=>{
-        console.log(e)
-      })
-    },[])
+    // useEffect(()=>{
+    //   apiKeyService.apiKey((res)=>{
+    //     console.log(res)
+    //   },(e)=>{
+    //     console.log(e)
+    //   })
+    // },[])
     return (
         <div className="dashboard-body">
             <Sidebar/>

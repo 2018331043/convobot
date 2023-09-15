@@ -4,7 +4,7 @@ const authService = {
     signUp(success,error,data){
         // console.log(data)
         try{
-            axios.post('http://localhost:8080/convobot/api/v1/auth/register',
+            axios.post('auth/register',
               {
                 userName:data.userName,
                 email:data.email,
@@ -24,7 +24,7 @@ const authService = {
     },
     signIn(success,error,data){
       try{
-        axios.post('  auth/login',
+        axios.post('auth/login',
           {
             email:data.email,
             password:data.password,

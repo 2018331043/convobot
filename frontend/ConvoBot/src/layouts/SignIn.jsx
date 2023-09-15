@@ -51,10 +51,12 @@ export default function SignIn() {
     let passwordData = data.get('password')
     if(emailData!==null&&passwordData!==null){
       authService.signIn((res)=>{
+        console.log(res)
         let token = res.data.token
+        let userName = res.data.userName
         localStorageService.setToken(token)
-        localStorageService.setUserInfo({email:emailData,password:passwordData})
-        window.location.replace('./dashboard')
+        localStorageService.setUserInfo({user:userName,email:emailData,password:passwordData})
+         window.location.replace('./dashboard')
       },(err)=>{
         console.log(err)
       },{email:emailData,password:passwordData})
