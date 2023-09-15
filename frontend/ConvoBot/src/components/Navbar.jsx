@@ -1,6 +1,7 @@
 import '../styling/components/Navbar.css'
+import userProfileImage from '../assets/user.png'
 import { Typography } from '@mui/material'
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,6 +15,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 export default function Navbar(){
         const [anchorEl, setAnchorEl] = useState(null);
         const [image, setImage] = useState(localStorage.getItem('navImage'));
+        
         const handleOpenMenu = (event) => {
           setAnchorEl(event.currentTarget);
         };
@@ -41,6 +43,13 @@ export default function Navbar(){
             setImage(imageUrl);
           }
         }
+
+        useEffect(() => {
+          // Set the default image URL in localStorage if it's not already set
+          if (!localStorage.getItem('navImage')) {
+            setImage(userProfileImage)
+          }
+        }, []);
     return (
         <div className="nav-body">
             <div className='nav-body-items'>
