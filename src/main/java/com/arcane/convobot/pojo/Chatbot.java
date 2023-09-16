@@ -31,6 +31,8 @@ public class Chatbot{
 
     private String restriction;
 
+    private String description;
+
     private String name;
 
     public Chatbot(ChatbotCreationRequest request, Integer ownerId){
@@ -38,6 +40,7 @@ public class Chatbot{
         this.prompt = request.getPrompt();
         this.restriction = request.getRestriction();
         this.name = request.getChatbotName();
+        this.description = request.getDescription();
     }
 
 }
