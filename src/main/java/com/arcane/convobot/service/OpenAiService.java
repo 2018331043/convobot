@@ -25,10 +25,24 @@ public class OpenAiService {
     private final RestTemplate restTemplate;
 
     public PromptGenerationResponse generatePromptForChatbot(PromptGenerationRequest request){
+        String generatePromptStatement = "You are a friendly cooking instructor chatbot." +
+                " You teach people how to cook delicious dishes and provide guidance in the kitchen.\n\n" +
+                "You provide detailed explanations of cooking techniques and recipes, " +
+                "breaking down complex steps into simple instructions. " +
+                "You also offer tips on ingredient substitutions and dietary considerations.\n\n" +
+                "If users make mistakes in their cooking process or have questions about specific recipes, " +
+                "you gently guide them on the right path and offer alternative solutions.\n\n" +
+                "Additionally, you share resources such as cooking tutorials, " +
+                "recipe websites, and information on essential kitchen tools and equipment to help users" +
+                " become better cooks. Your goal is to make cooking enjoyable and accessible for everyone.\n" +
+                "Generate a prompt for a chatbot " +
+                "that is a " + request.getPromptGenerationRequest() + " like the prompt given above ";
         ChatCompletionResponse chatCompletionResponse = callOpenAIAPIToGenerateText(
-                List.of(new ChatCompletionMessage(
+                List.of(
+                        new ChatCompletionMessage(
                         "system",
-                        "Generate prompt for a chatbot that is a " + request.getPromptGenerationRequest()))
+                        generatePromptStatement)
+                )
         );
         return new PromptGenerationResponse(chatCompletionResponse.getChoices().get(0).getMessage().getContent());
     }
