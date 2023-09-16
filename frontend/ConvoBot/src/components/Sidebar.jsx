@@ -12,15 +12,17 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState, forwardRef, useEffect} from 'react';
+import { useState, forwardRef, useEffect, useCallback} from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import authService from '../services/Auth.Service';
 
-export default function Sidebar(){
+export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
     const [chatbotList,setChatBotList] = useState([])
     const [newChatbotName,setNewChatbotName] = useState("")
     const [newChatbotDescription,setNewChatbotDescription] = useState("")
+    const [tempChatName,setTempChatName] = useState('')
+    const [tempChatDes,setTempChatDes] = useState('') 
 
         const handleClickOpen = () => {
             setOpenAddChatbot(true);
@@ -30,10 +32,13 @@ export default function Sidebar(){
             setOpenAddChatbot(false);
         };
         const newChatbotButtonClicked = ()=>{
+            console.log(chatbotList)
             if(newChatbotName!==""&&newChatbotDescription!==""){
                 // console.log(newChatbotName)
                 // console.log(newChatbotDescription)
                 handleClose()
+                setTempChatName(newChatbotName)
+                setTempChatDes(newChatbotDescription)
                 setNewChatbotName('')
                 setNewChatbotDescription('')
             }
@@ -49,6 +54,27 @@ export default function Sidebar(){
             },
           });
 
+          const itemClicked = useCallback((item) => {
+            // console.log(item);
+            setSelectedChatbot(item.id)
+            setSelectedChatbotInfo(item)
+          }, [setSelectedChatbot]);
+
+
+        //   const itemClicked = useCallback((id)=>{
+        //     console.log(id)
+        //     // props.setSelectedChatbot(id)
+        //   },[])
+        useEffect(()=>{
+            try{
+                let x = chatbotList[0]
+                setSelectedChatbot(x.id)
+                setSelectedChatbotInfo(x)
+            }catch(e){
+
+            }
+        },[chatbotList])
+
           useEffect(()=>{
             authService.getAllChatbots((res)=>{
                 let list = res.data
@@ -56,6 +82,7 @@ export default function Sidebar(){
             },(err)=>{
                 console.log(err)
             })
+
           },[])
     return (
         <div className="sidebar-body">
@@ -67,9 +94,14 @@ export default function Sidebar(){
                 <Typography className='sidebar-body-chats-title'>ALL CHATBOTS</Typography>
                 <div className='sidebar-body-chats-container'>
                     {
+                        tempChatName!==''&&tempChatDes!==''?(
+                            <ChatName name={tempChatName} />
+                        ):null
+                    }
+                    {
                         chatbotList.map(item =>{
                             return (
-                                <ChatName name={item.name} /> 
+                                <ChatName backStyle={item.id===selectedChatbot?1:0} key={item.id} onClick={()=>itemClicked(item)} name={item.name} /> 
                             )
                         })
                     }

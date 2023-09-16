@@ -27,7 +27,7 @@ import Grid from '@mui/material/Grid';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 
-export default function ChatbotInfo(){
+export default function ChatbotInfo(props){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
 
         const handleClickOpen = () => {

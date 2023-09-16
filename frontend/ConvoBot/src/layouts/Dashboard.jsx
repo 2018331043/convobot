@@ -14,6 +14,9 @@ export default function Dashboard(){
     //set true to trigger loading animation
     const [loading,setLoading]=useState(false)
 
+    const [selectedChatbot,setSelectedChatbot] = useState(null)
+    const [selectedChatbotInfo,setSelectedChatbotInfo] = useState(null)
+
     const customTheme = createTheme({
         palette: {
           primary: {
@@ -23,6 +26,11 @@ export default function Dashboard(){
           // You can also customize other colors like secondary, error, etc.
         },
       });
+
+    useEffect(()=>{
+      console.log(selectedChatbot)
+      console.log(selectedChatbotInfo)
+    },[selectedChatbot])
     // useEffect(()=>{
     //   apiKeyService.apiKey((res)=>{
     //     console.log(res)
@@ -32,7 +40,7 @@ export default function Dashboard(){
     // },[])
     return (
         <div className="dashboard-body">
-            <Sidebar/>
+            <Sidebar selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot} setSelectedChatbotInfo={setSelectedChatbotInfo}/>
             <div className='dashboard-right'>
                 {loading? (<ThemeProvider theme={customTheme}>
                 <Box sx={{ width: '100%' }}>
@@ -41,7 +49,7 @@ export default function Dashboard(){
                 </ThemeProvider>):null}
 
                 <Navbar/>
-                <ChatbotInfo/>
+                <ChatbotInfo selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot}/>
             </div>
         </div>
     )
