@@ -70,6 +70,20 @@ const authService = {
       }catch(e){
 
       }
+    },
+    generatePrompt(success,error,name){
+      try{
+        axios.post('/open-ai/generate-prompt-for-chatbot',{promptGenerationRequest:name}).then(
+          (res)=>{
+            // console.log()
+            success(res.data.generatedPrompt)
+          }
+        ).catch((err)=>{
+          error()
+        })
+      }catch(e){
+        console.log(e)
+      }
     }
       
 }

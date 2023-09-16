@@ -49,7 +49,7 @@ export default function Dashboard(){
                 </ThemeProvider>):null}
 
                 <Navbar/>
-                <ChatbotInfo selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot}/>
+                <ChatbotInfo selectedChatbotInfo={selectedChatbotInfo} />
             </div>
         </div>
     )
