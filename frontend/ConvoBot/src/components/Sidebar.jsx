@@ -12,11 +12,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState, forwardRef} from 'react';
+import { useState, forwardRef, useEffect} from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
+import authService from '../services/Auth.Service';
 
 export default function Sidebar(){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
+    const [chatbotList,setChatBotList] = useState([])
+    const [newChatbotName,setNewChatbotName] = useState("")
+    const [newChatbotDescription,setNewChatbotDescription] = useState("")
 
         const handleClickOpen = () => {
             setOpenAddChatbot(true);
@@ -25,7 +29,16 @@ export default function Sidebar(){
         const handleClose = () => {
             setOpenAddChatbot(false);
         };
-        
+        const newChatbotButtonClicked = ()=>{
+            if(newChatbotName!==""&&newChatbotDescription!==""){
+                // console.log(newChatbotName)
+                // console.log(newChatbotDescription)
+                handleClose()
+                setNewChatbotName('')
+                setNewChatbotDescription('')
+            }
+        }
+
         const customTheme = createTheme({
             palette: {
               primary: {
@@ -35,7 +48,15 @@ export default function Sidebar(){
               // You can also customize other colors like secondary, error, etc.
             },
           });
-        
+
+          useEffect(()=>{
+            authService.getAllChatbots((res)=>{
+                let list = res.data
+                setChatBotList(list)
+            },(err)=>{
+                console.log(err)
+            })
+          },[])
     return (
         <div className="sidebar-body">
             <div className='sidebar-body-title'>
@@ -45,16 +66,13 @@ export default function Sidebar(){
             <div className='sidebar-body-chats'>
                 <Typography className='sidebar-body-chats-title'>ALL CHATBOTS</Typography>
                 <div className='sidebar-body-chats-container'>
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    
+                    {
+                        chatbotList.map(item =>{
+                            return (
+                                <ChatName name={item.name} /> 
+                            )
+                        })
+                    }
                 </div>
                 <div className='sidebar-body-addchat'>
                 <Button variant="outlined" sx={{borderWidth:'1px'}} onClick={handleClickOpen} className='sidebar-body-addchat-button'>Add a Chatbot <AddIcon sx={{marginBottom:'1px',marginLeft:'5px'}}/></Button>
@@ -77,6 +95,9 @@ export default function Sidebar(){
                     maxRows={1}
                     defaultValue=""
                     inputProps={{ maxLength: 25 }}
+                    onChange={(e)=>{
+                        setNewChatbotName(e.target.value)
+                    }}
                 />
                 <TextField
                     autoFocus
@@ -87,11 +108,14 @@ export default function Sidebar(){
                     minRows={4}
                     maxRows={4}
                     defaultValue=""
+                    onChange={(e)=>{
+                        setNewChatbotDescription(e.target.value)
+                    }}
                 />
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Confirm</Button>
+                <Button onClick={newChatbotButtonClicked}>Confirm</Button>
                 </DialogActions>
             </Dialog>
             </ThemeProvider>
