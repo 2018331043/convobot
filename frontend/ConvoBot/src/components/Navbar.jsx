@@ -56,7 +56,7 @@ export default function Navbar(){
         }
 
         useEffect(() => {
-          console.log(userInfo)
+          // console.log(userInfo)
           try{
             setUserName(userInfo.user)
           }catch(e){

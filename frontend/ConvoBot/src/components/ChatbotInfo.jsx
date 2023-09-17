@@ -22,23 +22,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import ChatBox from './Chatbox.jsx'
-import Popper from '@mui/material/Popper';
-import Grid from '@mui/material/Grid';
-import Fade from '@mui/material/Fade';
-import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 import authService from '../services/auth.service.js';
 import LoadingDialog from './LoadingDialog';
 
 
-export default function ChatbotInfo({selectedChatbotInfo}){
+export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,selectedChatbotInfo}){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
   const [chatbotName,setChatbotName] = useState("")
   const [chatbotPrompt,setChatbotPrompt] = useState("")
   const [chatbotRestriction,setChatbotRestriction] = useState("")
   const [isLoading,setIsLoading] = useState(false)
   const [loadingTitle,setLoadingTitle] = useState('Loading')
-
 
         const handleClickOpen = () => {
             setOpenAddChatbot(true);
@@ -56,17 +51,6 @@ export default function ChatbotInfo({selectedChatbotInfo}){
           // You can also customize other colors like secondary, error, etc.
         },
       });
-
-      const [anchorEl, setAnchorEl] = useState(null);
-      const [open, setOpen] = useState(false);
-      const [placement, setPlacement] = useState();
-
-      const handleClick = (newPlacement) => (event) => {
-        setAnchorEl(event.currentTarget);
-        setOpen((prev) => placement !== newPlacement || !prev);
-        setPlacement(newPlacement);
-      };
-
       const autoPromptButtonClicked =()=>{
         setLoadingTitle('Auto Prompt Generation in Progress!')
         setIsLoading(true)
@@ -76,7 +60,7 @@ export default function ChatbotInfo({selectedChatbotInfo}){
             setIsLoading(false)
             setLoadingTitle('Loading')
           },(e)=>{
-            console.log(e)
+            // console.log(e)
           },chatbotName)
         }catch(e){
           //pls try again
@@ -84,11 +68,11 @@ export default function ChatbotInfo({selectedChatbotInfo}){
       }
   
       useEffect(()=>{
-        console.log(chatbotPrompt)
+        // console.log(chatbotPrompt)
       },[chatbotPrompt])
 
       useEffect(()=>{
-        console.log(selectedChatbotInfo)
+        // console.log(selectedChatbotInfo)
         try{
           setChatbotName(selectedChatbotInfo.name)
           setChatbotPrompt(selectedChatbotInfo.prompt)
@@ -103,6 +87,8 @@ export default function ChatbotInfo({selectedChatbotInfo}){
 
     return (
         <ThemeProvider theme={customTheme}>
+        {
+          chatActive? (<ChatBox chatbotName={chatbotName} setChatActive={setChatActive}/>) : (<>
         <div className='chatbotInfo-body'>
             <div className='chatbotInfo-body-head'>
                 <Typography variant='h6' sx={{marginLeft:'30px',color:'rgba(255,255,255,.9)'}}>{chatbotName}</Typography>
@@ -164,23 +150,19 @@ export default function ChatbotInfo({selectedChatbotInfo}){
             </Box>
             </div>
             <div className='chatbotInfo-body-footer'>
-            <Tooltip title="Tap to chat">
-              <Button onClick={handleClick('top-end') } sx={{borderRadius:'100px',marginRight:'20px'}}>
-                  <img src={logo} style={{height:'40px',width:'40px'}}/>
-              </Button>
-            </Tooltip>
+              {
+                selectedChatbot!==-3&&(
+                <Tooltip title="Tap to chat">
+                <Button onClick={()=>{
+                  setChatActive(true)
+                }} sx={{borderRadius:'100px',marginRight:'20px'}}>
+                    <img src={logo} style={{height:'40px',width:'40px'}}/>
+                </Button>
+              </Tooltip>)
+              }
+            
                 <Button variant='contained' size='string' className='chatbotInfo-body-footer-button'><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Chatbot</Button>
-            </div>
-            <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
-              {({ TransitionProps }) => (
-                <Fade {...TransitionProps} timeout={350}>
-                  <Paper>
-                    <ChatBox/>
-                  </Paper>
-                </Fade>
-              )}
-            </Popper>
-              
+            </div>       
         </div>
         <LoadingDialog loadingAnimation={isLoading} title={loadingTitle}/>
         <Dialog open={openAddChatbot} onClose={handleClose} sx={{background:'rgba(255,255,255,.6)'}}>
@@ -194,7 +176,10 @@ export default function ChatbotInfo({selectedChatbotInfo}){
                 <Button onClick={handleClose}>Cancel</Button>
                 <Button onClick={handleClose}>Ok</Button>
                 </DialogActions>
-         </Dialog> 
+         </Dialog>
+         </>
+          )
+        } 
         </ThemeProvider>
     )
 }

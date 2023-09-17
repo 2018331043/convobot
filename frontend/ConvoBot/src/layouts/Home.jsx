@@ -1,7 +1,6 @@
 import Typography from '@mui/material/Typography';
 import logo from '../assets/bot.png'
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box'
 import '../styling/Home.css'
 import { useEffect, useState } from 'react';
 

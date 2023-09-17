@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import authService from '../services/auth.service';
 import { useParams } from 'react-router-dom';
 
-export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo}){
+export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
     const [chatbotList,setChatBotList] = useState([])
     const [newChatbotName,setNewChatbotName] = useState("")
@@ -44,12 +44,13 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
                 let item = {
                     restriction: `- Do not answer any questions out of the topic.\n\n- Be brief and  precise with your answers\n\n- If anyone asks question out of the topic, you respond saying something like "Sorry I can't help you with that"`,
                     description:newChatbotDescription,
-                    id:chatbotList.length+1,
+                    id:-3,
                     name:newChatbotName,
                     ownerId:userId,
                     prompt:'- Write a base prompt for your chatbot.',
 
                 }
+                setChatActive(false)
                 setSelectedChatbot(item.id)
                 setSelectedChatbotInfo(item)
                 setNewChatbotName('')
@@ -70,6 +71,7 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
 
           const itemClicked = useCallback((item) => {
             // console.log(item);
+            setChatActive(false)
             setSelectedChatbot(item.id)
             setSelectedChatbotInfo(item)
           }, [setSelectedChatbot]);
@@ -80,7 +82,7 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
         //     // props.setSelectedChatbot(id)
         //   },[])
         useEffect(()=>{
-            console.log(chatbotList)
+            // console.log(chatbotList)
             try{
                 let x = chatbotList[chatbotList.length - 1]
                 setSelectedChatbot(x.id)
@@ -95,7 +97,7 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
                 let list = res.data
                 setChatBotList(list)
             },(err)=>{
-                console.log(err)
+                // console.log(err)
             })
 
           },[])
@@ -127,7 +129,7 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
             </div>
             <ThemeProvider theme={customTheme}>
             <Dialog open={openAddChatbot} onClose={handleClose} sx={{background:'rgba(255,255,255,.6)'}}>
-                <DialogTitle sx={{background:'rgba(0,0,0,0.9)',color:'white',marginBottom:'20px'}} >Convo<span className='sidebar-span-1'>Bot</span></DialogTitle>
+                <DialogTitle sx={{zIndex:'9000',background:'rgba(0,0,0,0.9)',color:'white',marginBottom:'20px'}} >Convo<span className='sidebar-span-1'>Bot</span></DialogTitle>
                 <DialogContent>
                 <DialogContentText sx={{marginBottom:'10px'}}> 
                     Let us know about your chatbot.

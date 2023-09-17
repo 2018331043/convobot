@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import minimizeImg from '../assets/Minimize.png'
 import {
   Box,
   TextField,
@@ -13,11 +12,14 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import '../styling/components/Chatbox.css';
-import MinimizeIcon from '@mui/icons-material/Minimize';
 import IconButton from '@mui/material/IconButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-export default function Chatbox() {
+export default function Chatbox({chatbotName,setChatActive}) {
 
+  const backButtonClicked = () =>{
+    setChatActive(false)
+  }
   const [messages, setMessages] = useState([
     { id: 1, text: "Hi there!", sender: "bot" },
     { id: 2, text: "Hello!", sender: "user" },
@@ -49,18 +51,20 @@ export default function Chatbox() {
 
   return (
     <ThemeProvider theme={customTheme}>
-      <div className="chatbox-container" style={{zIndex:9999}}>
+      <div className="chatbox-container" style={{zIndex:1000}}>
         <div className="chatbox-nav">
-          <Typography sx={{ color: 'white', marginLeft: '10px', fontSize:'17px'}}>
-            Convo<span className="chatbox-span-1">Bot</span>
+          <Typography variant="h6" sx={{ color: 'white', marginLeft: '30px', fontSize:'17px'}}>
+            {/* Convo<span className="chatbox-span-1">Bot</span> */}
+            {chatbotName}
           </Typography>
           <IconButton
               aria-label="open menu"
               aria-controls="menu"
               aria-haspopup="true"
+              onClick={backButtonClicked}
               sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'40px',width:'40px'}}
             >
-            <img style={{height:'20px',width:'20px',marginRight:'15px'}} src={minimizeImg} />
+            <ArrowBackIcon sx={{color:'white',marginRight:'20px'}}/>
           </IconButton>
 
         </div>
@@ -68,13 +72,13 @@ export default function Chatbox() {
           sx={{
             paddingTop: '10px',
             height: "calc(100% - 60px )",
-            width: "98%",
+            width: "100%",
             display: "flex",
             flexDirection: "column",
             bgcolor: "grey.200",
           }}
         >
-          <Box className="chatbox-messages-container" sx={{ flexGrow: 1, overflow: "auto", p: 1 }}>
+          <Box className="chatbox-messages-container" sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
             {messages.map((message) => (
               <Message key={message.id} message={message} />
             ))}

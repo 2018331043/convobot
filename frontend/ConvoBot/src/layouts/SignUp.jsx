@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '../styling/SignUp.css'
 import { useState,useEffect } from 'react';
-import authService from '../services/Auth.Service.js';
+import authService from '../services/auth.service.js';
 
 // http://localhost:8080/convobot/api/v1/register
 // private String userName;

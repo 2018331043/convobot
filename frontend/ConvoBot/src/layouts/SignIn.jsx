@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Container from "@mui/material/Container";
 import '../styling/SignIn.css'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import authService from "../services/Auth.Service";
+import authService from "../services/auth.service.js";
 import localStorageService from '../services/LocalStorageService'
 import { useState,useEffect } from "react";
 

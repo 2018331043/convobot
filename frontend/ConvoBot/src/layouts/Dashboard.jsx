@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useState,useEffect } from 'react';
 
 import apiKeyService from '../services/api.key.service.js'
-import authService from '../services/Auth.Service';
+import authService from '../services/auth.service.js';
 
 
 export default function Dashboard(){
@@ -16,7 +16,7 @@ export default function Dashboard(){
     //set true to trigger loading animation
 
     const [loading,setLoading]=useState(false)
-
+    const [chatActive,setChatActive] = useState(false)
     const [selectedChatbot,setSelectedChatbot] = useState(null)
     const [selectedChatbotInfo,setSelectedChatbotInfo] = useState(null)
 
@@ -30,10 +30,10 @@ export default function Dashboard(){
         },
       });
 
-    useEffect(()=>{
-      console.log(selectedChatbot)
-      console.log(selectedChatbotInfo)
-    },[selectedChatbot])
+    // useEffect(()=>{
+    //   console.log(selectedChatbot)
+    //   console.log(selectedChatbotInfo)
+    // },[selectedChatbot])
     // useEffect(()=>{
     //   apiKeyService.apiKey((res)=>{
     //     console.log(res)
@@ -43,7 +43,7 @@ export default function Dashboard(){
     // },[])
     return (
         <div className="dashboard-body">
-            <Sidebar selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot} setSelectedChatbotInfo={setSelectedChatbotInfo}/>
+            <Sidebar setChatActive={setChatActive} selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot} setSelectedChatbotInfo={setSelectedChatbotInfo}/>
             <div className='dashboard-right'>
                 {loading? (<ThemeProvider theme={customTheme}>
                 <Box sx={{ width: '100%' }}>
@@ -52,7 +52,7 @@ export default function Dashboard(){
                 </ThemeProvider>):null}
 
                 <Navbar/>
-                <ChatbotInfo selectedChatbotInfo={selectedChatbotInfo} />
+                <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} selectedChatbotInfo={selectedChatbotInfo} />
             </div>
         </div>
     )
