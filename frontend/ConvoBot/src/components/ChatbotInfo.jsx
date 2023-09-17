@@ -26,9 +26,14 @@ import Popper from '@mui/material/Popper';
 import Grid from '@mui/material/Grid';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
+import { useEffect } from 'react';
+import authService from '../services/Auth.Service';
 
-export default function ChatbotInfo(){
+export default function ChatbotInfo({selectedChatbotInfo}){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
+  const [chatbotName,setChatbotName] = useState("")
+  const [chatbotPrompt,setChatbotPrompt] = useState("")
+  const [chatbotRestriction,setChatbotRestriction] = useState("")
 
         const handleClickOpen = () => {
             setOpenAddChatbot(true);
@@ -56,14 +61,45 @@ export default function ChatbotInfo(){
         setOpen((prev) => placement !== newPlacement || !prev);
         setPlacement(newPlacement);
       };
+
+      const autoPromptButtonClicked =()=>{
+        try{
+          authService.generatePrompt((res)=>{
+            setChatbotPrompt(res)
+          },(e)=>{
+            console.log(e)
+          },chatbotName)
+        }catch(e){
+          //pls try again
+        }
+      }
+  
+      useEffect(()=>{
+        console.log(chatbotPrompt)
+      },[chatbotPrompt])
+
+      useEffect(()=>{
+        console.log(selectedChatbotInfo)
+        try{
+          setChatbotName(selectedChatbotInfo.name)
+          setChatbotPrompt(selectedChatbotInfo.prompt)
+          setChatbotRestriction(selectedChatbotInfo.restriction)
+        }catch(e){
+          setChatbotName("")
+          setChatbotPrompt("")
+          setChatbotRestriction("")
+        }
+        
+      },[selectedChatbotInfo])
+
     return (
         <ThemeProvider theme={customTheme}>
         <div className='chatbotInfo-body'>
             <div className='chatbotInfo-body-head'>
-                <Typography variant='h6' sx={{marginLeft:'30px',color:'rgba(255,255,255,.9)'}}>Education Chatbot</Typography>
+                <Typography variant='h6' sx={{marginLeft:'30px',color:'rgba(255,255,255,.9)'}}>{chatbotName}</Typography>
                 <div className='chatbotInfo-body-head-buttons'>
                 <Tooltip title="">
-                  <Button variant="outlined">Auto Prompt</Button>
+                  <Button variant="outlined" onClick={autoPromptButtonClicked}>Auto Prompt</Button>
                 </Tooltip>
                 <Tooltip title="Delete Chatbot">
                   <Button onClick={handleClickOpen} ><DeleteIcon/></Button>
@@ -86,7 +122,7 @@ export default function ChatbotInfo(){
                 label="Base Prompt"
                 multiline
                 rows={7}
-                defaultValue="Write a prompt for your chatbot."
+                defaultValue= {chatbotPrompt} //"Write a prompt for your chatbot."
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -104,7 +140,7 @@ export default function ChatbotInfo(){
                 label="Restrictions for the Chatbot"
                 multiline
                 rows={7}
-                defaultValue="Write if there any restrictions for the chatbot"
+                defaultValue= {chatbotRestriction}   //"Write if there any restrictions for the chatbot"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

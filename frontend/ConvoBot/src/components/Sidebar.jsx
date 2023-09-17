@@ -12,11 +12,17 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState, forwardRef} from 'react';
+import { useState, forwardRef, useEffect, useCallback} from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
+import authService from '../services/Auth.Service';
 
-export default function Sidebar(){
+export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
+    const [chatbotList,setChatBotList] = useState([])
+    const [newChatbotName,setNewChatbotName] = useState("")
+    const [newChatbotDescription,setNewChatbotDescription] = useState("")
+    const [tempChatName,setTempChatName] = useState('')
+    const [tempChatDes,setTempChatDes] = useState('') 
 
         const handleClickOpen = () => {
             setOpenAddChatbot(true);
@@ -25,7 +31,19 @@ export default function Sidebar(){
         const handleClose = () => {
             setOpenAddChatbot(false);
         };
-        
+        const newChatbotButtonClicked = ()=>{
+            console.log(chatbotList)
+            if(newChatbotName!==""&&newChatbotDescription!==""){
+                // console.log(newChatbotName)
+                // console.log(newChatbotDescription)
+                handleClose()
+                setTempChatName(newChatbotName)
+                setTempChatDes(newChatbotDescription)
+                setNewChatbotName('')
+                setNewChatbotDescription('')
+            }
+        }
+
         const customTheme = createTheme({
             palette: {
               primary: {
@@ -35,7 +53,37 @@ export default function Sidebar(){
               // You can also customize other colors like secondary, error, etc.
             },
           });
-        
+
+          const itemClicked = useCallback((item) => {
+            // console.log(item);
+            setSelectedChatbot(item.id)
+            setSelectedChatbotInfo(item)
+          }, [setSelectedChatbot]);
+
+
+        //   const itemClicked = useCallback((id)=>{
+        //     console.log(id)
+        //     // props.setSelectedChatbot(id)
+        //   },[])
+        useEffect(()=>{
+            try{
+                let x = chatbotList[0]
+                setSelectedChatbot(x.id)
+                setSelectedChatbotInfo(x)
+            }catch(e){
+
+            }
+        },[chatbotList])
+
+          useEffect(()=>{
+            authService.getAllChatbots((res)=>{
+                let list = res.data
+                setChatBotList(list)
+            },(err)=>{
+                console.log(err)
+            })
+
+          },[])
     return (
         <div className="sidebar-body">
             <div className='sidebar-body-title'>
@@ -45,16 +93,18 @@ export default function Sidebar(){
             <div className='sidebar-body-chats'>
                 <Typography className='sidebar-body-chats-title'>ALL CHATBOTS</Typography>
                 <div className='sidebar-body-chats-container'>
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    <ChatName name={"Education Chatbot"} />
-                    
+                    {
+                        tempChatName!==''&&tempChatDes!==''?(
+                            <ChatName name={tempChatName} />
+                        ):null
+                    }
+                    {
+                        chatbotList.map(item =>{
+                            return (
+                                <ChatName backStyle={item.id===selectedChatbot?1:0} key={item.id} onClick={()=>itemClicked(item)} name={item.name} /> 
+                            )
+                        })
+                    }
                 </div>
                 <div className='sidebar-body-addchat'>
                 <Button variant="outlined" sx={{borderWidth:'1px'}} onClick={handleClickOpen} className='sidebar-body-addchat-button'>Add a Chatbot <AddIcon sx={{marginBottom:'1px',marginLeft:'5px'}}/></Button>
@@ -77,6 +127,9 @@ export default function Sidebar(){
                     maxRows={1}
                     defaultValue=""
                     inputProps={{ maxLength: 25 }}
+                    onChange={(e)=>{
+                        setNewChatbotName(e.target.value)
+                    }}
                 />
                 <TextField
                     autoFocus
@@ -87,11 +140,14 @@ export default function Sidebar(){
                     minRows={4}
                     maxRows={4}
                     defaultValue=""
+                    onChange={(e)=>{
+                        setNewChatbotDescription(e.target.value)
+                    }}
                 />
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Confirm</Button>
+                <Button onClick={newChatbotButtonClicked}>Confirm</Button>
                 </DialogActions>
             </Dialog>
             </ThemeProvider>

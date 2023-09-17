@@ -11,10 +11,12 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Tooltip from '@mui/material/Tooltip';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import localStorageService from '../services/LocalStorageService.js';
 
 export default function Navbar(){
         const [anchorEl, setAnchorEl] = useState(null);
-        const [image, setImage] = useState(localStorage.getItem('navImage'));
+        const [image, setImage] = useState(userProfileImage);
+        const [userInfo,setUserInfo] = useState()
         
         const handleOpenMenu = (event) => {
           setAnchorEl(event.currentTarget);
@@ -32,6 +34,8 @@ export default function Navbar(){
           }
         };
       
+        const [userName,setUserName] = useState('')
+        
         const handleFileChange = (event) => {
           const selectedFile = event.target.files[0];
           if (selectedFile) {
@@ -44,11 +48,30 @@ export default function Navbar(){
           }
         }
 
+        const logOutButtonClicked = ()=>{
+          localStorageService.setToken("")
+          localStorageService.setUserInfo({})
+          localStorage.setItem("navImage","")
+          window.location.replace('./signin')
+        }
+
+        useEffect(() => {
+          console.log(userInfo)
+          try{
+            setUserName(userInfo.user)
+          }catch(e){
+            // console.log('opps')
+          }
+        }, [userInfo]);
+
         useEffect(() => {
           // Set the default image URL in localStorage if it's not already set
-          if (!localStorage.getItem('navImage')) {
-            setImage(userProfileImage)
+          if (localStorage.getItem('navImage')) {
+            // console.log('wow')
+            setImage(localStorage.getItem('navImage'))
           }
+          setUserInfo(localStorageService.getUserInfo())
+          // console.log(userInfo)
         }, []);
     return (
         <div className="nav-body">
@@ -74,7 +97,7 @@ export default function Navbar(){
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
                 />
-                <Typography className='nav-body-items-name'>Ahmed Iftekher Rais</Typography>
+                <Typography className='nav-body-items-name'>{userName}</Typography>
                 <div>
                     <IconButton
                         aria-label="open menu"
@@ -92,7 +115,7 @@ export default function Navbar(){
                     >
                         <MenuItem sx={{width:'180px',justifyContent:'space-between'}} onClick={handleIconClick} >Upload Photo<AddPhotoAlternateIcon/></MenuItem>
                         <MenuItem sx={{width:'180px',justifyContent:'space-between'}} > Help<HelpOutlineOutlinedIcon/></MenuItem>
-                        <MenuItem sx={{width:'180px',justifyContent:'space-between'}} >Log Out<LogoutOutlinedIcon/></MenuItem>
+                        <MenuItem sx={{width:'180px',justifyContent:'space-between'}} onClick={logOutButtonClicked} >Log Out<LogoutOutlinedIcon/></MenuItem>
                         {/* <MenuItem onClick={handleCloseMenu}>Option 3</MenuItem> */}
                     </Menu>
                 </div>

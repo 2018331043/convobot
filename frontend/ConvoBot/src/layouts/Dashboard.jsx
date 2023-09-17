@@ -8,10 +8,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useState,useEffect } from 'react';
 import apiKeyService from '../services/api.key.service.js'
 
+
 export default function Dashboard(){
 
     //set true to trigger loading animation
     const [loading,setLoading]=useState(false)
+
+    const [selectedChatbot,setSelectedChatbot] = useState(null)
+    const [selectedChatbotInfo,setSelectedChatbotInfo] = useState(null)
 
     const customTheme = createTheme({
         palette: {
@@ -22,16 +26,21 @@ export default function Dashboard(){
           // You can also customize other colors like secondary, error, etc.
         },
       });
+
     useEffect(()=>{
-      apiKeyService.apiKey((res)=>{
-        console.log(res)
-      },(e)=>{
-        console.log(e)
-      })
-    },[])
+      console.log(selectedChatbot)
+      console.log(selectedChatbotInfo)
+    },[selectedChatbot])
+    // useEffect(()=>{
+    //   apiKeyService.apiKey((res)=>{
+    //     console.log(res)
+    //   },(e)=>{
+    //     console.log(e)
+    //   })
+    // },[])
     return (
         <div className="dashboard-body">
-            <Sidebar/>
+            <Sidebar selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot} setSelectedChatbotInfo={setSelectedChatbotInfo}/>
             <div className='dashboard-right'>
                 {loading? (<ThemeProvider theme={customTheme}>
                 <Box sx={{ width: '100%' }}>
@@ -40,7 +49,7 @@ export default function Dashboard(){
                 </ThemeProvider>):null}
 
                 <Navbar/>
-                <ChatbotInfo/>
+                <ChatbotInfo selectedChatbotInfo={selectedChatbotInfo} />
             </div>
         </div>
     )

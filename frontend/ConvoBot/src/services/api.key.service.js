@@ -5,7 +5,7 @@ const apiKeyService = {
         // console.log(data)
         try{
 
-            axios.get('api-key/generate-api-key')
+            axios.post('api-key/generate-api-key')
               .then((res)=>{
                 success(res)
               })
@@ -17,25 +17,6 @@ const apiKeyService = {
             }catch(err){
             console.log(err)
           }
-    },
-    signIn(success,error,data){
-      try{
-        axios.post('auth/login',
-          {
-            email:data.email,
-            password:data.password,
-          })
-          .then((res)=>{
-            success(res)
-          })
-          .catch(
-            (e)=>{
-              error(e)
-            }
-          )
-        }catch(err){
-        console.log(err)
-      }
     }
 }
 
