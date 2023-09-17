@@ -3,7 +3,7 @@ An application to make Open Ai driven chatbots for custome purposes without writ
 To Run the application follow the given steps:
 1. Clone the Repo
 2. Run the backend using a java version 17 or higher
-3. navigate to frontend folder
+3. navigate to Convobot folder(cd frontend/Convobot)
 4. run "npm install" and then "npm run dev" while in the frontend folder to run the front end
    ![HomepageScreenshot](convobot.png)
 6. Add the follwing code snippet in the application.properties file in the src/main/resources folder with approproate fields
