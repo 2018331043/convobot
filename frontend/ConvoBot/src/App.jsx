@@ -3,7 +3,7 @@ import Home from '../src/layouts/Home.jsx'
 import SignUp from './layouts/SignUp.jsx'
 import SignIn from "./layouts/SignIn.jsx"
 import Dashboard from "./layouts/Dashboard.jsx"
-import Chatbox from './components/Chatbox.jsx'
+import Chatbox from './components/ExternalChatbox.jsx'
 
 export default function App(){
   return (

@@ -27,7 +27,7 @@ import Grid from '@mui/material/Grid';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
-import authService from '../services/Auth.Service';
+import authService from '../services/auth.service.js';
 import LoadingDialog from './LoadingDialog';
 
 
@@ -169,7 +169,7 @@ export default function ChatbotInfo({selectedChatbotInfo}){
                   <img src={logo} style={{height:'40px',width:'40px'}}/>
               </Button>
             </Tooltip>
-                <Button variant='contained' size='string' className='chatbotInfo-body-footer-button'><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Api</Button>
+                <Button variant='contained' size='string' className='chatbotInfo-body-footer-button'><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Chatbot</Button>
             </div>
             <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
               {({ TransitionProps }) => (

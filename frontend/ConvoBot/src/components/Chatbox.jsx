@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import minimizeImg from '../assets/Minimize.png'
 import {
   Box,
   TextField,
@@ -12,8 +13,11 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import '../styling/components/Chatbox.css';
+import MinimizeIcon from '@mui/icons-material/Minimize';
+import IconButton from '@mui/material/IconButton';
 
 export default function Chatbox() {
+
   const [messages, setMessages] = useState([
     { id: 1, text: "Hi there!", sender: "bot" },
     { id: 2, text: "Hello!", sender: "user" },
@@ -45,11 +49,20 @@ export default function Chatbox() {
 
   return (
     <ThemeProvider theme={customTheme}>
-      <div className="chatbox-container">
+      <div className="chatbox-container" style={{zIndex:9999}}>
         <div className="chatbox-nav">
           <Typography sx={{ color: 'white', marginLeft: '10px', fontSize:'17px'}}>
             Convo<span className="chatbox-span-1">Bot</span>
           </Typography>
+          <IconButton
+              aria-label="open menu"
+              aria-controls="menu"
+              aria-haspopup="true"
+              sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'40px',width:'40px'}}
+            >
+            <img style={{height:'20px',width:'20px',marginRight:'15px'}} src={minimizeImg} />
+          </IconButton>
+
         </div>
         <Box
           sx={{

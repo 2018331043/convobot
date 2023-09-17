@@ -14,7 +14,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState, forwardRef, useEffect, useCallback} from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-import authService from '../services/Auth.Service';
+import authService from '../services/auth.service';
 import { useParams } from 'react-router-dom';
 
 export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo}){
