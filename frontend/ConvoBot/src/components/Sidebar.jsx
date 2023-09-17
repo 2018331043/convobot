@@ -42,12 +42,12 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
                 setTempChatName(newChatbotName)
                 setTempChatDes(newChatbotDescription)
                 let item = {
-                    restriction: 'Let us know if there is any restrictions for your chatbot.',
+                    restriction: `- Do not answer any questions out of the topic.\n\n- Be brief and  precise with your answers\n\n- If anyone asks question out of the topic, you respond saying something like "Sorry I can't help you with that"`,
                     description:newChatbotDescription,
                     id:chatbotList.length+1,
                     name:newChatbotName,
                     ownerId:userId,
-                    prompt:'Write a base prompt for your chatbot.',
+                    prompt:'- Write a base prompt for your chatbot.',
 
                 }
                 setSelectedChatbot(item.id)
