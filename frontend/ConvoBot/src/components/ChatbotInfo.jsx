@@ -28,12 +28,16 @@ import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 import authService from '../services/Auth.Service';
+import LoadingDialog from './LoadingDialog';
+
 
 export default function ChatbotInfo({selectedChatbotInfo}){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
   const [chatbotName,setChatbotName] = useState("")
   const [chatbotPrompt,setChatbotPrompt] = useState("")
   const [chatbotRestriction,setChatbotRestriction] = useState("")
+  const [isLoading,setIsLoading] = useState(false)
+
 
         const handleClickOpen = () => {
             setOpenAddChatbot(true);
@@ -63,9 +67,11 @@ export default function ChatbotInfo({selectedChatbotInfo}){
       };
 
       const autoPromptButtonClicked =()=>{
+        setIsLoading(true)
         try{
           authService.generatePrompt((res)=>{
             setChatbotPrompt(res)
+            setIsLoading(false)
           },(e)=>{
             console.log(e)
           },chatbotName)
@@ -173,7 +179,7 @@ export default function ChatbotInfo({selectedChatbotInfo}){
             </Popper>
               
         </div>
-
+        <LoadingDialog loadingAnimation={isLoading}/>
         <Dialog open={openAddChatbot} onClose={handleClose} sx={{background:'rgba(255,255,255,.6)'}}>
                 <DialogTitle sx={{background:'rgba(0,0,0,0.9)',color:'white',marginBottom:'20px'}} >Convo<span className='sidebar-span-1'>Bot</span></DialogTitle>
                 <DialogContent>
