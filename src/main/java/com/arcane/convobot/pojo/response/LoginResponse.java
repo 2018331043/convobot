@@ -14,4 +14,5 @@ import java.io.Serializable;
 public class LoginResponse extends GenericResponseREST {
     private String token;
     private String userName;
+    private Integer userId;
 }

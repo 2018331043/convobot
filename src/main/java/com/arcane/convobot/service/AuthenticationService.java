@@ -53,6 +53,7 @@ public class AuthenticationService {
         return LoginResponse.builder()
                 .token(jwtToken)
                 .userName(user.userName)
+                .userId(user.getId())
                 .build();
     }
 }
