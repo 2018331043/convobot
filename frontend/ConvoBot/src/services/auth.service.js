@@ -32,6 +32,7 @@ const authService = {
             password:data.password,
           })
           .then((res)=>{
+            // console.log(res)
             success(res)
           })
           .catch(

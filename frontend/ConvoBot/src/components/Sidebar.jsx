@@ -15,6 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState, forwardRef, useEffect, useCallback} from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import authService from '../services/Auth.Service';
+import { useParams } from 'react-router-dom';
 
 export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
@@ -23,6 +24,7 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
     const [newChatbotDescription,setNewChatbotDescription] = useState("")
     const [tempChatName,setTempChatName] = useState('')
     const [tempChatDes,setTempChatDes] = useState('') 
+    const {userId} = useParams()
 
         const handleClickOpen = () => {
             setOpenAddChatbot(true);
@@ -39,8 +41,20 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
                 handleClose()
                 setTempChatName(newChatbotName)
                 setTempChatDes(newChatbotDescription)
+                let item = {
+                    restriction: 'Let us know if there is any restrictions for your chatbot.',
+                    description:newChatbotDescription,
+                    id:chatbotList.length+1,
+                    name:newChatbotName,
+                    ownerId:userId,
+                    prompt:'Write a base prompt for your chatbot.',
+
+                }
+                setSelectedChatbot(item.id)
+                setSelectedChatbotInfo(item)
                 setNewChatbotName('')
                 setNewChatbotDescription('')
+                setChatBotList(array=>[...array,item])
             }
         }
 
@@ -66,8 +80,9 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
         //     // props.setSelectedChatbot(id)
         //   },[])
         useEffect(()=>{
+            console.log(chatbotList)
             try{
-                let x = chatbotList[0]
+                let x = chatbotList[chatbotList.length - 1]
                 setSelectedChatbot(x.id)
                 setSelectedChatbotInfo(x)
             }catch(e){
@@ -93,11 +108,11 @@ export default function Sidebar({selectedChatbot,setSelectedChatbot,setSelectedC
             <div className='sidebar-body-chats'>
                 <Typography className='sidebar-body-chats-title'>ALL CHATBOTS</Typography>
                 <div className='sidebar-body-chats-container'>
-                    {
+                    {/* {
                         tempChatName!==''&&tempChatDes!==''?(
                             <ChatName name={tempChatName} />
                         ):null
-                    }
+                    } */}
                     {
                         chatbotList.map(item =>{
                             return (

@@ -37,6 +37,7 @@ export default function ChatbotInfo({selectedChatbotInfo}){
   const [chatbotPrompt,setChatbotPrompt] = useState("")
   const [chatbotRestriction,setChatbotRestriction] = useState("")
   const [isLoading,setIsLoading] = useState(false)
+  const [loadingTitle,setLoadingTitle] = useState('Loading')
 
 
         const handleClickOpen = () => {
@@ -67,11 +68,13 @@ export default function ChatbotInfo({selectedChatbotInfo}){
       };
 
       const autoPromptButtonClicked =()=>{
+        setLoadingTitle('Auto Prompt Generation in Progress!')
         setIsLoading(true)
         try{
           authService.generatePrompt((res)=>{
             setChatbotPrompt(res)
             setIsLoading(false)
+            setLoadingTitle('Loading')
           },(e)=>{
             console.log(e)
           },chatbotName)
@@ -179,7 +182,7 @@ export default function ChatbotInfo({selectedChatbotInfo}){
             </Popper>
               
         </div>
-        <LoadingDialog loadingAnimation={isLoading}/>
+        <LoadingDialog loadingAnimation={isLoading} title={loadingTitle}/>
         <Dialog open={openAddChatbot} onClose={handleClose} sx={{background:'rgba(255,255,255,.6)'}}>
                 <DialogTitle sx={{background:'rgba(0,0,0,0.9)',color:'white',marginBottom:'20px'}} >Convo<span className='sidebar-span-1'>Bot</span></DialogTitle>
                 <DialogContent>

@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 
-export default function LoadingDialog({loadingAnimation}){
+export default function LoadingDialog({loadingAnimation,title}){
 
   const [open, setOpen] = useState(false);
 
@@ -34,7 +34,7 @@ export default function LoadingDialog({loadingAnimation}){
         sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center', width:'100%' }}
       >
         <DialogTitle id="alert-dialog-title">
-          {"Loading"}
+          {title}
         </DialogTitle>
           <DialogContent sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',width:'400px' }}>
           <CircularProgress sx={{margin:'20px 20px 20px 20px'}} />

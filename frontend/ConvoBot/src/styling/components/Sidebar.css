@@ -3,8 +3,9 @@
     margin-top: 15px;
     height: calc(100vh - 325px);
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
+    justify-content:flex-end;
     overflow-x: hidden;
     overflow-y: auto;
     /* background: red; */
