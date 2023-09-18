@@ -69,9 +69,9 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
         }
       }
   
-      useEffect(()=>{
-        // console.log(chatbotPrompt)
-      },[chatbotPrompt])
+      // useEffect(()=>{
+      //   // console.log(chatbotPrompt)
+      // },[chatbotPrompt])
 
       useEffect(()=>{
         // console.log(selectedChatbotInfo)
