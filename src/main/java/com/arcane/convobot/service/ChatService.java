@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -25,8 +27,9 @@ public class ChatService {
     private final APIKeyService apiKeyService;
     @Transactional
     public ChattingResponse chat(ChattingRequest request, String apiKey){
-        apiKeyService.checkIfApiIsValid(apiKey);
-        //TODO make the chat stateful
+
+        apiKeyService.checkIfApiIsValid(apiKey);//Access Control
+
         Chatbot chatbot = chatbotRepository.findById(request.getChatbotId()).orElseGet(()->null);
 
         List<ChatCompletionMessage> chatMessages = getChatCompletionMessages(request, chatbot);
@@ -50,8 +53,12 @@ public class ChatService {
                 .findChatMessagesByChatbotIdOrderByCreationTimeDesc(chatbot.getId());
 
         if(previousChatMessageList != null){
+            //TODO add code to perform conversation summarization
+//            if(rememberance >= 10)
+//                previousChatMessageList = getSummaryOfPreviousChatsAndMostRecentChats(previousChatMessageList, 10, chatbot);
             if(previousChatMessageList.size() > rememberance)
                 previousChatMessageList = previousChatMessageList.subList(0,2);
+            Collections.reverse(previousChatMessageList);
             previousChatMessageList.forEach(chatMessage -> {
                 chatMessages.add(new ChatCompletionMessage(chatMessage.getRole(), chatMessage.getContent()));
             });
@@ -59,6 +66,34 @@ public class ChatService {
 
         chatMessages.add(new ChatCompletionMessage( "user", request.getInputText()));
         return chatMessages;
+    }
+
+
+    //TODO complete this method to create a summarization system that reduces the cost of calling open Ai apis
+    private List<ChatMessage> getSummaryOfPreviousChatsAndMostRecentChats(
+            List<ChatMessage> previousChatMessageList,
+            Integer remeberance,
+            Chatbot chatbot
+    ) {
+        List<ChatMessage> chatMessageLimit = new ArrayList<>();
+        Boolean summaryFound = false;
+        for(ChatMessage chatMessage : previousChatMessageList){
+            if(chatMessage.getRole().equals("previousSummary")){
+                chatMessageLimit = previousChatMessageList.subList(0, previousChatMessageList.indexOf(chatMessage) + 1);
+                summaryFound = true;
+                break;
+            }
+        }
+        if(!summaryFound){
+            chatMessageLimit = previousChatMessageList;
+            if(chatMessageLimit.size() >= 10){
+                String previousSummary = openAiService.summarizeConversation(chatMessageLimit);
+                chatMessageRepository.save(new ChatMessage(chatbot, "previousSummary", previousSummary));
+            }
+        }else{
+            chatMessageLimit = previousChatMessageList;
+        }
+        return chatMessageLimit;
     }
 
     public AllChatsOfAChatbotResponse getAllChatsOfAChatbot(Integer request){
