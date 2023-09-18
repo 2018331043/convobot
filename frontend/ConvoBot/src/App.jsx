@@ -4,8 +4,10 @@ import SignUp from './layouts/SignUp.jsx'
 import SignIn from "./layouts/SignIn.jsx"
 import Dashboard from "./layouts/Dashboard.jsx"
 import Chatbox from './components/ExternalChatbox.jsx'
+import { ToastContainer } from 'react-toastify';
 
 export default function App(){
+
   return (
     <>
       <BrowserRouter>

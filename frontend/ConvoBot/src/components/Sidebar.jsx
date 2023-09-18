@@ -16,6 +16,7 @@ import { useState, forwardRef, useEffect, useCallback} from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import authService from '../services/auth.service';
 import { useParams } from 'react-router-dom';
+import displayToast from '../services/toast.service';
 
 export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
@@ -38,6 +39,7 @@ export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbo
             if(newChatbotName!==""&&newChatbotDescription!==""){
                 // console.log(newChatbotName)
                 // console.log(newChatbotDescription)
+                setChatBotList(chatbotList.filter(item=>item.id!==-3))
                 handleClose()
                 setTempChatName(newChatbotName)
                 setTempChatDes(newChatbotDescription)
@@ -56,6 +58,7 @@ export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbo
                 setNewChatbotName('')
                 setNewChatbotDescription('')
                 setChatBotList(array=>[...array,item])
+                displayToast.warning('Generate a Chatbot, otherwise it will be removed from the sidebar later.',5000)
             }
         }
 
@@ -75,7 +78,6 @@ export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbo
             setSelectedChatbot(item.id)
             setSelectedChatbotInfo(item)
           }, [setSelectedChatbot]);
-
 
         //   const itemClicked = useCallback((id)=>{
         //     console.log(id)

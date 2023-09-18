@@ -25,6 +25,8 @@ import ChatBox from './Chatbox.jsx'
 import { useEffect } from 'react';
 import authService from '../services/auth.service.js';
 import LoadingDialog from './LoadingDialog';
+import displayToast from '../services/toast.service.js';
+
 
 
 export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,selectedChatbotInfo}){
@@ -67,9 +69,9 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
         }
       }
   
-      useEffect(()=>{
-        // console.log(chatbotPrompt)
-      },[chatbotPrompt])
+      // useEffect(()=>{
+      //   // console.log(chatbotPrompt)
+      // },[chatbotPrompt])
 
       useEffect(()=>{
         // console.log(selectedChatbotInfo)
@@ -84,6 +86,10 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
         }
         
       },[selectedChatbotInfo])
+
+      const generateChatbot = ()=>{
+        
+      }
 
     return (
         <ThemeProvider theme={customTheme}>
@@ -161,7 +167,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
               </Tooltip>)
               }
             
-                <Button variant='contained' size='string' className='chatbotInfo-body-footer-button'><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Chatbot</Button>
+                <Button variant='contained' size='string' className='chatbotInfo-body-footer-button' onClick={generateChatbot}><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Chatbot</Button>
             </div>       
         </div>
         <LoadingDialog loadingAnimation={isLoading} title={loadingTitle}/>
@@ -177,6 +183,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                 <Button onClick={handleClose}>Ok</Button>
                 </DialogActions>
          </Dialog>
+         {/* <ToastContainer /> */}
          </>
           )
         } 
