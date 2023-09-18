@@ -54,7 +54,7 @@ public class ChatService {
 
         if(previousChatMessageList != null){
             //TODO add code to perform conversation summarization
-//            if(rememberance >= 10)
+//            if(rememberance > 10)
 //                previousChatMessageList = getSummaryOfPreviousChatsAndMostRecentChats(previousChatMessageList, 10, chatbot);
             if(previousChatMessageList.size() > rememberance)
                 previousChatMessageList = previousChatMessageList.subList(0,2);
@@ -86,11 +86,19 @@ public class ChatService {
         }
         if(!summaryFound){
             chatMessageLimit = previousChatMessageList;
-            if(chatMessageLimit.size() >= 10){
+            if(chatMessageLimit.size() > 10){
+                chatMessageLimit = previousChatMessageList.subList(0, 10);
                 String previousSummary = openAiService.summarizeConversation(chatMessageLimit);
                 chatMessageRepository.save(new ChatMessage(chatbot, "previousSummary", previousSummary));
+                chatMessageLimit.add(new ChatMessage(chatbot, "previousSummary", previousSummary));
             }
         }else{
+            if(chatMessageLimit.size() > 11){
+                chatMessageLimit = previousChatMessageList.subList(0, 10);
+                String previousSummary = openAiService.summarizeConversation(chatMessageLimit);
+                chatMessageRepository.save(new ChatMessage(chatbot, "previousSummary", previousSummary));
+                chatMessageLimit.add(new ChatMessage(chatbot, "previousSummary", previousSummary));
+            }
             chatMessageLimit = previousChatMessageList;
         }
         return chatMessageLimit;
