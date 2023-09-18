@@ -50,14 +50,12 @@ public class ChatService {
                 chatbot.getPrompt() + chatbot.getRestriction())
         );
         List<ChatMessage> previousChatMessageList = chatMessageRepository
-                .findChatMessagesByChatbotIdOrderByCreationTimeDesc(chatbot.getId());
+                .findChatMessagesByChatbotIdAndRoleNotOrderByCreationTimeDesc(chatbot.getId(), "system");
 
         if(previousChatMessageList != null){
             //TODO add code to perform conversation summarization
-//            if(rememberance > 10)
-//                previousChatMessageList = getSummaryOfPreviousChatsAndMostRecentChats(previousChatMessageList, 10, chatbot);
             if(previousChatMessageList.size() > rememberance)
-                previousChatMessageList = previousChatMessageList.subList(0,2);
+                previousChatMessageList = previousChatMessageList.subList(0, rememberance);
             Collections.reverse(previousChatMessageList);
             previousChatMessageList.forEach(chatMessage -> {
                 chatMessages.add(new ChatCompletionMessage(chatMessage.getRole(), chatMessage.getContent()));
@@ -99,7 +97,6 @@ public class ChatService {
                 chatMessageRepository.save(new ChatMessage(chatbot, "previousSummary", previousSummary));
                 chatMessageLimit.add(new ChatMessage(chatbot, "previousSummary", previousSummary));
             }
-            chatMessageLimit = previousChatMessageList;
         }
         return chatMessageLimit;
     }
