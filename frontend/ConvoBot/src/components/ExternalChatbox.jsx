@@ -33,7 +33,7 @@ import SendIcon from "@mui/icons-material/Send";
 import '../styling/components/Chatbox.css';
 import MinimizeIcon from '@mui/icons-material/Minimize';
 import {Avatar} from "@mui/material";
-import minimizeImg from '../assets/Minimize.png'
+import minimizeImg from '../assets/minimize.png'
 
 export default function ExternalChatbox(){
 
