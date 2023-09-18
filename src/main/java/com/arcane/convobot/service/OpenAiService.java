@@ -46,6 +46,19 @@ public class OpenAiService {
         );
         return new PromptGenerationResponse(chatCompletionResponse.getChoices().get(0).getMessage().getContent());
     }
+    public PromptGenerationResponse enhancePromptForChatbot(PromptGenerationRequest request){
+        String enhancePromptStatement = "Add more appropriate instructions to the instructions given below for " +
+                "a chatbot but dont change the tone or \n" +
+                request.getPromptGenerationRequest();
+        ChatCompletionResponse chatCompletionResponse = callOpenAIAPIToGenerateText(
+                List.of(
+                        new ChatCompletionMessage(
+                                "system",
+                                enhancePromptStatement)
+                )
+        );
+        return new PromptGenerationResponse(chatCompletionResponse.getChoices().get(0).getMessage().getContent());
+    }
 
     public ChatCompletionResponse callOpenAIAPIToGenerateText(List<ChatCompletionMessage> messages){
         return callOpenAIAPIToGenerateText(
