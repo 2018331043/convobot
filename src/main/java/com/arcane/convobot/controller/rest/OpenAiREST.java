@@ -26,4 +26,14 @@ public class OpenAiREST {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
 //        }
     }
+    @PostMapping("/enhance-prompt-for-chatbot")
+    public ResponseEntity<GenericResponseREST> enhancePromptForChatbot(
+            @RequestBody PromptGenerationRequest request
+    ) {
+//        try {
+        return ResponseEntity.ok(openAiService.enhancePromptForChatbot(request));
+//        }catch (Exception e){
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
+//        }
+    }
 }
