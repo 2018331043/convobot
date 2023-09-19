@@ -1,8 +1,10 @@
 import '../styling/components/Navbar.css'
 import userProfileImage from '../assets/user.png'
 import { Typography } from '@mui/material'
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 import React, { useState, useRef, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -12,12 +14,18 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Tooltip from '@mui/material/Tooltip';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import localStorageService from '../services/LocalStorageService.js';
+import apiImg from '../assets/api.png'
+import UserApiKeys from './UserApiKeys.jsx';
 
 export default function Navbar(){
+        const [openApiKeys, setOpenApiKeys] = useState(false)
         const [anchorEl, setAnchorEl] = useState(null);
         const [image, setImage] = useState(userProfileImage);
         const [userInfo,setUserInfo] = useState()
         
+        const openApiModal = () =>{
+          setOpenApiKeys(true)
+        }
         const handleOpenMenu = (event) => {
           setAnchorEl(event.currentTarget);
         };
@@ -33,7 +41,16 @@ export default function Navbar(){
             inputRef.current.click();
           }
         };
-      
+        const customTheme = createTheme({
+          palette: {
+            primary: {
+              main: "rgb(255, 189, 6)", // Change this to your desired color
+              // main: "rgb(0,0,0,.9)",
+            },
+            // You can also customize other colors like secondary, error, etc.
+          },
+        });
+
         const [userName,setUserName] = useState('')
         
         const handleFileChange = (event) => {
@@ -52,7 +69,7 @@ export default function Navbar(){
           localStorageService.setToken("")
           localStorageService.setUserInfo({})
           localStorage.setItem("navImage","")
-          window.location.replace('./signin')
+          window.location.replace('../signin')
         }
 
         useEffect(() => {
@@ -74,8 +91,14 @@ export default function Navbar(){
           // console.log(userInfo)
         }, []);
     return (
+        <ThemeProvider theme={customTheme}>
         <div className="nav-body">
             <div className='nav-body-items'>
+                <Tooltip title="Generate Api key">
+                    <div onClick={openApiModal} className='nav-body-apiKeyButton'>
+                      <img src={apiImg} style={{height:'24px',width:'24px',borderRadius:'50%'}}/>
+                    </div>
+                </Tooltip>
                 <label htmlFor="contained-button-file">
                 {/* <Tooltip title="Click to Add Profile Image"> */}
                 <IconButton>
@@ -121,5 +144,7 @@ export default function Navbar(){
                 </div>
             </div>
         </div>
+        <UserApiKeys openApiKeys={openApiKeys} setOpenApiKeys={setOpenApiKeys}/>
+        </ThemeProvider>
     )
 }

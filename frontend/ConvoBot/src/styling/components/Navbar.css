@@ -4,7 +4,27 @@
     border-radius: 50%; /* Makes it rounded */
     overflow: hidden; /* Hides any overflow from the rounded container */
   }
-  
+
+.nav-body-apiKeyButton{
+   display: flex;
+   justify-content: center;
+   /* flex-direction: column; */
+   align-items: center;
+   height: 34px;
+   width: 34px;
+   cursor: pointer;
+   margin-right: 5px;
+   border-radius: 1000px;
+   border-right-color: rgb(219, 138, 17) !important;
+   border-right: solid;
+   /* border: solid;
+   border-color: rgba(219, 155, 36, 0.24);
+   border-width: 3px; */
+   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+  .nav-body-apiKeyButton Img{
+    padding: 0px;
+  }
   .avatar-image {
     width: 100%;
     height: 100%;

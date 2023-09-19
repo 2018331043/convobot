@@ -131,7 +131,7 @@ export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbo
             </div>
             <ThemeProvider theme={customTheme}>
             <Dialog open={openAddChatbot} onClose={handleClose} sx={{background:'rgba(255,255,255,.6)'}}>
-                <DialogTitle sx={{zIndex:'9000',background:'rgba(0,0,0,0.9)',color:'white',marginBottom:'20px'}} >Convo<span className='sidebar-span-1'>Bot</span></DialogTitle>
+                <DialogTitle sx={{zIndex:'1000',background:'rgba(0,0,0,0.9)',color:'white',marginBottom:'20px'}} >Convo<span className='sidebar-span-1'>Bot</span></DialogTitle>
                 <DialogContent>
                 <DialogContentText sx={{marginBottom:'10px'}}> 
                     Let us know about your chatbot.

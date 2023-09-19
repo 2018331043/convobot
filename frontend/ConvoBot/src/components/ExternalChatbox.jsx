@@ -5,24 +5,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 // import AssistantIcon from '@mui/icons-material/Assistant';
 import { InputAdornment } from '@mui/material';
 import { IconButton } from '@mui/material';
-import AdbIcon from '@mui/icons-material/Adb';
-// import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import BlockIcon from '@mui/icons-material/Block';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
 // import Tooltip from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
-import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
-import ChatBox from './Chatbox.jsx'
 import Popper from '@mui/material/Popper';
-import Grid from '@mui/material/Grid';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
@@ -31,8 +19,6 @@ import * as React from "react";
 import { v4 as uuidv4 } from 'uuid';
 import SendIcon from "@mui/icons-material/Send";
 import '../styling/components/Chatbox.css';
-import MinimizeIcon from '@mui/icons-material/Minimize';
-import {Avatar} from "@mui/material";
 import minimizeImg from '../assets/minimize.png'
 
 export default function ExternalChatbox(){
