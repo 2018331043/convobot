@@ -27,8 +27,10 @@ public class Chatbot{
 
     private Integer ownerId;
 
+    @Column(length = 7000)
     private String prompt;
 
+    @Column(length = 7000)
     private String restriction;
 
     private String description;
