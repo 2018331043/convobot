@@ -26,10 +26,11 @@ import { useEffect } from 'react';
 import authService from '../services/auth.service.js';
 import LoadingDialog from './LoadingDialog';
 import displayToast from '../services/toast.service.js';
+import chatService from '../services/chat.service';
 
 
-
-export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,selectedChatbotInfo}){
+export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
+  selectedChatbotInfo,setChatBotList}){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
   const [chatbotName,setChatbotName] = useState("")
   const [chatbotPrompt,setChatbotPrompt] = useState("")
@@ -88,7 +89,45 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
       },[selectedChatbotInfo])
 
       const generateChatbot = ()=>{
-        
+        if(selectedChatbot===-3){
+          // console.log(chatbotPrompt)
+          // console.log(chatbotRestriction)
+          setLoadingTitle('Chatbot creation in progress!')
+          setIsLoading(true)
+          chatService.createChatbot((res)=>{
+            setIsLoading(false)
+            window.location.reload()
+            displayToast.success('Successfully Chatbot Created!')
+          },
+          (e)=>{
+            displayToast.error('Error Occured!')
+          },
+          {
+            prompt:chatbotPrompt,
+            restriction:chatbotRestriction,
+            chatbotName:selectedChatbotInfo.name,
+            description:selectedChatbotInfo.description,
+          })
+        }else{
+          if(selectedChatbotInfo.prompt!==chatbotPrompt||selectedChatbotInfo.restriction!==chatbotRestriction){
+            setLoadingTitle('Chatbot updating in progress!')
+            setIsLoading(true)
+            chatService.updateChatbot((res)=>{
+              setIsLoading(false)
+              displayToast.success('Successfully Chatbot Updated!')
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000)
+            },(e)=>{
+              displayToast.error('Error Occured!')
+            },{id:selectedChatbot,
+              prompt:chatbotPrompt,
+              restriction:chatbotRestriction,
+              chatbotName:selectedChatbotInfo.name,
+              description:selectedChatbotInfo.description,})
+          }
+          // console.log(selectedChatbot)
+        }
       }
 
     return (
@@ -124,6 +163,9 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                 multiline
                 rows={7}
                 defaultValue= {chatbotPrompt} //"Write a prompt for your chatbot."
+                onChange={(e)=>{
+                  setChatbotPrompt(e.target.value)
+                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -142,6 +184,9 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                 multiline
                 rows={7}
                 defaultValue= {chatbotRestriction}   //"Write if there any restrictions for the chatbot"
+                onChange={(e)=>{
+                  setChatbotRestriction(e.target.value)
+                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

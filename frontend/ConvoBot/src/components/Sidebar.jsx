@@ -18,9 +18,10 @@ import authService from '../services/auth.service';
 import { useParams } from 'react-router-dom';
 import displayToast from '../services/toast.service';
 
-export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo}){
+export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
+    chatbotList,setChatBotList}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
-    const [chatbotList,setChatBotList] = useState([])
+    
     const [newChatbotName,setNewChatbotName] = useState("")
     const [newChatbotDescription,setNewChatbotDescription] = useState("")
     const [tempChatName,setTempChatName] = useState('')
