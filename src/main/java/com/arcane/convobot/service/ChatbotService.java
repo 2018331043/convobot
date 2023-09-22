@@ -21,8 +21,10 @@ public class ChatbotService {
     public GenericResponseREST createChatbot(ChatbotCreationRequest request){
         Chatbot chatbot = new Chatbot(request, userInfoProviderService.getRequestUser().getId());
         Chatbot createdChatbot = chatbotRepository.save(chatbot);
-        ChatMessage chatMessage = new ChatMessage(createdChatbot, "system",request.getPrompt() + request.getRestriction());
-        chatMessageRepository.save(chatMessage);
+        ChatMessage chatMessage1 = new ChatMessage(createdChatbot, "system",request.getPrompt() + request.getRestriction());
+        chatMessageRepository.save(chatMessage1);
+        ChatMessage chatMessage2 = new ChatMessage(createdChatbot, "assistant","Hello there, How can I help you?");
+        chatMessageRepository.save(chatMessage2);
         return new GenericResponseREST("Chatbot Created");
     }
     public GenericResponseREST updateChatbot(ChatbotUpdateRequest request){
