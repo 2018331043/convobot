@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 // import AssistantIcon from '@mui/icons-material/Assistant';
 import { InputAdornment } from '@mui/material';
-import { IconButton } from '@mui/material';
+import { IconButton, Avatar } from '@mui/material';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 // import Tooltip from '@mui/material';
