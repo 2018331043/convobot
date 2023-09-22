@@ -1,14 +1,15 @@
 import axios from "axios";
 
 const chatService = {
-    sendText(success,error,data,api){
+    sendText(success,error,data){
+        // console.log(data)
         try{
             axios.post('/chat/post-text',{
                 inputText:data.text,
-                chatboId:data.id,
+                chatbotId:data.id,
             },{
                 params:{
-                    apiKey:api
+                    apiKey:data.api
                 }
             }).then(
                 (res)=>{
@@ -27,11 +28,12 @@ const chatService = {
         try{
             axios.get('/chat/get-all-chats',{
                 params:{
-                    chatbotId:data
+                    chatbotId:data.id
                 }
             }).then(
                 (res)=>{
-                    success(res)
+                    // console.log(res.data.messages.length)
+                    success(res.data.messages)
                 }
             ).catch(
                 (err)=>{
@@ -84,30 +86,6 @@ const chatService = {
             )
         }catch(e){
             console.log(e)
-        }
-    },
-    postMessage(success,error,data){
-        try{
-            axios.post('/chat/get-all-chats',{
-                inputText : data.input,
-                chatbotId: data.id
-            },
-            {
-                params:{
-                    apiKey:data.apiKey
-                }
-            }
-            ).then(
-                (res)=>{
-                    success(res)
-                }
-            ).catch(
-                (err)=>{
-                    error(err)
-                }
-            )
-        }catch(e){
-
         }
     }
 }

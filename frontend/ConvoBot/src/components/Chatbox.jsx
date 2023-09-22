@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import {
   Box,
@@ -14,9 +14,15 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import '../styling/components/Chatbox.css';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import chatService from "../services/chat.service";
+import apiKeyService from "../services/api.key.service";
+import displayToast from "../services/toast.service";
 
-export default function Chatbox({chatbotName,setChatActive}) {
+export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
 
+  const [apiList,setApiList] = useState([])
+  const [userApi,setUserApi] = useState('')
+  const [tempList,setTempList] = useState([])
   const backButtonClicked = () =>{
     setChatActive(false)
   }
@@ -30,11 +36,27 @@ export default function Chatbox({chatbotName,setChatActive}) {
 
   const handleSend = () => {
     if (input.trim() !== "") {
-      console.log(input);
+      // console.log(input);
       const newMessage = { id: uuidv4(), text: input, sender: "user" };
-      setMessages([...messages, newMessage]); // Create a new array with the existing messages and the new message
-      setInput("");
+      const updatedMessages = [...messages, newMessage];
+      setMessages(updatedMessages); // Create a new array with the existing messages and the new message
+      // console.log(input)
+      // console.log(selectedChatbot)
+      // console.log(userApi)
+      chatService.sendText((res)=>{
+        console.log(res.data.outputText)
+        const newReplyMessage = { id: uuidv4(), text: res.data.outputText, sender: "bot" }
+        const updatedMessagesWithReply = [...updatedMessages, newReplyMessage];
+        setMessages(updatedMessagesWithReply);
+      },(err)=>{
+        console.log('error')
+      },{
+        text:input,
+        id:selectedChatbot,
+        api: userApi
+      })
     }
+    setInput("");
   };
 
   const handleInputChange = (event) => {
@@ -48,6 +70,54 @@ export default function Chatbox({chatbotName,setChatActive}) {
       },
     },
   });
+  useEffect(()=>{
+    apiKeyService.getApiKeys((res)=>{
+        setApiList(res)
+        console.log(res.length)
+        if(res.length===0){
+          // console.log(('wow'))
+          apiKeyService.generateApiKey((res)=>{
+            setUserApi(res.value)
+          },(err)=>{
+  
+          })
+        }
+        // else{
+        //   setUserApi(apiList[0].value)
+        // }
+      
+      },(err)=>{
+        console.log(err)
+      })
+
+    chatService.getChat((res)=>{
+      console.log(res)
+      const transformedMessages = res.map((item) => ({
+        id: uuidv4(),
+        text: item.content,
+        sender: item.role === 'assistant' ? 'bot' : item.role,
+      }))
+      setTempList(transformedMessages)
+    },
+    (err)=>{
+
+    },
+    {
+      id:selectedChatbot
+    }
+    )
+  },[])
+
+  useEffect(()=>{
+    if(apiList.length>0){
+      setUserApi(apiList[0].value)
+      console.log(userApi)
+    }
+  },[apiList])
+
+  useEffect(()=>{
+    setMessages(tempList)
+  },[tempList])
 
   return (
     <ThemeProvider theme={customTheme}>

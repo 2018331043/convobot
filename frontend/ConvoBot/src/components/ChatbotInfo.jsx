@@ -134,7 +134,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
     return (
         <ThemeProvider theme={customTheme}>
         {
-          chatActive? (<ChatBox chatbotName={chatbotName} setChatActive={setChatActive}/>) : (<>
+          chatActive? (<ChatBox selectedChatbot={selectedChatbot} chatbotName={chatbotName} setChatActive={setChatActive}/>) : (<>
         <div className='chatbotInfo-body'>
             <div className='chatbotInfo-body-head'>
                 <Typography variant='h6' sx={{marginLeft:'30px',color:'rgba(255,255,255,.9)'}}>{chatbotName}</Typography>

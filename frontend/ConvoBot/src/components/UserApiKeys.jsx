@@ -13,7 +13,7 @@ import displayToast from "../services/toast.service.js";
 export default function UserApiKeys({openApiKeys,setOpenApiKeys}){
 
     const [listItems,setListItems] = useState([])
-    const textItems = ['Item 1', 'Item 2', 'Item 3'];
+    // const textItems = ['Item 1', 'Item 2', 'Item 3'];
 
     const handleClickOpen = () => {
         setOpenApiKeys(true)
