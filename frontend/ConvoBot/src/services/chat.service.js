@@ -65,7 +65,7 @@ const chatService = {
     },
     updateChatbot(success,error,data){
         try{
-            console.log(data.id)
+            console.log(data)
             axios.post('/chatbot/update-chatbot',{
                 id:data.id,
                 prompt:data.prompt,
@@ -79,17 +79,38 @@ const chatService = {
             ).catch(
                 (e)=>{
                     console.log(e)
+                    error(e)
                 }
             )
         }catch(e){
             console.log(e)
+        }
+    },
+    postMessage(success,error,data){
+        try{
+            axios.post('/chat/get-all-chats',{
+                inputText : data.input,
+                chatbotId: data.id
+            },
+            {
+                params:{
+                    apiKey:data.apiKey
+                }
+            }
+            ).then(
+                (res)=>{
+                    success(res)
+                }
+            ).catch(
+                (err)=>{
+                    error(err)
+                }
+            )
+        }catch(e){
+
         }
     }
 }
 
 export default chatService
 
-// private String prompt;
-// private String restriction;
-// private String chatbotName;
-// private String description;

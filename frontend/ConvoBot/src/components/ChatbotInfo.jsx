@@ -120,6 +120,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
               }, 2000)
             },(e)=>{
               displayToast.error('Error Occured!')
+              setIsLoading(false)
             },{id:selectedChatbot,
               prompt:chatbotPrompt,
               restriction:chatbotRestriction,

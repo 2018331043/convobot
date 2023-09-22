@@ -21,9 +21,9 @@ export default function Chatbox({chatbotName,setChatActive}) {
     setChatActive(false)
   }
   const [messages, setMessages] = useState([
-    { id: 1, text: "Hi there!", sender: "bot" },
-    { id: 2, text: "Hello!", sender: "user" },
-    { id: 3, text: "How can I assist you today?", sender: "bot" },
+    { id: uuidv4(), text: "Hi there!", sender: "bot" },
+    // { id: 2, text: "Hello!", sender: "user" },
+    { id: uuidv4(), text: "How can I help you?", sender: "bot" },
   ]);
 
   const [input, setInput] = useState("");
@@ -116,7 +116,7 @@ const Message = ({ message }) => {
       sx={{
         display: "flex",
         justifyContent: isBot ? "flex-start" : "flex-end",
-        mb: 2,
+        mb: 2.5,
       }}
     >
       <Box
@@ -132,14 +132,14 @@ const Message = ({ message }) => {
         <Paper
           variant="outlined"
           sx={{
-            padding:'9px 14px' ,
+            padding:'13px 19px' ,
             ml: isBot ? 1 : 0,
             mr: isBot ? 0 : 1,
             backgroundColor: isBot ? "primary.light" : "",
             borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
           }}
         >
-          <Typography variant="body1" sx={{ fontSize: '11px' }}>{message.text}</Typography>
+          <Typography variant="body1" sx={{ fontSize: '14px' }}>{message.text}</Typography>
         </Paper>
       </Box>
     </Box>
