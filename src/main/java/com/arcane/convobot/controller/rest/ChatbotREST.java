@@ -38,6 +38,17 @@ public class ChatbotREST {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
     }
+
+    @PostMapping("/delete-chatbot/{chatbotId}")
+    public ResponseEntity<GenericResponseREST> deleteChatbot(
+            @PathVariable Integer chatbotId
+    ) {
+        try {
+            return ResponseEntity.ok(chatbotService.deleteChatbot(chatbotId));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
+        }
+    }
     @GetMapping("/get-all-chatbots")
     public ResponseEntity<List<Chatbot>> getAllChatbots(
     ) {

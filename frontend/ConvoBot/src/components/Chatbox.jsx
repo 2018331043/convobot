@@ -17,6 +17,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import chatService from "../services/chat.service";
 import apiKeyService from "../services/api.key.service";
 import displayToast from "../services/toast.service";
+import MicOffIcon from '@mui/icons-material/MicOff';
 
 export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
 
@@ -163,6 +164,14 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
               value={input}
               onChange={handleInputChange}
             />
+              <Button
+                  className="chatbox-container-send-button"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSend}
+              >
+              <MicOffIcon sx={{color:'primary',marginTop:'0px'}}/>
+              </Button>
             <Button
               className="chatbox-container-send-button"
               color="primary"

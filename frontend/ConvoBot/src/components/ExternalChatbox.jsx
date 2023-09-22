@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 // import AssistantIcon from '@mui/icons-material/Assistant';
 import { InputAdornment } from '@mui/material';
-import { IconButton } from '@mui/material';
+import { IconButton, Avatar } from '@mui/material';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 // import Tooltip from '@mui/material';
@@ -20,6 +20,7 @@ import { v4 as uuidv4 } from 'uuid';
 import SendIcon from "@mui/icons-material/Send";
 import '../styling/components/Chatbox.css';
 import minimizeImg from '../assets/minimize.png'
+import MicOffIcon from "@mui/icons-material/MicOff.js";
 
 export default function ExternalChatbox(){
 
@@ -44,9 +45,9 @@ export default function ExternalChatbox(){
         { id: 2, text: "Hello!", sender: "user" },
         { id: 3, text: "How can I assist you today?", sender: "bot" },
       ]);
-    
+
       const [input, setInput] = useState("");
-    
+
       const handleSend = () => {
         if (input.trim() !== "") {
           console.log(input);
@@ -55,11 +56,11 @@ export default function ExternalChatbox(){
           setInput("");
         }
       };
-    
+
       const handleInputChange = (event) => {
         setInput(event.target.value);
       };
-    
+
       const customTheme = createTheme({
         palette: {
           primary: {
@@ -116,6 +117,14 @@ export default function ExternalChatbox(){
               value={input}
               onChange={handleInputChange}
             />
+              <Button
+                  className="chatbox-container-send-button"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSend}
+              >
+                  <MicOffIcon sx={{color:'primary',marginTop:'0px'}}/>
+              </Button>
             <Button
               className="chatbox-container-send-button"
               color="primary"
@@ -145,7 +154,7 @@ export default function ExternalChatbox(){
 
 const Message = ({ message }) => {
     const isBot = message.sender === "bot";
-  
+
     return (
       <Box
         sx={{

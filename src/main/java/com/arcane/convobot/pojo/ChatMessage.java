@@ -22,6 +22,8 @@ public class ChatMessage {
     private Long creationTime;
 
     private String role;
+
+    @Column(length = 7000)
     private String content;
     @PrePersist
     protected void onCreate() {
