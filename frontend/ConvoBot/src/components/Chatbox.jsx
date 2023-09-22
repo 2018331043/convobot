@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState,useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
+
 import {
   Box,
   TextField,
@@ -18,12 +19,15 @@ import chatService from "../services/chat.service";
 import apiKeyService from "../services/api.key.service";
 import displayToast from "../services/toast.service";
 import MicOffIcon from '@mui/icons-material/MicOff';
+import Lottie from 'lottie-react'
+import loading from '../assets/lottieLoading.json'
 
 export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
 
   const [apiList,setApiList] = useState([])
   const [userApi,setUserApi] = useState('')
   const [tempList,setTempList] = useState([])
+  const [isBotLoading,setIsBotLoading] = useState(false)
   const backButtonClicked = () =>{
     setChatActive(false)
   }
@@ -41,6 +45,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
       const newMessage = { id: uuidv4(), text: input, sender: "user" };
       const updatedMessages = [...messages, newMessage];
       setMessages(updatedMessages); // Create a new array with the existing messages and the new message
+      setIsBotLoading(true)
       // console.log(input)
       // console.log(selectedChatbot)
       // console.log(userApi)
@@ -48,9 +53,11 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
         console.log(res.data.outputText)
         const newReplyMessage = { id: uuidv4(), text: res.data.outputText, sender: "bot" }
         const updatedMessagesWithReply = [...updatedMessages, newReplyMessage];
+        setIsBotLoading(false)
         setMessages(updatedMessagesWithReply);
       },(err)=>{
         console.log('error')
+        setIsBotLoading(false)
       },{
         text:input,
         id:selectedChatbot,
@@ -160,6 +167,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
             {messages.map((message) => (
               <Message key={message.id} message={message} />
             ))}
+            <LoadingAnim isLoading={isBotLoading} />
           </Box>
           <Box sx={{ backgroundColor: "background.default", display: 'flex',padding:'15px 3px 10px 3px' }}>
             <TextField
@@ -189,6 +197,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
             </Button>
           </Box>
         </Box>
+        
       </div>
     </ThemeProvider>
   );
@@ -230,4 +239,42 @@ const Message = ({ message }) => {
       </Box>
     </Box>
   );
+}
+
+const LoadingAnim = ({ isLoading }) => {
+  console.log("isLoading:", isLoading);
+  const isBot = 'bot'
+  return isLoading ? (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: isBot ? "flex-start" : "flex-end",
+        mb: 2.5,
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: isBot ? "row" : "row-reverse",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ bgcolor: isBot ? "primary.main" : "secondary.main" }}>
+          {isBot ? "B" : "U"}
+        </Avatar>
+        <Paper
+          variant="outlined"
+          sx={{
+            padding:'0px 0px' ,
+            ml: isBot ? 1 : 0,
+            mr: isBot ? 0 : 1,
+            // backgroundColor: isBot ? "primary.light" : "",
+            borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
+          }}
+        >
+        <Lottie style={{height:'40px',width:'80px'}} animationData={loading}/>
+        </Paper>
+      </Box>
+    </Box>
+  ):null;
 }

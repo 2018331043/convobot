@@ -1,3 +1,12 @@
+.loading-anim-container{
+    height: 60px;
+    width: 120px;
+    position: absolute;
+    /* background: red; */
+    bottom: 90px;
+    left: 52%;
+}
+
 .chatbox-container{
     width: calc(100% - 60px);
     margin-left: 30px;
