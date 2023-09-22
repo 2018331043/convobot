@@ -93,11 +93,18 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
 
     chatService.getChat((res)=>{
       console.log(res)
-      const transformedMessages = res.map((item) => ({
-        id: uuidv4(),
-        text: item.content,
-        sender: item.role === 'assistant' ? 'bot' : item.role,
-      }))
+      const transformedMessages = res.map((item) => {
+        if (item.role === 'system') {
+          // Skip creating a message for 'system' role
+          return null;
+        }
+      
+        return {
+          id: uuidv4(),
+          text: item.content,
+          sender: item.role === 'assistant' ? 'bot' : item.role,
+        };
+      }).filter(Boolean)
       setTempList(transformedMessages)
     },
     (err)=>{
