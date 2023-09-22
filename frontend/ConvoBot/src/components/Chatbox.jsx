@@ -39,6 +39,13 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
 
   const [input, setInput] = useState("");
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSend(); 
+    }
+  };
+
   const handleSend = () => {
     if (input.trim() !== "") {
       // console.log(input);
@@ -132,8 +139,22 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
 
   useEffect(()=>{
     setMessages(tempList)
+    scrollBottom()
   },[tempList])
 
+  const scrollBottom = (e) => {
+    console.log('ohhhhhh')
+    var targetDiv = document.querySelector('.chatbox-messages-container')
+    try{
+        targetDiv.scrollTop = targetDiv.scrollHeight
+        msgData.value = null
+    }catch(e){
+        console.log(e)
+    } 
+}
+  useEffect(()=>{
+    scrollBottom()
+  },[messages])
   return (
     <ThemeProvider theme={customTheme}>
       <div className="chatbox-container" style={{zIndex:1000}}>
@@ -178,6 +199,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
               variant="outlined"
               value={input}
               onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
             />
               <Button
                   className="chatbox-container-send-button"
