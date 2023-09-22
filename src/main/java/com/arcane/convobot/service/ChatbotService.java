@@ -38,6 +38,15 @@ public class ChatbotService {
 
         return new GenericResponseREST("Chatbot Updated");
     }
+    public GenericResponseREST deleteChatbot(Integer chatbotId){
+        Chatbot chatbot = chatbotRepository.findById(chatbotId)
+                .orElseThrow(()->new RuntimeException("The requested chatbot was not found"));
+        chatbot.setStatus(Chatbot.STATUS_DELETED);
+        chatbotRepository.save(chatbot);
+
+        return new GenericResponseREST("Chatbot deleted");
+    }
+
     public List<Chatbot> getAllChatbots(){
         return chatbotRepository.findChatbotsByOwnerId(userInfoProviderService.getRequestUser().getId());
     }
