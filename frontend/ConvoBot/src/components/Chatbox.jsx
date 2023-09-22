@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import '../styling/components/Chatbox.css';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import MicOffIcon from '@mui/icons-material/MicOff';
 
 export default function Chatbox({chatbotName,setChatActive}) {
 
@@ -93,6 +94,14 @@ export default function Chatbox({chatbotName,setChatActive}) {
               value={input}
               onChange={handleInputChange}
             />
+              <Button
+                  className="chatbox-container-send-button"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSend}
+              >
+              <MicOffIcon sx={{color:'primary',marginTop:'0px'}}/>
+              </Button>
             <Button
               className="chatbox-container-send-button"
               color="primary"
