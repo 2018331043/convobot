@@ -18,12 +18,17 @@ public class ChatbotService {
     private final ChatbotRepository chatbotRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final UserInfoProviderService userInfoProviderService;
+    private final OpenAiService openAiService;
     public GenericResponseREST createChatbot(ChatbotCreationRequest request){
         Chatbot chatbot = new Chatbot(request, userInfoProviderService.getRequestUser().getId());
         Chatbot createdChatbot = chatbotRepository.save(chatbot);
         ChatMessage chatMessage1 = new ChatMessage(createdChatbot, "system",request.getPrompt() + request.getRestriction());
         chatMessageRepository.save(chatMessage1);
-        ChatMessage chatMessage2 = new ChatMessage(createdChatbot, "assistant","Hello there, How can I help you?");
+        ChatMessage chatMessage2 = new ChatMessage(
+                createdChatbot,
+                "assistant",
+                openAiService.generateGreetingsForChatbot(request.getPrompt())+request.getRestriction()
+        );
         chatMessageRepository.save(chatMessage2);
         return new GenericResponseREST("Chatbot Created");
     }
