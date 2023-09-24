@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState,useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
-
+import Tooltip from '@mui/material/Tooltip';
 import {
   Box,
   TextField,
@@ -17,7 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import '../styling/components/Widget.css'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import Highlight from 'react-highlight'
+import displayToast from "../services/toast.service";
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -60,6 +60,7 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
     document.execCommand('copy');
     document.body.removeChild(textArea);
     setIsCopied(true);
+    displayToast.default('Code copied to clipboard',2000)
   };
 
   return (
@@ -87,9 +88,11 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
             <Typography variant="h6">Show popup chat widget in your website</Typography>
             <div className="widget-code">
                 <div className="widget-code-copy">
-                <Button onClick={copyToClipboard} sx={{margin:'10px 5px -20px'}}>
-                    <ContentCopyIcon sx={{color:'white'}}/>
-                </Button>
+                <Tooltip title='Copy to Clipboard'>
+                  <Button onClick={copyToClipboard} sx={{margin:'10px 5px -20px'}}>
+                      <ContentCopyIcon sx={{color:'white'}}/>
+                  </Button>
+                </Tooltip>
                 </div>
                 <pre style={{color:'white',marginLeft:'40px',marginBottom:'20px'}}>{iframeCode}</pre>
             </div>
