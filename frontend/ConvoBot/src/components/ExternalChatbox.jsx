@@ -24,11 +24,13 @@ import MicOffIcon from "@mui/icons-material/MicOff.js";
 import chatService from "../services/chat.service";
 import apiKeyService from "../services/api.key.service";
 import { useParams } from 'react-router-dom';
+import Lottie from 'lottie-react'
+import loading from '../assets/lottieLoading.json'
 
 export default function ExternalChatbox(){
 
   const [isChatbotInfoVisible, setIsChatbotInfoVisible] = useState(false);
-  const {key,id} = useParams()
+  const {key,chatbotId} = useParams()
 
   const handleMinimizeClick = () => {
     setIsChatbotInfoVisible((prev) => !prev);
@@ -73,17 +75,17 @@ export default function ExternalChatbox(){
           // console.log(selectedChatbot)
           // console.log(userApi)
           chatService.sendText((res)=>{
-            console.log(res.data.outputText)
+            // console.log(res.data.outputText)
             const newReplyMessage = { id: uuidv4(), text: res.data.outputText, sender: "bot" }
             const updatedMessagesWithReply = [...updatedMessages, newReplyMessage];
             setIsBotLoading(false)
             setMessages(updatedMessagesWithReply);
           },(err)=>{
-            console.log('error')
+            // console.log('error')
             setIsBotLoading(false)
           },{
             text:input,
-            id:id,
+            id:chatbotId,
             api: key
           })
         }
@@ -103,7 +105,6 @@ export default function ExternalChatbox(){
       });
     
       const scrollBottom = (e) => {
-        console.log('ohhhhhh')
         var targetDiv = document.querySelector('.chatbox-messages-container')
         try{
             targetDiv.scrollTop = targetDiv.scrollHeight
@@ -116,7 +117,7 @@ export default function ExternalChatbox(){
       },[messages])
     return(
         <>
-        <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+        <Popper open={open} anchorEl={anchorEl} placement={placement} transition sx={{zIndex:'8000'}}>
               {({ TransitionProps }) => (
                 <Fade {...TransitionProps} timeout={350}>
                   <Paper sx={{boxShadow:'none'}}>
@@ -124,7 +125,8 @@ export default function ExternalChatbox(){
           {isChatbotInfoVisible&&(
           <div className="chatbox-container" style={{zIndex:9999,height:'550px',width:'320px',
           display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-          <div className="chatbox-nav" style={{borderTopLeftRadius:'20px',borderTopRightRadius:'20px'}}>
+          <div className="chatbox-nav" style={{borderTopLeftRadius:'20px',borderTopRightRadius:'20px',
+          borderBottom:'solid', borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>
           <Typography sx={{ color: 'white', marginLeft: '10px', fontSize:'17px'}}>
             Convo<span className="chatbox-span-1">Bot</span>
           </Typography>
@@ -155,6 +157,7 @@ export default function ExternalChatbox(){
             {messages.map((message) => (
               <Message key={message.id} message={message} />
             ))}
+            <LoadingAnim isLoading={isBotLoading} />
           </Box>
           <Box sx={{ backgroundColor: "background.default", display: 'flex',padding:'15px 3px 10px 3px',background:'none' }}>
             <TextField
@@ -168,6 +171,7 @@ export default function ExternalChatbox(){
               sx={{
                 background:'white'
               }}
+              onKeyPress={handleKeyPress}
               InputProps={{
                 endAdornment: (
                   <Button
@@ -200,7 +204,7 @@ export default function ExternalChatbox(){
             </Popper>
 
         <Tooltip title="Tap to chat">
-              <Button onClick={handleClick('top-end') } sx={{position:'fixed',right:'0',bottom:'0',margin:'0px 80px 30px 0px'}}>
+              <Button onClick={handleClick('top-end') } sx={{zIndex:'8000',position:'fixed',right:'0',bottom:'0',margin:'0px 80px 30px 0px'}}>
                   <img src={logo} style={{height:'60px',width:'60px'}}/>
               </Button>
         </Tooltip>
@@ -244,4 +248,41 @@ const Message = ({ message }) => {
         </Box>
       </Box>
     );
+  }
+
+  const LoadingAnim = ({ isLoading }) => {
+    const isBot = 'bot'
+    return isLoading ? (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: isBot ? "flex-start" : "flex-end",
+          mb: 2.5,
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isBot ? "row" : "row-reverse",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ bgcolor: isBot ? "primary.main" : "secondary.main" }}>
+            {isBot ? "B" : "U"}
+          </Avatar>
+          <Paper
+            variant="outlined"
+            sx={{
+              padding:'0px 0px' ,
+              ml: isBot ? 1 : 0,
+              mr: isBot ? 0 : 1,
+              // backgroundColor: isBot ? "primary.light" : "",
+              borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
+            }}
+          >
+          <Lottie style={{height:'40px',width:'80px'}} animationData={loading}/>
+          </Paper>
+        </Box>
+      </Box>
+    ):null;
   }
