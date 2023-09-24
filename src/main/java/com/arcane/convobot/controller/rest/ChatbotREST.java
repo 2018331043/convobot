@@ -25,6 +25,7 @@ public class ChatbotREST {
         try {
             return ResponseEntity.ok(chatbotService.createChatbot(request));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
     }
@@ -35,6 +36,7 @@ public class ChatbotREST {
         try {
             return ResponseEntity.ok(chatbotService.updateChatbot(request));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
     }
@@ -46,6 +48,7 @@ public class ChatbotREST {
         try {
             return ResponseEntity.ok(chatbotService.deleteChatbot(chatbotId));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
     }

@@ -22,6 +22,7 @@ public class ChatREST {
         try {
             return ResponseEntity.ok(chatService.chat(request, apiKey));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
     }
@@ -33,6 +34,7 @@ public class ChatREST {
         try {
             return ResponseEntity.ok(chatService.getAllChatsOfAChatbot(chatbotId));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
     }
