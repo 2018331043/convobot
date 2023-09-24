@@ -158,7 +158,8 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   return (
     <ThemeProvider theme={customTheme}>
       <div className="chatbox-container" style={{zIndex:1000}}>
-        <div className="chatbox-nav">
+        <div className="chatbox-nav" style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',borderBottom:'solid',
+        borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>
           <Typography variant="h6" sx={{ color: 'white', marginLeft: '30px', fontSize:'17px'}}>
             {/* Convo<span className="chatbox-span-1">Bot</span> */}
             {chatbotName}
@@ -190,7 +191,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
             ))}
             <LoadingAnim isLoading={isBotLoading} />
           </Box>
-          <Box sx={{ backgroundColor: "background.default", display: 'flex',padding:'15px 3px 10px 3px' }}>
+          <Box sx={{ backgroundColor: "background.default", display: 'flex',padding:'15px 3px 10px 3px',borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px' }}>
             <TextField
             className="chatbox-container-textField"
               size="small"
@@ -200,15 +201,19 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
               value={input}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    color="primary"
+                    variant="text"
+                    onClick={handleSend}
+                    style={{ marginRight: '-15px' }} 
+                  >
+                    <MicOffIcon sx={{ color: 'primary', marginTop: '0px' }} />
+                  </Button>
+                ),
+              }}
             />
-              <Button
-                  className="chatbox-container-send-button"
-                  color="primary"
-                  variant="contained"
-                  onClick={handleSend}
-              >
-              <MicOffIcon sx={{color:'primary',marginTop:'0px'}}/>
-              </Button>
             <Button
               className="chatbox-container-send-button"
               color="primary"

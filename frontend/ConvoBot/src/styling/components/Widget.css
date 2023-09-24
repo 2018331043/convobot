@@ -1,0 +1,25 @@
+.widget-body{
+    width: calc(100%-60px);
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    /* background: rgb(184, 9, 9); */
+}
+
+.widget-code{
+    width: 100%;
+    /* height: 100px; */
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(45deg,rgba(0, 0, 0, 0.911),rgba(19, 22, 37, 0.849));
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.widget-code-copy{
+    /* width: 100%; */
+    margin-left: auto;
+
+}

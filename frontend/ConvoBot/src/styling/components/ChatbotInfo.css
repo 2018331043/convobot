@@ -6,11 +6,17 @@
     align-items: center !important;
 }
 
+.chatbotInfo-body-footer-button-group{
+    width: calc(100% - 240px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .chatbotInfo-body-footer{
     height: 60px;
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     /* background: red; */
 }
 
