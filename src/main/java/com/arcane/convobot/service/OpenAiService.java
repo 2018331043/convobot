@@ -3,8 +3,10 @@ package com.arcane.convobot.service;
 import com.arcane.convobot.pojo.ChatMessage;
 import com.arcane.convobot.pojo.request.ChatCompletionMessage;
 import com.arcane.convobot.pojo.request.ChatCompletionRequest;
+import com.arcane.convobot.pojo.request.CreateEmbeddingRequest;
 import com.arcane.convobot.pojo.request.PromptGenerationRequest;
 import com.arcane.convobot.pojo.response.ChatCompletionResponse;
+import com.arcane.convobot.pojo.response.CreateEmbeddingResponse;
 import com.arcane.convobot.pojo.response.PromptGenerationResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -106,6 +108,34 @@ public class OpenAiService {
 
         // Make the API call
         return restTemplate.exchange(requestEntity, ChatCompletionResponse.class).getBody();
+    }
+
+    public CreateEmbeddingResponse callOpenAIAPIToEmbedText(String inputText){
+        return callOpenAIAPIToEmbedText(
+                "https://api.openai.com/v1/embeddings",
+                inputText,
+                "text-embedding-ada-002");
+    }
+    public CreateEmbeddingResponse callOpenAIAPIToEmbedText(
+            String openAiApiURL,
+            String inputText,
+            String model
+    ) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer " + apiKey);
+
+        CreateEmbeddingRequest requestBody = new CreateEmbeddingRequest(model,inputText);
+
+        URI uri = UriComponentsBuilder.fromHttpUrl(openAiApiURL).build().toUri();
+        RequestEntity<CreateEmbeddingRequest> requestEntity = RequestEntity
+                .post(uri)
+                .headers(headers)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(requestBody);
+
+        // Make the API call
+        return restTemplate.exchange(requestEntity, CreateEmbeddingResponse.class).getBody();
     }
 
     public String summarizeConversation(List<ChatMessage> chatMessageLimit) {

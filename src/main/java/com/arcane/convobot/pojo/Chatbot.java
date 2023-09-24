@@ -32,6 +32,8 @@ public class Chatbot{
 
     private Integer ownerId;
 
+    private Integer embeddingId;
+
     private Integer status;
 
     @Column(length = 7000)

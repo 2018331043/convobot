@@ -2,10 +2,13 @@ package com.arcane.convobot.service;
 
 import com.arcane.convobot.pojo.ChatMessage;
 import com.arcane.convobot.pojo.Chatbot;
+import com.arcane.convobot.pojo.TextEmbedding;
 import com.arcane.convobot.pojo.request.*;
+import com.arcane.convobot.pojo.response.CreateEmbeddingResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.repo.ChatMessageRepository;
 import com.arcane.convobot.repo.ChatbotRepository;
+import com.arcane.convobot.repo.TextEmbeddingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ import java.util.List;
 public class ChatbotService {
     private final ChatbotRepository chatbotRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final TextEmbeddingRepository textEmbeddingRepository;
     private final UserInfoProviderService userInfoProviderService;
     private final OpenAiService openAiService;
     public GenericResponseREST createChatbot(ChatbotCreationRequest request){
@@ -56,5 +60,26 @@ public class ChatbotService {
 
     public List<Chatbot> getAllChatbots(){
         return chatbotRepository.findChatbotsByOwnerId(userInfoProviderService.getRequestUser().getId());
+    }
+
+    public GenericResponseREST attachEmbeddingToChatbot(AttachEmbeddingToChatbotRequest request) {
+        CreateEmbeddingResponse createEmbeddingResponse = openAiService.callOpenAIAPIToEmbedText(request.getInputText());
+
+        String doubleListAsString = UtilService
+                .generateStringFromAListOfDoubles(createEmbeddingResponse.getData().get(0).getEmbedding());
+
+        TextEmbedding textEmbedding = new TextEmbedding(
+                request.getChatbotId(),
+                request.getInputText(),
+                doubleListAsString
+        );
+        TextEmbedding newTextEmbedding = textEmbeddingRepository.save(textEmbedding);
+
+        Chatbot chatbot = chatbotRepository.findById(request.getChatbotId())
+                .orElseThrow(() -> new RuntimeException("Chatbot Not found"));
+        chatbot.setEmbeddingId(newTextEmbedding.getId());
+        chatbotRepository.save(chatbot);
+
+        return new GenericResponseREST("Successfully Added Data to your chatbot");
     }
 }
