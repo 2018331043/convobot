@@ -18,6 +18,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import '../styling/components/Widget.css'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import displayToast from "../services/toast.service";
+import apiKeyService
+ from "../services/api.key.service";
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -30,7 +32,9 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
     setOpenWidget(false)
   }
 
- 
+  const [apiList,setApiList] = useState([])
+  const [userApi,setUserApi] = useState('')
+
   const [isCopied, setIsCopied] = useState(false);
   const iframeCode = 
 `<iframe
@@ -38,7 +42,7 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
   width="400px"
   height="500px"
   title="ConvoBot Chatbot"
-  src="http://127.0.0.1:5173/chatbot"
+  src="http://127.0.0.1:5173/chatbot/${userApi}/${selectedChatbot}"
   sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
   style="position: absolute;bottom: 1px;right: 1px;z-index: 100">
 </iframe>`
@@ -52,6 +56,7 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
   });
  
 
+
   const copyToClipboard = () => {
     const textArea = document.createElement('textarea');
     textArea.value = iframeCode;
@@ -63,6 +68,32 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
     displayToast.default('Code copied to clipboard',2000)
   };
 
+  useEffect(()=>{
+    apiKeyService.getApiKeys((res)=>{
+      setApiList(res)
+      console.log(res.length)
+      if(res.length===0){
+        // console.log(('wow'))
+        apiKeyService.generateApiKey((res)=>{
+          setUserApi(res.value)
+        },(err)=>{
+
+        })
+      }
+      // else{
+      //   setUserApi(apiList[0].value)
+      // }
+    
+    },(err)=>{
+      console.log(err)
+    })
+  },[])
+  useEffect(()=>{
+    if(apiList.length>0){
+      setUserApi(apiList[0].value)
+      console.log(userApi)
+    }
+  },[apiList])
   return (
     
       <div className="chatbox-container" style={{zIndex:1000}}>

@@ -147,7 +147,6 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
     var targetDiv = document.querySelector('.chatbox-messages-container')
     try{
         targetDiv.scrollTop = targetDiv.scrollHeight
-        msgData.value = null
     }catch(e){
         console.log(e)
     } 

@@ -39,7 +39,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
   const [isLoading,setIsLoading] = useState(false)
   const [loadingTitle,setLoadingTitle] = useState('Loading')
   const [openWidget,setOpenWidget] = useState(false)
-
+  
   const openWidgetClicked = ()=>{
     setOpenWidget(true)
   }
@@ -228,7 +228,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
                     )
                   }
                 
-                    <Button variant='contained' size='string' className='chatbotInfo-body-footer-button' onClick={generateChatbot}><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Chatbot</Button>
+                    <Button variant='contained' size='string' className='chatbotInfo-body-footer-button' onClick={generateChatbot} sx={{marginLeft:'auto'}}><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Chatbot</Button>
                 </div>       
             </div>
             <LoadingDialog loadingAnimation={isLoading} title={loadingTitle}/>

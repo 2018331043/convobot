@@ -18,7 +18,7 @@ export default function App(){
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/signin" element={<SignIn/>}/>
           <Route path="/dashboard/:userId" element={<Dashboard/>}/>
-          <Route path="/chatbot" element={<Chatbox/>}/>
+          <Route path="/chatbot/:key/:id" element={<Chatbox/>}/>
           <Route path="/speech-to-text" element={<SpeechToText/>}/>
         </Routes>
       </BrowserRouter>
