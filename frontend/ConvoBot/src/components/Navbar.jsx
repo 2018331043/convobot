@@ -69,7 +69,7 @@ export default function Navbar(){
           localStorageService.setToken("")
           localStorageService.setUserInfo({})
           localStorage.setItem("navImage","")
-          window.location.replace('../signin')
+          window.location.replace('../')
         }
 
         useEffect(() => {

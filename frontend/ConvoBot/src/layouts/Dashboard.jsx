@@ -6,10 +6,11 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box'
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { useState,useEffect } from 'react';
-
+import axios from 'axios'
 import apiKeyService from '../services/api.key.service.js'
 import authService from '../services/auth.service.js';
 
+const axiosInstance = axios.create();
 
 export default function Dashboard(){
 
@@ -31,7 +32,28 @@ export default function Dashboard(){
           // You can also customize other colors like secondary, error, etc.
         },
       });
+      const signOutUser = () => {
+        localStorageService.setToken("")
+        localStorageService.setUserInfo({})
+        localStorage.setItem("navImage","")
+        window.location.replace('../')
+      };
 
+      useEffect(() => {
+        const responseInterceptor = axiosInstance.interceptors.response.use(
+          (response) => response,
+          (error) => {
+            if (error.response && error.response.status === 403) {
+              signOutUser(); // Implement your sign-out function
+            }
+            return Promise.reject(error);
+          }
+        );
+        return () => {
+          axiosInstance.interceptors.response.eject(responseInterceptor);
+        };
+      }, [])
+      
     // useEffect(()=>{
     //   console.log(selectedChatbot)
     //   console.log(selectedChatbotInfo)
