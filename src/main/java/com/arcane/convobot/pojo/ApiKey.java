@@ -26,6 +26,12 @@ public class ApiKey {
 
     private Integer status;
 
+    private Integer totalInputTokensSoFar;
+
+    private Integer totalOutputTokensSoFar;
+
+    private Integer totalTokensSoFar;
+
     @PrePersist
     protected void onCreate() {
         this.status = STATUS_ACTIVE;

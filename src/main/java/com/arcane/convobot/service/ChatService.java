@@ -1,5 +1,6 @@
 package com.arcane.convobot.service;
 
+import com.arcane.convobot.pojo.ApiKey;
 import com.arcane.convobot.pojo.ChatMessage;
 import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.TextEmbedding;
@@ -8,6 +9,7 @@ import com.arcane.convobot.pojo.request.ChattingRequest;
 import com.arcane.convobot.pojo.response.AllChatsOfAChatbotResponse;
 import com.arcane.convobot.pojo.response.ChatCompletionResponse;
 import com.arcane.convobot.pojo.response.ChattingResponse;
+import com.arcane.convobot.repo.ApiKeyRepository;
 import com.arcane.convobot.repo.ChatMessageRepository;
 import com.arcane.convobot.repo.ChatbotRepository;
 import jakarta.transaction.Transactional;
@@ -21,6 +23,7 @@ import java.util.*;
 public class ChatService {
     private final ChatbotRepository chatbotRepository;
     private final ChatMessageRepository chatMessageRepository;
+    private final ApiKeyRepository apiKeyRepository;
     private final OpenAiService openAiService;
     private final APIKeyService apiKeyService;
     @Transactional
@@ -35,9 +38,41 @@ public class ChatService {
         chatMessageRepository.save(new ChatMessage(chatbot, "user", request.getInputText()));
 
         ChatCompletionResponse chatCompletionResponse = openAiService.callOpenAIAPIToGenerateText(chatMessages);
+        saveTokensUsedInChat(chatbot, apiKey, chatCompletionResponse);
+
         chatMessageRepository.save(new ChatMessage(chatbot, "assistant",
                 chatCompletionResponse.getChoices().get(0).getMessage().getContent()));
         return new ChattingResponse(chatCompletionResponse.getChoices().get(0).getMessage().getContent());
+    }
+
+    public void saveTokensUsedInChat(Chatbot chatbot,String apiKey, ChatCompletionResponse chatCompletionResponse){
+        ApiKey apiKeyObject = apiKeyRepository.findApiKeyByValue(apiKey);
+        chatbot.setTotalInputTokensSoFar(
+                chatbot.getTotalInputTokensSoFar()
+                        + chatCompletionResponse.getUsage().getPromptTokens()
+        );
+        chatbot.setTotalInputTokensSoFar(
+                chatbot.getTotalOutputTokensSoFar()
+                        + chatCompletionResponse.getUsage().getCompletionTokens()
+        );
+        chatbot.setTotalInputTokensSoFar(
+                chatbot.getTotalTokensSoFar()
+                        + chatCompletionResponse.getUsage().getTotalTokens()
+        );
+
+        apiKeyObject.setTotalInputTokensSoFar(
+                apiKeyObject.getTotalInputTokensSoFar()
+                        + chatCompletionResponse.getUsage().getPromptTokens()
+        );
+        apiKeyObject.setTotalInputTokensSoFar(
+                apiKeyObject.getTotalOutputTokensSoFar()
+                        + chatCompletionResponse.getUsage().getCompletionTokens()
+        );
+        apiKeyObject.setTotalInputTokensSoFar(
+                apiKeyObject.getTotalTokensSoFar()
+                        + chatCompletionResponse.getUsage().getTotalTokens()
+        );
+        chatbotRepository.save(chatbot);
     }
 
     private List<ChatCompletionMessage> getChatCompletionMessages(ChattingRequest request, Chatbot chatbot) {

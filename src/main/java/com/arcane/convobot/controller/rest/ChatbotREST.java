@@ -4,6 +4,7 @@ package com.arcane.convobot.controller.rest;
 import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.request.ChatbotCreationRequest;
 import com.arcane.convobot.pojo.request.ChatbotUpdateRequest;
+import com.arcane.convobot.pojo.response.ChatbotReportResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.service.ChatbotService;
 import com.arcane.convobot.service.WebCrawlerService;
@@ -59,6 +60,12 @@ public class ChatbotREST {
     ) {
         return ResponseEntity.ok(chatbotService.getAllChatbots());
     }
+    @GetMapping("/get-chatbot-report")
+    public ResponseEntity<List<ChatbotReportResponse>> getAllChatbotReport(
+    ) {
+        return ResponseEntity.ok(chatbotService.getAllChatbotReport());
+    }
+
     @GetMapping("/crawl-webpage")
     public ResponseEntity<String> crawlWebPage(
     ) {

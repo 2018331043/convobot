@@ -4,6 +4,7 @@ import com.arcane.convobot.pojo.ChatMessage;
 import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.TextEmbedding;
 import com.arcane.convobot.pojo.request.*;
+import com.arcane.convobot.pojo.response.ChatbotReportResponse;
 import com.arcane.convobot.pojo.response.CreateEmbeddingResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.repo.ChatMessageRepository;
@@ -79,12 +80,15 @@ public class ChatbotService {
             textEmbeddingRepository.save(textEmbedding);
         }));
 
-
-//        Chatbot chatbot = chatbotRepository.findById(request.getChatbotId())
-//                .orElseThrow(() -> new RuntimeException("Chatbot Not found"));
-//        chatbot.setEmbeddingId(newTextEmbedding.getId());
-//        chatbotRepository.save(chatbot);
-
         return new GenericResponseREST("Successfully Added Data to your chatbot");
+    }
+
+    public List<ChatbotReportResponse> getAllChatbotReport() {
+        List<Chatbot> chatbotList = getAllChatbots();
+        List<ChatbotReportResponse> chatbotReportResponseList = new ArrayList<>();
+        chatbotList.forEach(chatbot -> {
+            chatbotReportResponseList.add(new ChatbotReportResponse(chatbot));
+        });
+        return chatbotReportResponseList;
     }
 }

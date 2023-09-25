@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ApiKeyRepository extends JpaRepository<ApiKey, Integer> {
     List<ApiKey> findApiKeyByOwnerIdAndStatus(Integer ownerId, Integer status);
+    ApiKey findApiKeyByValue(String value);
 }
