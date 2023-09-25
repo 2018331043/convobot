@@ -39,12 +39,12 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
   const iframeCode = 
 `<iframe
   id="my-iframe"
-  width="400px"
-  height="500px"
+  width="500px"
+  height="650px"
   title="ConvoBot Chatbot"
   src="http://127.0.0.1:5173/chatbot/${userApi}/${selectedChatbot}"
   sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-  style="position: absolute;bottom: 1px;right: 1px;z-index: 100">
+  style="position: absolute;bottom: 1px;right: 1px;z-index: 9000">
 </iframe>`
 
   const customTheme = createTheme({
