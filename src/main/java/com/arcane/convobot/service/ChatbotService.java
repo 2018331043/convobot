@@ -63,22 +63,27 @@ public class ChatbotService {
     }
 
     public GenericResponseREST attachEmbeddingToChatbot(AttachEmbeddingToChatbotRequest request) {
-        CreateEmbeddingResponse createEmbeddingResponse = openAiService.callOpenAIAPIToEmbedText(request.getInputText());
+        List<String> chunkedTexts = UtilService.generateStringsFromText(request.getInputText());
+        CreateEmbeddingResponse createEmbeddingResponse = openAiService.callOpenAIAPIToEmbedText(chunkedTexts);
 
-        String doubleListAsString = UtilService
-                .generateStringFromAListOfDoubles(createEmbeddingResponse.getData().get(0).getEmbedding());
+        createEmbeddingResponse.getData().forEach((embeddingData -> {
+            String doubleListAsString = UtilService
+                    .generateStringFromAListOfDoubles(embeddingData.getEmbedding());
 
-        TextEmbedding textEmbedding = new TextEmbedding(
-                request.getChatbotId(),
-                request.getInputText(),
-                doubleListAsString
-        );
-        TextEmbedding newTextEmbedding = textEmbeddingRepository.save(textEmbedding);
+            TextEmbedding textEmbedding = new TextEmbedding(
+                    request.getChatbotId(),
+                    chunkedTexts.get(createEmbeddingResponse.getData().indexOf(embeddingData)),
+                    doubleListAsString
+            );
 
-        Chatbot chatbot = chatbotRepository.findById(request.getChatbotId())
-                .orElseThrow(() -> new RuntimeException("Chatbot Not found"));
-        chatbot.setEmbeddingId(newTextEmbedding.getId());
-        chatbotRepository.save(chatbot);
+            textEmbeddingRepository.save(textEmbedding);
+        }));
+
+
+//        Chatbot chatbot = chatbotRepository.findById(request.getChatbotId())
+//                .orElseThrow(() -> new RuntimeException("Chatbot Not found"));
+//        chatbot.setEmbeddingId(newTextEmbedding.getId());
+//        chatbotRepository.save(chatbot);
 
         return new GenericResponseREST("Successfully Added Data to your chatbot");
     }

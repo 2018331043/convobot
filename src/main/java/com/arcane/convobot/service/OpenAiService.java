@@ -1,6 +1,8 @@
 package com.arcane.convobot.service;
 
 import com.arcane.convobot.pojo.ChatMessage;
+import com.arcane.convobot.pojo.Chatbot;
+import com.arcane.convobot.pojo.TextEmbedding;
 import com.arcane.convobot.pojo.request.ChatCompletionMessage;
 import com.arcane.convobot.pojo.request.ChatCompletionRequest;
 import com.arcane.convobot.pojo.request.CreateEmbeddingRequest;
@@ -8,9 +10,15 @@ import com.arcane.convobot.pojo.request.PromptGenerationRequest;
 import com.arcane.convobot.pojo.response.ChatCompletionResponse;
 import com.arcane.convobot.pojo.response.CreateEmbeddingResponse;
 import com.arcane.convobot.pojo.response.PromptGenerationResponse;
+import com.arcane.convobot.repo.TextEmbeddingRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,16 +28,17 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OpenAiService {
+    public static final Integer CONTEXT_LENGTH = 100;
     @Value("${openapi.apikey}")
     private String apiKey;
     private final RestTemplate restTemplate;
+    private final TextEmbeddingRepository textEmbeddingRepository;
 
     public PromptGenerationResponse generatePromptForChatbot(PromptGenerationRequest request){
         String generatePromptStatement = "You are a friendly cooking instructor chatbot." +
@@ -110,22 +119,22 @@ public class OpenAiService {
         return restTemplate.exchange(requestEntity, ChatCompletionResponse.class).getBody();
     }
 
-    public CreateEmbeddingResponse callOpenAIAPIToEmbedText(String inputText){
+    public CreateEmbeddingResponse callOpenAIAPIToEmbedText(List<String> chunkedTexts){
         return callOpenAIAPIToEmbedText(
                 "https://api.openai.com/v1/embeddings",
-                inputText,
+                chunkedTexts,
                 "text-embedding-ada-002");
     }
     public CreateEmbeddingResponse callOpenAIAPIToEmbedText(
             String openAiApiURL,
-            String inputText,
+            List<String> inputText,
             String model
     ) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + apiKey);
 
-        CreateEmbeddingRequest requestBody = new CreateEmbeddingRequest(model,inputText);
+        CreateEmbeddingRequest requestBody = new CreateEmbeddingRequest(model, inputText);
 
         URI uri = UriComponentsBuilder.fromHttpUrl(openAiApiURL).build().toUri();
         RequestEntity<CreateEmbeddingRequest> requestEntity = RequestEntity
@@ -162,4 +171,62 @@ public class OpenAiService {
         );
         return chatCompletionResponse.getChoices().get(0).getMessage().getContent();
     }
+    public String findMostSimilarText(String questionEmbedding, Chatbot chatbot) {
+        List<TextEmbedding> allEmbeddings = textEmbeddingRepository.findTextEmbeddingsByChatbotId(chatbot.getId());
+
+        if (allEmbeddings.isEmpty()) {
+            return null; // No embeddings in the database
+        }
+
+        // Convert question embedding and stored embeddings to RealVector objects
+        RealVector questionVector = toRealVector(questionEmbedding);
+        List<RealVector> storedVectors = allEmbeddings.stream()
+                .map(textEmbedding -> toRealVector(textEmbedding.getEmbedding()))
+                .collect(Collectors.toList());
+        //Create a list of text with distance from the questio to produce more similar responses by sorting them
+        List<TextWithDistances> textWithDistances = new ArrayList<>();
+        for (int i = 0; i < storedVectors.size(); i++) {
+            Double cosineSimilarity = calculateCosineSimilarity(questionVector, storedVectors.get(i));
+            textWithDistances.add(new TextWithDistances(allEmbeddings.get(i).getText(), cosineSimilarity));
+        }
+        Comparator<TextWithDistances> descendingComparator =
+                (obj1, obj2) -> Double.compare(obj2.getDistance(), obj1.getDistance());
+        Collections.sort(textWithDistances, descendingComparator);
+
+        String mostSimilarString = "";
+        for( TextWithDistances textWithDistances1: textWithDistances){
+            mostSimilarString = mostSimilarString.concat(textWithDistances1.getText() + ".");
+            //Add upto a certain lenght of character
+            if(mostSimilarString.length()>CONTEXT_LENGTH) break;
+        }
+
+        return mostSimilarString;
+    }
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private class TextWithDistances {
+        private String Text;
+        private Double distance;
+    }
+    private RealVector toRealVector(String embedding) {
+        // Parse the comma-separated embedding string and convert it to a RealVector
+        List<Double> values = Arrays.stream(embedding.split(","))
+                .map(Double::parseDouble)
+                .collect(Collectors.toList());
+
+        // Create a RealVector from the parsed values
+        double[] vectorData = new double[values.size()];
+        for (int i = 0; i < values.size(); i++) {
+            vectorData[i] = values.get(i);
+        }
+
+        return new ArrayRealVector(vectorData);
+    }
+
+    private double calculateCosineSimilarity(RealVector vectorA, RealVector vectorB) {
+        // Calculate cosine similarity between two vectors
+        return vectorA.dotProduct(vectorB) / (vectorA.getNorm() * vectorB.getNorm());
+    }
+
 }

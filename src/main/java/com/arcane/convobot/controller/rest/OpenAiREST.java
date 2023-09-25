@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/open-ai")
@@ -44,7 +46,7 @@ public class OpenAiREST {
             @RequestBody String request
     ) {
         try {
-            return ResponseEntity.ok(openAiService.callOpenAIAPIToEmbedText(request));
+            return ResponseEntity.ok(openAiService.callOpenAIAPIToEmbedText(Arrays.asList(request)));
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));

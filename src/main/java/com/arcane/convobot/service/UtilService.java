@@ -22,4 +22,17 @@ public class UtilService {
                 .map(Double::parseDouble)
                 .collect(Collectors.toList());
     }
+    public static List<String> generateStringsFromText(String inputText){
+        String[] sentences = inputText.split("\\.");
+
+        // Convert the array to a List if needed
+        List<String> sentenceList = Arrays.asList(sentences);
+
+        //Trimming them
+        sentenceList = sentenceList.stream()
+                .map(String::trim)
+                .collect(Collectors.toList());
+
+        return  sentenceList;
+    }
 }
