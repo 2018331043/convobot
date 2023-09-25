@@ -17,6 +17,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import authService from '../services/auth.service';
 import { useParams } from 'react-router-dom';
 import displayToast from '../services/toast.service';
+import chatService from "../services/chat.service";
+import apiKeyService from "../services/api.key.service";
 
 export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
     chatbotList,setChatBotList}){
