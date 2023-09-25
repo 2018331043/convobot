@@ -31,14 +31,14 @@ import widgetImg from '../assets/open_menu.png'
 import Widget from './Widget';
 
 export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
-  selectedChatbotInfo,setChatBotList}){
+  selectedChatbotInfo,setChatBotList,openWidget,setOpenWidget}){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
   const [chatbotName,setChatbotName] = useState("")
   const [chatbotPrompt,setChatbotPrompt] = useState("")
   const [chatbotRestriction,setChatbotRestriction] = useState("")
   const [isLoading,setIsLoading] = useState(false)
   const [loadingTitle,setLoadingTitle] = useState('Loading')
-  const [openWidget,setOpenWidget] = useState(false)
+  
   
   const openWidgetClicked = ()=>{
     setOpenWidget(true)

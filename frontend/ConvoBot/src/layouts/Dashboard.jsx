@@ -20,6 +20,7 @@ export default function Dashboard(){
     const [selectedChatbot,setSelectedChatbot] = useState(null)
     const [selectedChatbotInfo,setSelectedChatbotInfo] = useState(null)
     const [chatbotList,setChatBotList] = useState([])
+    const [openWidget,setOpenWidget] = useState(false)
 
     const customTheme = createTheme({
         palette: {
@@ -45,7 +46,7 @@ export default function Dashboard(){
     return (
         <div className="dashboard-body">
             <Sidebar setChatActive={setChatActive} selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot}
-             setSelectedChatbotInfo={setSelectedChatbotInfo} chatbotList={chatbotList} setChatBotList={setChatBotList}/>
+             setSelectedChatbotInfo={setSelectedChatbotInfo} chatbotList={chatbotList} setChatBotList={setChatBotList} setOpenWidget={setOpenWidget}/>
             <div className='dashboard-right'>
                 {loading? (<ThemeProvider theme={customTheme}>
                 <Box sx={{ width: '100%' }}>
@@ -54,7 +55,8 @@ export default function Dashboard(){
                 </ThemeProvider>):null}
 
                 <Navbar/>
-                <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} selectedChatbotInfo={selectedChatbotInfo} setChatBotList={setChatBotList} />
+                <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} selectedChatbotInfo={selectedChatbotInfo} 
+                setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} />
             </div>
         </div>
     )

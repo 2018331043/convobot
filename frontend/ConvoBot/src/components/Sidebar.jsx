@@ -21,7 +21,7 @@ import chatService from "../services/chat.service";
 import apiKeyService from "../services/api.key.service";
 
 export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
-    chatbotList,setChatBotList}){
+    chatbotList,setChatBotList,setOpenWidget}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
     
     const [newChatbotName,setNewChatbotName] = useState("")
@@ -80,6 +80,7 @@ export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbo
             setChatActive(false)
             setSelectedChatbot(item.id)
             setSelectedChatbotInfo(item)
+            setOpenWidget(false)
           }, [setSelectedChatbot]);
 
         //   const itemClicked = useCallback((id)=>{

@@ -117,14 +117,14 @@ export default function ExternalChatbox(){
       },[messages])
     return(
         <>
-        <Popper open={open} anchorEl={anchorEl} placement={placement} transition sx={{zIndex:'8000'}}>
+        <Popper open={open} anchorEl={anchorEl} placement={placement} transition sx={{zIndex:'8000',boxShadow:'none'}}>
               {({ TransitionProps }) => (
-                <Fade {...TransitionProps} timeout={350}>
+                <Fade {...TransitionProps} timeout={350} sx={{background:'transparent',boxShadow:'none'}}>
                   <Paper sx={{boxShadow:'none'}}>
         <ThemeProvider theme={customTheme}>
           {isChatbotInfoVisible&&(
           <div className="chatbox-container" style={{zIndex:9999,height:'550px',width:'320px',
-          display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+          display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',background:'white'}}>
           <div className="chatbox-nav" style={{borderTopLeftRadius:'20px',borderTopRightRadius:'20px',
           borderBottom:'solid', borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>
           <Typography sx={{ color: 'white', marginLeft: '10px', fontSize:'17px'}}>
@@ -204,7 +204,8 @@ export default function ExternalChatbox(){
             </Popper>
 
         <Tooltip title="Tap to chat">
-              <Button onClick={handleClick('top-end') } sx={{zIndex:'8000',position:'fixed',right:'0',bottom:'0',margin:'0px 80px 30px 0px'}}>
+              <Button onClick={handleClick('top-end') } sx={{zIndex:'8000',position:'fixed',right:'0',bottom:'0',margin:'0px 80px 30px 0px',
+            boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',borderRadius:'0px 1000px 1000px 1000px',background:'rgba(250,250,250,.7)'}}>
                   <img src={logo} style={{height:'60px',width:'60px'}}/>
               </Button>
         </Tooltip>
