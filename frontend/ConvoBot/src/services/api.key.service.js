@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 const apiKeyService = {
-    generateApiKey(success,error){
-        // console.log(data)
+    generateApiKey(success,error,data){
+        console.log(data.apikeyName)
         try{
-            axios.post('api-key/generate-api-key')
+            axios.post('api-key/generate-api-key',data.apikeyName)
               .then((res)=>{
-                // console.log(res)
+                console.log(res)
                 success(res)
               })
               .catch(
@@ -23,6 +23,7 @@ const apiKeyService = {
       .then( (res) =>{
         // console.log(res.data.apiKeyResponseList)
         let data = res.data.apiKeyResponseList
+        console.log(data)
         success(data)
       } )
       .catch(
