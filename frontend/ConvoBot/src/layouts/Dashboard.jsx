@@ -45,8 +45,8 @@ export default function Dashboard(){
     // },[])
     return (
         <div className="dashboard-body">
-            <Sidebar setChatActive={setChatActive} selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot}
-             setSelectedChatbotInfo={setSelectedChatbotInfo} chatbotList={chatbotList} setChatBotList={setChatBotList} setOpenWidget={setOpenWidget}/>
+            <Sidebar chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot}
+             setSelectedChatbotInfo={setSelectedChatbotInfo} chatbotList={chatbotList} setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget}/>
             <div className='dashboard-right'>
                 {loading? (<ThemeProvider theme={customTheme}>
                 <Box sx={{ width: '100%' }}>

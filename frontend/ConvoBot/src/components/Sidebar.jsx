@@ -20,8 +20,8 @@ import displayToast from '../services/toast.service';
 import chatService from "../services/chat.service";
 import apiKeyService from "../services/api.key.service";
 
-export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
-    chatbotList,setChatBotList,setOpenWidget}){
+export default function Sidebar({chatActive,setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
+    chatbotList,setChatBotList,openWidget,setOpenWidget}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
     
     const [newChatbotName,setNewChatbotName] = useState("")
@@ -56,6 +56,7 @@ export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbo
 
                 }
                 setChatActive(false)
+                setOpenWidget(false)
                 setSelectedChatbot(item.id)
                 setSelectedChatbotInfo(item)
                 setNewChatbotName('')
@@ -81,7 +82,7 @@ export default function Sidebar({setChatActive,selectedChatbot,setSelectedChatbo
             setSelectedChatbot(item.id)
             setSelectedChatbotInfo(item)
             setOpenWidget(false)
-          }, [setSelectedChatbot]);
+          }, [setSelectedChatbot,openWidget,chatActive]);
 
         //   const itemClicked = useCallback((id)=>{
         //     console.log(id)

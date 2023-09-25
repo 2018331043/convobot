@@ -39,7 +39,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
   const [isLoading,setIsLoading] = useState(false)
   const [loadingTitle,setLoadingTitle] = useState('Loading')
   
-  
+
   const openWidgetClicked = ()=>{
     setOpenWidget(true)
   }
@@ -74,10 +74,6 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
           //pls try again
         }
       }
-  
-      // useEffect(()=>{
-      //   // console.log(chatbotPrompt)
-      // },[chatbotPrompt])
 
       useEffect(()=>{
         // console.log(selectedChatbotInfo)
@@ -85,23 +81,25 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
           setChatbotName(selectedChatbotInfo.name)
           setChatbotPrompt(selectedChatbotInfo.prompt)
           setChatbotRestriction(selectedChatbotInfo.restriction)
+          // console.log(selectedChatbotInfo)
         }catch(e){
           setChatbotName("")
           setChatbotPrompt("")
           setChatbotRestriction("")
+          // window.location.reload()
         }
-        
-      },[selectedChatbotInfo])
+        // console.log('wwow')
+      },[selectedChatbotInfo,isLoading])
 
       const generateChatbot = ()=>{
         if(selectedChatbot===-3){
-          // console.log(chatbotPrompt)
-          // console.log(chatbotRestriction)
+          selectedChatbotInfo.prompt = chatbotPrompt
+          selectedChatbotInfo.restriction = chatbotRestriction
           setLoadingTitle('Chatbot creation in progress!')
           setIsLoading(true)
           chatService.createChatbot((res)=>{
             setIsLoading(false)
-            window.location.reload()
+            // window.location.reload()
             displayToast.success('Successfully Chatbot Created!')
           },
           (e)=>{
@@ -171,7 +169,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
                     label="Base Prompt"
                     multiline
                     rows={7}
-                    defaultValue= {chatbotPrompt} //"Write a prompt for your chatbot."
+                    value= {chatbotPrompt} //"Write a prompt for your chatbot."
                     onChange={(e)=>{
                       setChatbotPrompt(e.target.value)
                     }}
@@ -192,7 +190,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
                     label="Restrictions for the Chatbot"
                     multiline
                     rows={7}
-                    defaultValue= {chatbotRestriction}   //"Write if there any restrictions for the chatbot"
+                    value= {chatbotRestriction}   //"Write if there any restrictions for the chatbot"
                     onChange={(e)=>{
                       setChatbotRestriction(e.target.value)
                     }}

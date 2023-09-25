@@ -88,7 +88,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   useEffect(()=>{
     apiKeyService.getApiKeys((res)=>{
         setApiList(res)
-        console.log(res.length)
+        // console.log(res.length)
         if(res.length===0){
           // console.log(('wow'))
           apiKeyService.generateApiKey((res)=>{
@@ -106,7 +106,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
       })
 
     chatService.getChat((res)=>{
-      console.log(res)
+      // console.log(res)
       const transformedMessages = res.map((item) => {
         if (item.role === 'system') {
           // Skip creating a message for 'system' role
@@ -133,7 +133,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   useEffect(()=>{
     if(apiList.length>0){
       setUserApi(apiList[0].value)
-      console.log(userApi)
+      // console.log(userApi)
     }
   },[apiList])
 
@@ -143,7 +143,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   },[tempList])
 
   const scrollBottom = (e) => {
-    console.log('ohhhhhh')
+    // console.log('ohhhhhh')
     var targetDiv = document.querySelector('.chatbox-messages-container')
     try{
         targetDiv.scrollTop = targetDiv.scrollHeight
@@ -268,7 +268,7 @@ const Message = ({ message }) => {
 }
 
 const LoadingAnim = ({ isLoading }) => {
-  console.log("isLoading:", isLoading);
+  // console.log("isLoading:", isLoading);
   const isBot = 'bot'
   return isLoading ? (
     <Box

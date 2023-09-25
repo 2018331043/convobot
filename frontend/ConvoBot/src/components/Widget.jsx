@@ -71,7 +71,7 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
   useEffect(()=>{
     apiKeyService.getApiKeys((res)=>{
       setApiList(res)
-      console.log(res.length)
+      // console.log(res.length)
       if(res.length===0){
         // console.log(('wow'))
         apiKeyService.generateApiKey((res)=>{
@@ -91,7 +91,7 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
   useEffect(()=>{
     if(apiList.length>0){
       setUserApi(apiList[0].value)
-      console.log(userApi)
+      // console.log(userApi)
     }
   },[apiList])
   return (
