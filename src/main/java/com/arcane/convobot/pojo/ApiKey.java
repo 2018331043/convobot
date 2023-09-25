@@ -18,6 +18,8 @@ public class ApiKey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String name;
+
     private String value;
 
     private Integer ownerId;
@@ -29,8 +31,9 @@ public class ApiKey {
         this.status = STATUS_ACTIVE;
     }
 
-    public ApiKey(String value, Integer ownerId){
+    public ApiKey(String value, Integer ownerId, String name){
         this.value = value;
         this.ownerId = ownerId;
+        this.name = name;
     }
 }

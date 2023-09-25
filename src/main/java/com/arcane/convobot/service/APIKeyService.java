@@ -16,9 +16,9 @@ public class APIKeyService {
     private final ApiKeyRepository apiKeyRepository;
     private final UserInfoProviderService userInfoProviderService;
 
-    public GenericResponseREST generateApiKey(){
+    public GenericResponseREST generateApiKey(String keyName){
         UUID apiKeyUUID = UUID.randomUUID();
-        ApiKey apiKey = new ApiKey(apiKeyUUID.toString(), userInfoProviderService.getRequestUser().getId());
+        ApiKey apiKey = new ApiKey(apiKeyUUID.toString(), userInfoProviderService.getRequestUser().getId(), keyName);
         apiKeyRepository.save(apiKey);
         return new GenericResponseREST("Created Api Key Successfully");
     }
