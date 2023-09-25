@@ -2,6 +2,7 @@ package com.arcane.convobot.service;
 
 import com.arcane.convobot.pojo.ChatMessage;
 import com.arcane.convobot.pojo.Chatbot;
+import com.arcane.convobot.pojo.TextEmbedding;
 import com.arcane.convobot.pojo.request.ChatCompletionMessage;
 import com.arcane.convobot.pojo.request.ChattingRequest;
 import com.arcane.convobot.pojo.response.AllChatsOfAChatbotResponse;
@@ -13,10 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -45,9 +43,13 @@ public class ChatService {
     private List<ChatCompletionMessage> getChatCompletionMessages(ChattingRequest request, Chatbot chatbot) {
         Integer rememberance = 2;
         List<ChatCompletionMessage> chatMessages = new ArrayList<>();
+        String context = getContext(request, chatbot);
+        context = context == null? "" : context;
         chatMessages.add(new ChatCompletionMessage(
                 "system",
-                chatbot.getPrompt() + chatbot.getRestriction())
+                chatbot.getPrompt() + chatbot.getRestriction() +
+                        "Also use the context below if it is relevant to the questions\n" +
+                        "Context: "+ context)
         );
         List<ChatMessage> previousChatMessageList = chatMessageRepository
                 .findChatMessagesByChatbotIdAndRoleNotOrderByCreationTimeDesc(chatbot.getId(), "system");
@@ -64,6 +66,23 @@ public class ChatService {
 
         chatMessages.add(new ChatCompletionMessage( "user", request.getInputText()));
         return chatMessages;
+    }
+
+    private String getContext(ChattingRequest request, Chatbot chatbot) {
+        String questionEmbedding = UtilService.generateStringFromAListOfDoubles(
+                openAiService.callOpenAIAPIToEmbedText(Arrays.asList(request.getInputText())).getData().get(0).getEmbedding()
+        );
+
+
+        // Query the database to find the most similar text based on embeddings
+        String mostSimilarText = openAiService.findMostSimilarText(questionEmbedding, chatbot);
+
+        if (mostSimilarText != null) {
+            // Return the text associated with the most similar embeddings
+            return mostSimilarText;
+        } else {
+            return "No matching text found.";
+        }
     }
 
 
