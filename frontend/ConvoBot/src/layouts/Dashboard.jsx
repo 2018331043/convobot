@@ -10,6 +10,7 @@ import axios from 'axios'
 import apiKeyService from '../services/api.key.service.js'
 import authService from '../services/auth.service.js';
 import ChildSiidebar from '../components/ChildSidebar';
+import DetailedReport from "../components/DetailedReport.jsx";
 
 const axiosInstance = axios.create();
 
@@ -23,6 +24,7 @@ export default function Dashboard(){
     const [selectedChatbotInfo,setSelectedChatbotInfo] = useState(null)
     const [chatbotList,setChatBotList] = useState([])
     const [openWidget,setOpenWidget] = useState(false)
+    const [openReport,setOpenReport] = useState(false)
 
     const customTheme = createTheme({
         palette: {
@@ -83,6 +85,8 @@ export default function Dashboard(){
                 setSelectedChatbot={setSelectedChatbot} selectedChatbotInfo={selectedChatbotInfo} 
                 setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} chatbotList={chatbotList}/>
                 </div>
+                {(openReport ? <DetailedReport/> : <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} selectedChatbotInfo={selectedChatbotInfo}
+                                                               setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} />)}
             </div>
         </div>
     )

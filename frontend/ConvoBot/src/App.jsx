@@ -6,7 +6,7 @@ import Dashboard from "./layouts/Dashboard.jsx"
 import Chatbox from './components/ExternalChatbox.jsx'
 import { ToastContainer } from 'react-toastify';
 import SpeechToText from "./components/SpeechToText.jsx";
-
+import DetailedReport from "./components/DetailedReport.jsx";
 
 
 export default function App(){
@@ -21,6 +21,7 @@ export default function App(){
           <Route path="/dashboard/:userId" element={<Dashboard/>}/>
           <Route path="/chatbot/:key/:chatbotId" element={<Chatbox/>}/>
           <Route path="/speech-to-text" element={<SpeechToText/>}/>
+          <Route path="/detailed-report" element={<DetailedReport/>}/>
         </Routes>
       </BrowserRouter>
     </>

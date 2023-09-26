@@ -1,6 +1,7 @@
 package com.arcane.convobot.controller.rest;
 
 import com.arcane.convobot.pojo.request.AttachEmbeddingToChatbotRequest;
+import com.arcane.convobot.pojo.request.AttachWebInfoInChatbotRequest;
 import com.arcane.convobot.pojo.request.PromptGenerationRequest;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.service.ChatbotService;
@@ -64,4 +65,17 @@ public class OpenAiREST {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
     }
+
+    @PostMapping("/attach-web-info-to-chatbot")
+    public ResponseEntity<GenericResponseREST> generateEmbeddingForAWebsiteAndAttachToAChatbot(
+            @RequestBody AttachWebInfoInChatbotRequest request
+    ) {
+        try {
+            return ResponseEntity.ok(chatbotService.attachWebInfoAsEmbeddingInChatbot(request));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
+        }
+    }
+
 }

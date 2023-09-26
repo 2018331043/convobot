@@ -23,6 +23,7 @@ public class ChatbotService {
     private final ChatMessageRepository chatMessageRepository;
     private final TextEmbeddingRepository textEmbeddingRepository;
     private final UserInfoProviderService userInfoProviderService;
+    private final WebCrawlerService webCrawlerService;
     private final OpenAiService openAiService;
     public GenericResponseREST createChatbot(ChatbotCreationRequest request){
         Chatbot chatbot = new Chatbot(request, userInfoProviderService.getRequestUser().getId());
@@ -61,6 +62,11 @@ public class ChatbotService {
 
     public List<Chatbot> getAllChatbots(){
         return chatbotRepository.findChatbotsByOwnerId(userInfoProviderService.getRequestUser().getId());
+    }
+
+    public GenericResponseREST attachWebInfoAsEmbeddingInChatbot(AttachWebInfoInChatbotRequest request){
+        String textToEmbed = webCrawlerService.getAllTextDataFromAWebPage(request.getUrl());
+        return attachEmbeddingToChatbot(new AttachEmbeddingToChatbotRequest(request.getChatbotId(), textToEmbed));
     }
 
     public GenericResponseREST attachEmbeddingToChatbot(AttachEmbeddingToChatbotRequest request) {
