@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography';
 export default function ChildSiidebar({chatActive,setChatActive,openWidget,setOpenWidget,selectedChatbot}){
 
     const backStyle = {
-        color:'rgba(219, 138, 17, 1)',
-        background: 'rgba(219, 138, 17, 0.175)'
+        color:'rgba(255, 189, 6, 1)',
+        background: 'rgba(255, 189, 6, 0.185)',
     }
     const TrainButtonClicked = ()=>{
         // console.log('no')

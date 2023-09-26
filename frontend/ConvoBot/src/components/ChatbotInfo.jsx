@@ -150,6 +150,32 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
         }
       }
 
+      const deleteItem = ()=>{
+        handleClose()
+        setIsLoading(true)
+        setLoadingTitle('Deletiion in progress!')
+
+        chatService.deleteChatbot((res)=>{
+          authService.getAllChatbots((res)=>{
+            let list = res.data
+            setTimeout(()=>{
+              setIsLoading(false)
+              setLoadingTitle('')
+              displayToast.info('Chatbot deleted',2000)
+              setChatBotList(list)
+            },1500)
+          },(err)=>{
+            setIsLoading(false)
+            setLoadingTitle('')
+              // console.log(err)
+          })
+          setSelectedChatbot(chatbotList[chatbotList.length-1].id)
+        },(e)=>{
+            setIsLoading(false)
+            setLoadingTitle('')
+        },selectedChatbot)
+      }
+
     return (
         <ThemeProvider theme={customTheme}>
         {
@@ -255,7 +281,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                     </DialogContent>
                     <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Ok</Button>
+                    <Button onClick={deleteItem}>Ok</Button>
                     </DialogActions>
              </Dialog>
              {/* <ToastContainer /> */}

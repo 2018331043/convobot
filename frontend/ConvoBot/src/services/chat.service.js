@@ -87,6 +87,22 @@ const chatService = {
         }catch(e){
             console.log(e)
         }
+    },
+    deleteChatbot(success,error,id){
+        try{
+            axios.post(`/chatbot/delete-chatbot/${id}`).then(
+                (res)=>{
+                    success(res)
+                }
+            ).catch(
+                (e)=>{
+                    error(e)
+                }
+            )
+
+        }catch(e){
+
+        }
     }
 }
 
