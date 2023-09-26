@@ -16,7 +16,7 @@ public class AllApiKeysResponse extends GenericResponseREST{
     public AllApiKeysResponse(List<ApiKey> apiKeyList){
         this.apiKeyResponseList = new ArrayList<>();
         apiKeyList.forEach(apiKey -> {
-            this.apiKeyResponseList.add(new ApiKeyResponse(apiKey.getId(), apiKey.getValue()));
+            this.apiKeyResponseList.add(new ApiKeyResponse(apiKey.getId(), apiKey.getName(), apiKey.getValue()));
         });
     }
 
@@ -25,6 +25,7 @@ public class AllApiKeysResponse extends GenericResponseREST{
     @NoArgsConstructor
     private class ApiKeyResponse{
         private Integer id;
+        private String name;
         private String value;
     }
 }
