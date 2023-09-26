@@ -12,8 +12,7 @@ import displayToast from "../services/toast.service.js";
 import TextField from '@mui/material/TextField';
 import LoadingDialog from "./LoadingDialog.jsx";
 
-export default function UserApiKeys({ openApiKeys, setOpenApiKeys }) {
-  const [listItems, setListItems] = useState([]);
+export default function UserApiKeys({listItems, setListItems, openApiKeys, setOpenApiKeys }) {
   const [openGenerateDialog, setOpenGenerateDialog] = useState(false); // New state for the generate API key dialog
   const [apiName,setApiName] = useState('')
   const [isLoading,setIsLoading] = useState(false)

@@ -114,6 +114,8 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
           })
         }else{
           if(selectedChatbotInfo.prompt!==chatbotPrompt||selectedChatbotInfo.restriction!==chatbotRestriction){
+            selectedChatbotInfo.prompt = chatbotPrompt
+            selectedChatbotInfo.restriction = chatbotRestriction
             setLoadingTitle('Chatbot updating in progress!')
             setIsLoading(true)
             chatService.updateChatbot((res)=>{
