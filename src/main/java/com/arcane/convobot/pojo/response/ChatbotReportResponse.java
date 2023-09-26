@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatbotReportResponse {
-    private Integer chatbotId;
+    private Integer id;
     private String chatbotName;
     private String prompt;
     private String restrictions;
@@ -18,7 +18,7 @@ public class ChatbotReportResponse {
     private Integer totalOutputTokensSoFar;
     private Integer totalTokensSoFar;
     public ChatbotReportResponse(Chatbot chatbot) {
-        this.chatbotId = chatbot.getId();
+        this.id = chatbot.getId();
         this.chatbotName = chatbot.getName();
         this.prompt = chatbot.getPrompt();
         this.restrictions = chatbot.getRestriction();

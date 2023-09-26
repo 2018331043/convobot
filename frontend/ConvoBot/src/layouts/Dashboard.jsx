@@ -23,7 +23,7 @@ export default function Dashboard(){
     const [selectedChatbotInfo,setSelectedChatbotInfo] = useState(null)
     const [chatbotList,setChatBotList] = useState([])
     const [openWidget,setOpenWidget] = useState(false)
-    const [openReport,setOpenReport] = useState(false)
+    const [openReport,setOpenReport] = useState(true)
 
     const customTheme = createTheme({
         palette: {
@@ -55,7 +55,7 @@ export default function Dashboard(){
           axiosInstance.interceptors.response.eject(responseInterceptor);
         };
       }, [])
-      
+
     // useEffect(()=>{
     //   console.log(selectedChatbot)
     //   console.log(selectedChatbotInfo)

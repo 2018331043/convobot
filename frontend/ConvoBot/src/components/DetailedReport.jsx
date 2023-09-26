@@ -5,25 +5,39 @@ import {Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack.js";
 import authService from "../services/auth.service.js";
+import {useEffect, useState} from "react";
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
     {
-        field: 'age',
-        headerName: 'Age',
+        field: 'SL',
+        headerName: 'SL',
+        description: 'This column has a value getter and is not sortable.',
+        sortable: false,
+        width: 160,
+        valueGetter: (params) => params.api.getRowIndexRelativeToVisibleRows(params.id)+1,
+    },
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'chatbotName', headerName: 'Chatbot Name', width: 130 },
+    { field: 'description', headerName: 'Description', width: 200 },
+    { field: 'prompt', headerName: 'Prompt', width: 400 },
+    { field: 'restrictions', headerName: 'Restrictions', width: 200 },
+    {
+        field: 'totalInputTokensSoFar',
+        headerName: 'Input Tokens Used',
+        type: 'number',
+        width: 100,
+    },
+    {
+        field: 'totalOutputTokensSoFar',
+        headerName: 'Output Tokens Used',
         type: 'number',
         width: 90,
     },
     {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 160,
-        valueGetter: (params) =>
-            `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
+        field: 'totalTokensSoFar',
+        headerName: 'Total Tokens Used',
+        type: 'number',
+        width: 90,
+    }
 ];
 
 const rows = [
@@ -49,14 +63,24 @@ const backButtonClicked = () =>{
     // setOpenWidget(false)
     console.log("hello world")
 }
-
 export default function DetailedReport() {
+    useEffect(()=>{
+        authService.getAllChatbotReport((res)=>{
+            let list = res.data
+            setChatbotListForReport(list)
+            // console.log(list)
+            // setChatBotList(list)
+        },(err)=>{
+            console.log(err)
+        })
+
+    },[])
+    const [chatbotListForReport,setChatbotListForReport] = useState(rows)
     return (
     <div className="chatbox-container" style={{zIndex:1000}}>
         <div className="chatbox-nav" style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',borderBottom:'solid',
             borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>
             <Typography variant="h6" sx={{ color: 'white', marginLeft: '30px', fontSize:'17px'}}>
-                {/* Convo<span className="chatbox-span-1">Bot</span> */}
                 Chatbot Report
             </Typography>
             <IconButton
@@ -74,7 +98,7 @@ export default function DetailedReport() {
             <div style={{ height: '80%', width: '100%',display:"flex",justifyContent:"center", marginTop:"20px"}}>
                 <div>
                     <DataGrid
-                        rows={rows}
+                        rows={chatbotListForReport}
                         columns={columns}
                         initialState={{
                             pagination: {
@@ -83,6 +107,7 @@ export default function DetailedReport() {
                         }}
                         pageSizeOptions={[5, 10]}
                         checkboxSelection
+                        rowHeight={100}
                     />
                 </div>
             </div>
