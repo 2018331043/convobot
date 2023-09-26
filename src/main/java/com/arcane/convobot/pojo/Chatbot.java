@@ -63,6 +63,9 @@ public class Chatbot{
         this.restriction = request.getRestriction();
         this.name = request.getChatbotName();
         this.description = request.getDescription();
+        this.totalInputTokensSoFar = 0;
+        this.totalOutputTokensSoFar = 0;
+        this.totalTokensSoFar = 0;
     }
 
 }

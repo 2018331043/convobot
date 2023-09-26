@@ -26,6 +26,7 @@ public class ApiKey {
 
     private Integer status;
 
+    @Column(columnDefinition = "DEFAULT 0")
     private Integer totalInputTokensSoFar;
 
     private Integer totalOutputTokensSoFar;
