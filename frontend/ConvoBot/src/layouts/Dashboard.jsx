@@ -81,12 +81,10 @@ export default function Dashboard(){
                 <Navbar/>
                 <div className='dashboard-right-container'>
                 <ChildSiidebar chatActive={chatActive} setChatActive={setChatActive} openWidget={openWidget} setOpenWidget={setOpenWidget} selectedChatbot={selectedChatbot}/>
-                <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot}
+                {(openReport ? <DetailedReport/> : <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot}
                 setSelectedChatbot={setSelectedChatbot} selectedChatbotInfo={selectedChatbotInfo} 
-                setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} chatbotList={chatbotList}/>
+                setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} chatbotList={chatbotList} />)}
                 </div>
-                {(openReport ? <DetailedReport/> : <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} selectedChatbotInfo={selectedChatbotInfo}
-                                                               setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} />)}
             </div>
         </div>
     )
