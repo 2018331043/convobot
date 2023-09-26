@@ -1,6 +1,8 @@
 package com.arcane.convobot.controller.rest;
 
 import com.arcane.convobot.pojo.Chatbot;
+import com.arcane.convobot.pojo.response.ApiKeyReportResponse;
+import com.arcane.convobot.pojo.response.ChatbotReportResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.service.APIKeyService;
 import lombok.RequiredArgsConstructor;
@@ -25,4 +27,10 @@ public class APIKeyREST {
     ) {
         return ResponseEntity.ok(apiKeyService.getAllKeysResponseForAUser());
     }
+    @GetMapping("/get-apikey-report")
+    public ResponseEntity<List<ApiKeyReportResponse>> getAllApiKeyReport(
+    ) {
+        return ResponseEntity.ok(apiKeyService.getAllApiKeyReport());
+    }
+
 }

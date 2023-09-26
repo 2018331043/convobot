@@ -1,12 +1,16 @@
 package com.arcane.convobot.service;
 
 import com.arcane.convobot.pojo.ApiKey;
+import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.response.AllApiKeysResponse;
+import com.arcane.convobot.pojo.response.ApiKeyReportResponse;
+import com.arcane.convobot.pojo.response.ChatbotReportResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.repo.ApiKeyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,4 +45,12 @@ public class APIKeyService {
         if(!isValidApiKey) throw new RuntimeException("The provided api key is not valid");
     }
 
+    public List<ApiKeyReportResponse> getAllApiKeyReport() {
+        List<ApiKey> apiKeyList = getAllKeysForAUser();
+        List<ApiKeyReportResponse> apiKeyReportResponseList = new ArrayList<>();
+        apiKeyList.forEach(apiKey -> {
+            apiKeyReportResponseList.add(new ApiKeyReportResponse(apiKey));
+        });
+        return apiKeyReportResponseList;
+    }
 }
