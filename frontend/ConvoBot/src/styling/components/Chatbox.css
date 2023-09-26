@@ -8,9 +8,9 @@
 }
 
 .chatbox-container{
-    width: calc(100% - 60px);
-    margin-left: 30px;
-    margin-right: 30px;
+    width: calc(100% - 200px);
+    /* margin-left: 30px; */
+    margin-right: 20px;
     margin-top: 20px;
     height: calc(100vh - 130px);
     display: flex;
@@ -35,6 +35,8 @@
 
 .chatbox-nav{
     height:60px;
+    min-width: 60px;
+    max-height: 60px;
     width: 100%;
     display: flex;
     align-items: center;

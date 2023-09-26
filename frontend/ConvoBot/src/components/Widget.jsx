@@ -98,12 +98,12 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
     
       <div className="chatbox-container" style={{zIndex:1000}}>
         <div className="chatbox-nav" style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',borderBottom:'solid',
-        borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>
-          <Typography variant="h6" sx={{ color: 'white', marginLeft: '30px', fontSize:'17px'}}>
+        borderBottomColor:'rgba(255, 189, 6, 0.849)',height:'60px'}}>
+          <Typography variant="h6" sx={{ color: 'white', marginLeft: '30px',marginBottom:'0', display: 'flex', alignItems: 'center'}}>
             {/* Convo<span className="chatbox-span-1">Bot</span> */}
             {chatbotName}
           </Typography>
-          <IconButton
+          {/* <IconButton
               aria-label="open menu"
               aria-controls="menu"
               aria-haspopup="true"
@@ -111,7 +111,7 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
               sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'40px',width:'40px'}}
             >
             <ArrowBackIcon sx={{color:'white',marginRight:'20px',paddingLeft:'10px'}}/>
-          </IconButton>
+          </IconButton> */}
 
         </div>
         <ThemeProvider theme={darkTheme}>
