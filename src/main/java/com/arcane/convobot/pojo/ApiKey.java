@@ -42,5 +42,8 @@ public class ApiKey {
         this.value = value;
         this.ownerId = ownerId;
         this.name = name;
+        this.totalInputTokensSoFar = 0;
+        this.totalOutputTokensSoFar = 0;
+        this.totalTokensSoFar = 0;
     }
 }

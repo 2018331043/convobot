@@ -24,7 +24,7 @@ export default function Dashboard(){
     const [selectedChatbotInfo,setSelectedChatbotInfo] = useState(null)
     const [chatbotList,setChatBotList] = useState([])
     const [openWidget,setOpenWidget] = useState(false)
-    const [openReport,setOpenReport] = useState(true)
+    const [openReport,setOpenReport] = useState(false)
 
     const customTheme = createTheme({
         palette: {
@@ -82,7 +82,7 @@ export default function Dashboard(){
                 <div className='dashboard-right-container'>
                 <ChildSiidebar chatActive={chatActive} setChatActive={setChatActive} openWidget={openWidget} setOpenWidget={setOpenWidget} selectedChatbot={selectedChatbot}/>
                 {(openReport ? <DetailedReport/> : <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot}
-                setSelectedChatbot={setSelectedChatbot} selectedChatbotInfo={selectedChatbotInfo} 
+                setSelectedChatbot={setSelectedChatbot} selectedChatbotInfo={selectedChatbotInfo}
                 setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} chatbotList={chatbotList} />)}
                 </div>
             </div>
