@@ -33,7 +33,7 @@ public class ChatbotService {
         ChatMessage chatMessage2 = new ChatMessage(
                 createdChatbot,
                 "assistant",
-                openAiService.generateGreetingsForChatbot(request.getPrompt())+request.getRestriction()
+                openAiService.generateGreetingsForChatbot(request.getPrompt())
         );
         chatMessageRepository.save(chatMessage2);
         return new GenericResponseREST("Chatbot Created");
