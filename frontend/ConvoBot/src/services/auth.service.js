@@ -100,7 +100,7 @@ const authService = {
       try{
         axios.post('/open-ai/generate-prompt-for-chatbot',{promptGenerationRequest:name}).then(
           (res)=>{
-            // console.log()
+            // console.log(res.data.generatedPrompt)
             success(res.data.generatedPrompt)
           }
         ).catch((err)=>{

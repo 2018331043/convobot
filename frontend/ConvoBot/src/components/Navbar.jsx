@@ -16,8 +16,10 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import localStorageService from '../services/LocalStorageService.js';
 import apiImg from '../assets/api.png'
 import UserApiKeys from './UserApiKeys.jsx';
+import Badge from '@mui/material/Badge';
 
 export default function Navbar(){
+        const [listItems, setListItems] = useState([]);
         const [openApiKeys, setOpenApiKeys] = useState(false)
         const [anchorEl, setAnchorEl] = useState(null);
         const [image, setImage] = useState(userProfileImage);
@@ -69,7 +71,7 @@ export default function Navbar(){
           localStorageService.setToken("")
           localStorageService.setUserInfo({})
           localStorage.setItem("navImage","")
-          window.location.replace('../signin')
+          window.location.replace('../')
         }
 
         useEffect(() => {
@@ -94,10 +96,13 @@ export default function Navbar(){
         <ThemeProvider theme={customTheme}>
         <div className="nav-body">
             <div className='nav-body-items'>
-                <Tooltip title="Generate Api key">
-                    <div onClick={openApiModal} className='nav-body-apiKeyButton'>
-                      <img src={apiImg} style={{height:'24px',width:'24px',borderRadius:'50%'}}/>
-                    </div>
+                <Tooltip title="Api key list">
+                <Badge badgeContent={listItems.length} color="primary" sx={{marginRight:'30px'}}>
+                    <Button variant='outlined' onClick={openApiModal} sx={{color:'black'}} >
+                      <img src={apiImg} style={{height:'22px',width:'22px',marginRight:'10px'}}/>
+                      <Typography>Api Key</Typography>
+                    </Button>
+                </Badge>
                 </Tooltip>
                 <label htmlFor="contained-button-file">
                 {/* <Tooltip title="Click to Add Profile Image"> */}
@@ -144,7 +149,7 @@ export default function Navbar(){
                 </div>
             </div>
         </div>
-        <UserApiKeys openApiKeys={openApiKeys} setOpenApiKeys={setOpenApiKeys}/>
+        <UserApiKeys listItems={listItems} setListItems={setListItems} openApiKeys={openApiKeys} setOpenApiKeys={setOpenApiKeys}/>
         </ThemeProvider>
     )
 }

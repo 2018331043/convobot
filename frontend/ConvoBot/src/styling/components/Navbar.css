@@ -11,10 +11,10 @@
    /* flex-direction: column; */
    align-items: center;
    height: 34px;
-   width: 34px;
+   width: fit-content;
    cursor: pointer;
    margin-right: 5px;
-   border-radius: 1000px;
+   /* border-radius: 1000px; */
    border-right-color: rgb(219, 138, 17) !important;
    border-right: solid;
    /* border: solid;

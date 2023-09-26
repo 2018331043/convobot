@@ -64,6 +64,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
         setIsLoading(true)
         try{
           authService.generatePrompt((res)=>{
+            // console.log(res)
             setChatbotPrompt(res)
             setIsLoading(false)
             setLoadingTitle('Loading')
@@ -89,7 +90,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
           // window.location.reload()
         }
         // console.log('wwow')
-      },[selectedChatbotInfo,isLoading])
+      },[selectedChatbotInfo])
 
       const generateChatbot = ()=>{
         if(selectedChatbot===-3){
@@ -113,13 +114,14 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
           })
         }else{
           if(selectedChatbotInfo.prompt!==chatbotPrompt||selectedChatbotInfo.restriction!==chatbotRestriction){
+            selectedChatbotInfo.prompt = chatbotPrompt
+            selectedChatbotInfo.restriction = chatbotRestriction
             setLoadingTitle('Chatbot updating in progress!')
             setIsLoading(true)
             chatService.updateChatbot((res)=>{
-              setIsLoading(false)
-              displayToast.success('Successfully Chatbot Updated!')
               setTimeout(() => {
-                window.location.reload();
+                setIsLoading(false)
+                displayToast.success('Successfully Chatbot Updated!')
               }, 2000)
             },(e)=>{
               displayToast.error('Error Occured!')

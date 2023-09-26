@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import SpeechToText from "./components/SpeechToText.jsx";
 import DetailedReport from "./components/DetailedReport.jsx";
 
+
 export default function App(){
 
   return (
