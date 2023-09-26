@@ -9,6 +9,7 @@ import { useState,useEffect } from 'react';
 import axios from 'axios'
 import apiKeyService from '../services/api.key.service.js'
 import authService from '../services/auth.service.js';
+import ChildSiidebar from '../components/ChildSidebar';
 
 const axiosInstance = axios.create();
 
@@ -53,7 +54,7 @@ export default function Dashboard(){
           axiosInstance.interceptors.response.eject(responseInterceptor);
         };
       }, [])
-      
+
     // useEffect(()=>{
     //   console.log(selectedChatbot)
     //   console.log(selectedChatbotInfo)
@@ -75,10 +76,13 @@ export default function Dashboard(){
                 <LinearProgress />
                 </Box>
                 </ThemeProvider>):null}
-
                 <Navbar/>
-                <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} selectedChatbotInfo={selectedChatbotInfo} 
-                setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} />
+                <div className='dashboard-right-container'>
+                <ChildSiidebar chatActive={chatActive} setChatActive={setChatActive} openWidget={openWidget} setOpenWidget={setOpenWidget} selectedChatbot={selectedChatbot}/>
+                <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot}
+                setSelectedChatbot={setSelectedChatbot} selectedChatbotInfo={selectedChatbotInfo} 
+                setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} chatbotList={chatbotList}/>
+                </div>
             </div>
         </div>
     )

@@ -30,15 +30,15 @@ import chatService from '../services/chat.service';
 import widgetImg from '../assets/open_menu.png'
 import Widget from './Widget';
 
-export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
-  selectedChatbotInfo,setChatBotList,openWidget,setOpenWidget}){
+export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,setSelectedChatbot,
+  selectedChatbotInfo,setChatBotList,openWidget,setOpenWidget,chatbotList}){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
   const [chatbotName,setChatbotName] = useState("")
   const [chatbotPrompt,setChatbotPrompt] = useState("")
   const [chatbotRestriction,setChatbotRestriction] = useState("")
   const [isLoading,setIsLoading] = useState(false)
   const [loadingTitle,setLoadingTitle] = useState('Loading')
-  
+  // console.log(selectedChatbot)
 
   const openWidgetClicked = ()=>{
     setOpenWidget(true)
@@ -94,11 +94,18 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
 
       const generateChatbot = ()=>{
         if(selectedChatbot===-3){
-          selectedChatbotInfo.prompt = chatbotPrompt
-          selectedChatbotInfo.restriction = chatbotRestriction
+          // selectedChatbotInfo.prompt = chatbotPrompt
+          // selectedChatbotInfo.restriction = chatbotRestriction
           setLoadingTitle('Chatbot creation in progress!')
           setIsLoading(true)
           chatService.createChatbot((res)=>{
+            authService.getAllChatbots((res)=>{
+              let list = res.data
+              setChatBotList(list)
+            },(err)=>{
+                // console.log(err)
+            })
+            setSelectedChatbot(chatbotList[chatbotList.length-1].id)
             setIsLoading(false)
             // window.location.reload()
             displayToast.success('Successfully Chatbot Created!')
@@ -114,11 +121,18 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
           })
         }else{
           if(selectedChatbotInfo.prompt!==chatbotPrompt||selectedChatbotInfo.restriction!==chatbotRestriction){
-            selectedChatbotInfo.prompt = chatbotPrompt
-            selectedChatbotInfo.restriction = chatbotRestriction
+            // selectedChatbotInfo.prompt = chatbotPrompt
+            // selectedChatbotInfo.restriction = chatbotRestriction
             setLoadingTitle('Chatbot updating in progress!')
             setIsLoading(true)
             chatService.updateChatbot((res)=>{
+                authService.getAllChatbots((res)=>{
+                  let list = res.data
+                  setChatBotList(list)
+              },(err)=>{
+                  // console.log(err)
+              })
+              setSelectedChatbot(chatbotList[chatbotList.length-1].id)
               setTimeout(() => {
                 setIsLoading(false)
                 displayToast.success('Successfully Chatbot Updated!')
@@ -145,7 +159,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
             <div className='chatbotInfo-body'>
                 <div className='chatbotInfo-body-head' style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',
                 borderBottom:'solid', borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>
-                    <Typography variant='h6' sx={{marginLeft:'30px',color:'rgba(255,255,255,.9)'}}>{chatbotName}</Typography>
+                    <Typography variant='h6' sx={{marginLeft:'30px',color:'rgba(255,255,255,1)',marginBottom:'0', display: 'flex', alignItems: 'center'}}>{chatbotName}</Typography>
                     <div className='chatbotInfo-body-head-buttons'>
                     <Tooltip title="">
                       <Button variant="outlined" onClick={autoPromptButtonClicked}>Auto Prompt</Button>
@@ -210,7 +224,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
                 </Box>
                 </div>
                 <div className='chatbotInfo-body-footer'>
-                  {
+                  {/* {
                     selectedChatbot!==-3&&(
                     <div className='chatbotInfo-body-footer-button-group'>
                       <Tooltip title='Open widget menu'>
@@ -226,7 +240,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,
                       </Tooltip>
                     </div>
                     )
-                  }
+                  } */}
                 
                     <Button variant='contained' size='string' className='chatbotInfo-body-footer-button' onClick={generateChatbot} sx={{marginLeft:'auto'}}><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Chatbot</Button>
                 </div>       

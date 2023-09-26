@@ -94,8 +94,9 @@
 }
 
 .sidebar-body{
+    /* position: absolute; */
     width: 250px;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     background: rgb(32, 33, 35);
