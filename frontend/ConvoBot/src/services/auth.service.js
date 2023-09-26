@@ -56,6 +56,30 @@ const authService = {
         console.log(e)
       }
     },
+    getAllChatbotReport(success,error){
+        try{
+            axios.get('/chatbot/get-chatbot-report')
+                .then((res)=>{
+                    success(res)
+                }).catch((e)=>{
+                error(e)
+            })
+        }catch(e){
+            console.log(e)
+        }
+    },
+    getAllApiKeyReport(success,error){
+        try{
+            axios.get('/api-key/get-apikey-report')
+                .then((res)=>{
+                    success(res)
+                }).catch((e)=>{
+                error(e)
+            })
+        }catch(e){
+            console.log(e)
+        }
+    },
     createChatbot(success,error,data){
       try{
         axios.post('/chatbot/create-chatbot',{
@@ -86,7 +110,7 @@ const authService = {
         console.log(e)
       }
     }
-      
+
 }
 
 export default authService

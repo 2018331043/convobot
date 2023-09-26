@@ -9,6 +9,7 @@ import { useState,useEffect } from 'react';
 
 import apiKeyService from '../services/api.key.service.js'
 import authService from '../services/auth.service.js';
+import DetailedReport from "../components/DetailedReport.jsx";
 
 
 export default function Dashboard(){
@@ -21,6 +22,7 @@ export default function Dashboard(){
     const [selectedChatbotInfo,setSelectedChatbotInfo] = useState(null)
     const [chatbotList,setChatBotList] = useState([])
     const [openWidget,setOpenWidget] = useState(false)
+    const [openReport,setOpenReport] = useState(false)
 
     const customTheme = createTheme({
         palette: {
@@ -55,8 +57,8 @@ export default function Dashboard(){
                 </ThemeProvider>):null}
 
                 <Navbar/>
-                <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} selectedChatbotInfo={selectedChatbotInfo} 
-                setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} />
+                {(openReport ? <DetailedReport/> : <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} selectedChatbotInfo={selectedChatbotInfo}
+                                                               setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} />)}
             </div>
         </div>
     )
