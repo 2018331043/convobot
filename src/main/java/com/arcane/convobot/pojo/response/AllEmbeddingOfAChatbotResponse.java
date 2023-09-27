@@ -1,4 +1,4 @@
-package com.arcane.convobot.pojo.request;
+package com.arcane.convobot.pojo.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachEmbeddingToChatbotRequest {
-    private Integer chatbotId;
-    private String inputText;
+public class AllEmbeddingOfAChatbotResponse{
+    private Integer embeddingId;
     private String embeddingName;
+    private Integer embeddingLength;
 }

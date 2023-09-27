@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TextEmbeddingRepository  extends JpaRepository<TextEmbedding, Integer> {
     List<TextEmbedding> findTextEmbeddingsByChatbotId(Integer chatbotId);
+    List<TextEmbedding> findTextEmbeddingsByEmbeddingId(Integer embeddingId);
 }

@@ -1,5 +1,6 @@
 package com.arcane.convobot.pojo;
 
+import com.arcane.convobot.pojo.request.AttachEmbeddingToChatbotRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +8,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Where(clause = "status != -1")
-public class TextEmbedding {
+public class Embedding {
     public static final Integer STATUS_DELETED = -1;
     public static final Integer STATUS_ACTIVE = 1;
 
@@ -19,28 +20,26 @@ public class TextEmbedding {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer chatbotId;
-
-    private Integer embeddingId;
-
     private Integer status;
 
-    @Column(columnDefinition = "TEXT")
-    private String text;
+    private String name;
 
-    @Column(columnDefinition = "TEXT")
-    private String embedding;
+    private Integer length;
+
+    private Long creationTime;
+
+    private Integer chatbotId;
 
     @PrePersist
     protected void onCreate() {
         this.status = STATUS_ACTIVE;
+        this.creationTime = System.currentTimeMillis();
     }
 
-    public TextEmbedding(Integer chatbotId, String text, String embedding, Integer embeddingId) {
-        this.chatbotId = chatbotId;
-        this.text = text;
-        this.embedding = embedding;
-        this.embeddingId = embeddingId;
+    public Embedding(AttachEmbeddingToChatbotRequest request){
+        this.chatbotId = request.getChatbotId();
+        this.name = request.getEmbeddingName();
+        this.length = request.getInputText().length();
     }
 
 }

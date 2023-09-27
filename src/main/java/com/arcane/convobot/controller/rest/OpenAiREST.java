@@ -3,18 +3,17 @@ package com.arcane.convobot.controller.rest;
 import com.arcane.convobot.pojo.request.AttachEmbeddingToChatbotRequest;
 import com.arcane.convobot.pojo.request.AttachWebInfoInChatbotRequest;
 import com.arcane.convobot.pojo.request.PromptGenerationRequest;
+import com.arcane.convobot.pojo.response.AllEmbeddingOfAChatbotResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.service.ChatbotService;
 import com.arcane.convobot.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -64,6 +63,25 @@ public class OpenAiREST {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
         }
+    }
+
+    @PostMapping("/delete-embedding/{embeddingId}")
+    public ResponseEntity<GenericResponseREST> deleteEmbeddingFromAChatbot(
+            @PathVariable Integer embeddingId
+    ) {
+        try {
+            return ResponseEntity.ok(chatbotService.deleteEmbeddingFromChatbot(embeddingId));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
+        }
+    }
+
+    @PostMapping("/get-all-embedding")
+    public ResponseEntity<List<AllEmbeddingOfAChatbotResponse>> getAllEmbeddingOfAChatbot(
+            @RequestParam Integer chatbotId
+    ) {
+            return ResponseEntity.ok(chatbotService.getAllEmbeddingOfChatbot(chatbotId));
     }
 
     @PostMapping("/attach-web-info-to-chatbot")
