@@ -47,7 +47,7 @@ export default function Sidebar({chatActive,setChatActive,selectedChatbot,setSel
                 setTempChatName(newChatbotName)
                 setTempChatDes(newChatbotDescription)
                 let item = {
-                    restriction: `- Do not answer any questions out of the topic.\n\n- Be brief and  precise with your answers\n\n- If anyone asks question out of the topic, you respond saying something like "Sorry I can't help you with that"`,
+                    restriction: `Do not answer any questions out of the topic.\n\nBe brief and  precise with your answers\n\nIf anyone asks question out of the topic, you respond saying something like "Sorry I can't help you with that"`,
                     description:newChatbotDescription,
                     id:-3,
                     name:newChatbotName,

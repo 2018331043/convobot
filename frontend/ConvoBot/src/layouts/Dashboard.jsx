@@ -25,6 +25,7 @@ export default function Dashboard(){
     const [chatbotList,setChatBotList] = useState([])
     const [openWidget,setOpenWidget] = useState(false)
     const [openReport,setOpenReport] = useState(false)
+    const [openAdvanced,setOpenAdvanced] = useState(false)
 
     const customTheme = createTheme({
         palette: {
@@ -80,10 +81,13 @@ export default function Dashboard(){
                 </ThemeProvider>):null}
                 <Navbar/>
                 <div className='dashboard-right-container'>
-                <ChildSiidebar chatActive={chatActive} setChatActive={setChatActive} openWidget={openWidget} setOpenWidget={setOpenWidget} selectedChatbot={selectedChatbot}/>
+                <ChildSiidebar chatActive={chatActive} setChatActive={setChatActive} 
+                openWidget={openWidget} setOpenWidget={setOpenWidget} 
+                selectedChatbot={selectedChatbot} openAdvanced={openAdvanced} setOpenAdvanced={setOpenAdvanced}/>
                 {(openReport ? <DetailedReport/> : <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot}
                 setSelectedChatbot={setSelectedChatbot} selectedChatbotInfo={selectedChatbotInfo}
-                setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} chatbotList={chatbotList} />)}
+                setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} chatbotList={chatbotList}
+                openAdvanced={openAdvanced} setOpenAdvanced={setOpenAdvanced} />)}
                 </div>
             </div>
         </div>
