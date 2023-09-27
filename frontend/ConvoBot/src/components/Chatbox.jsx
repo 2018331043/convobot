@@ -21,6 +21,7 @@ import displayToast from "../services/toast.service";
 import MicOffIcon from '@mui/icons-material/MicOff';
 import Lottie from 'lottie-react'
 import loading from '../assets/lottieLoading.json'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
 
@@ -28,6 +29,18 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   const [userApi,setUserApi] = useState('')
   const [tempList,setTempList] = useState([])
   const [isBotLoading,setIsBotLoading] = useState(false)
+  const [isMicOn,setIsMicOn] = useState(false)
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    displayToast.warning('Your browser does not support speech input',5000)
+  }
   const backButtonClicked = () =>{
     setChatActive(false)
   }
@@ -37,12 +50,12 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
     { id: uuidv4(), text: "How can I help you?", sender: "bot" },
   ]);
 
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(transcript);
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      handleSend(); 
+      handleSend();
     }
   };
 
@@ -78,6 +91,22 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
     setInput(event.target.value);
   };
 
+  // const startListeningInMic = () => {
+  //   console.log("isMicOn")
+  //   setIsMicOn(!isMicOn);
+  //   // if(isMicOn)
+  //     SpeechRecognition.startListening()
+  //   // else {
+  //   //   SpeechRecognition.stopListening()
+  //   //   // setInput(input + transcript)
+  //   // };
+  // };
+
+  useEffect(()=>{
+    //console.log(transcript)
+    setInput(transcript)
+  },[transcript])
+
   const customTheme = createTheme({
     palette: {
       primary: {
@@ -94,13 +123,13 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
           apiKeyService.generateApiKey((res)=>{
             setUserApi(res.value)
           },(err)=>{
-  
+
           })
         }
         // else{
         //   setUserApi(apiList[0].value)
         // }
-      
+
       },(err)=>{
         console.log(err)
       })
@@ -112,7 +141,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
           // Skip creating a message for 'system' role
           return null;
         }
-      
+
         return {
           id: uuidv4(),
           text: item.content,
@@ -149,7 +178,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
         targetDiv.scrollTop = targetDiv.scrollHeight
     }catch(e){
         console.log(e)
-    } 
+    }
 }
   useEffect(()=>{
     scrollBottom()
@@ -205,8 +234,8 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
                   <Button
                     color="primary"
                     variant="text"
-                    onClick={handleSend}
-                    style={{ marginRight: '-15px' }} 
+                    onClick={SpeechRecognition.startListening}
+                    style={{ marginRight: '-15px' }}
                   >
                     <MicOffIcon sx={{ color: 'primary', marginTop: '0px' }} />
                   </Button>
@@ -223,7 +252,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
             </Button>
           </Box>
         </Box>
-        
+
       </div>
     </ThemeProvider>
   );

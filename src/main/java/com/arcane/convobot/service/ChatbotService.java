@@ -10,6 +10,7 @@ import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.repo.ChatMessageRepository;
 import com.arcane.convobot.repo.ChatbotRepository;
 import com.arcane.convobot.repo.TextEmbeddingRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class ChatbotService {
     private final UserInfoProviderService userInfoProviderService;
     private final WebCrawlerService webCrawlerService;
     private final OpenAiService openAiService;
+
+    @Transactional
     public GenericResponseREST createChatbot(ChatbotCreationRequest request){
         Chatbot chatbot = new Chatbot(request, userInfoProviderService.getRequestUser().getId());
         Chatbot createdChatbot = chatbotRepository.save(chatbot);
