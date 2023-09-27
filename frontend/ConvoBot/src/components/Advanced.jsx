@@ -36,6 +36,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/system'
 import BuildIcon from '@mui/icons-material/Build';
+import advancedOpenApiService from '../services/advance.open.ai.service.js';
 
 
 export default function Advanced({
@@ -49,10 +50,66 @@ export default function Advanced({
     const [text,setText] = useState('')
     const [url,setUrl] = useState('')
     const [inputSize,setInputSize] = useState(400)
+    const [openName, setOpenName] = useState(false);
+    const [contextName, setContextName] = useState('');
 
-    const handleModelChange = (event) => {
-      setSelectedModel(event.target.value);
-    };
+        const handleClickOpen = () => {
+            setOpenName(true);
+        };
+
+        const handleClose = () => {
+            setOpenName(false);
+        };
+
+
+        const embeddingButtonClicked = ()=>{
+            if(text===''){
+                displayToast.error('Please provide some textual data to train.')
+            }else{
+                handleClickOpen()
+            }
+        }
+        const handleModelChange = (event) => {
+        setSelectedModel(event.target.value);
+        };
+
+        
+
+        const handleContextNameChange = (event) => {
+        setContextName(event.target.value);
+        };
+        
+        const embeddingConfirmation = ()=>{
+            setOpenName(false)
+            if(contextName!==''){
+                setIsLoading(true)
+                setLoadingTitle('Context integration in progress')
+                advancedOpenApiService.generateEmbedding(
+                    (res)=>{
+                        // console.log(res)
+                        setTimeout(()=>{
+                            setIsLoading(false)
+                            setLoadingTitle('')
+                            displayToast.success('Integration successfully completed.')
+                        },1000)
+                    },
+                    (e)=>{
+                        setTimeout(()=>{
+                            setIsLoading(false)
+                            setLoadingTitle('')
+                            displayToast.error('Error occured!')
+                        },1000)
+                    },
+                    {
+                        id:selectedChatbot,
+                        inputText:text,
+                        embeddingName:contextName
+                    }
+                )
+            }else{
+                displayToast.info('Please Provide a title.')
+            }
+        }
 
     return (
         <>
@@ -90,6 +147,7 @@ export default function Advanced({
                         variant="contained"
                         sx={{width:'fit-content',marginTop:'20px',marginLeft:'auto'}}
                         color="primary"
+                        onClick={embeddingButtonClicked}
                         startIcon={<BuildIcon />} // Add the TrainIcon as a startIcon
                         // onClick={handleTrainClick}
                         >
@@ -158,6 +216,35 @@ export default function Advanced({
                             paddingBottom:'5px'}}/>REGenerate Chatbot</Button>
                     </div>
                 </div>
+
+                {/* Dialog for embedding name */}
+                <Dialog
+                    open={openName}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                    {"Please provide a title for the context"}
+                    </DialogTitle>
+                    <DialogContent sx={{width:'450px'}}>
+                    <DialogContentText id="alert-dialog-description">
+                        <TextField
+                            label="title"
+                            variant="outlined"
+                            fullWidth
+                            value={contextName}
+                            onChange={handleContextNameChange}
+                            />
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={embeddingConfirmation} autoFocus>
+                        Confirm
+                    </Button>
+                    </DialogActions>
+                </Dialog>
                 <LoadingDialog loadingAnimation={isLoading} title={loadingTitle}/>
         </>
     )
