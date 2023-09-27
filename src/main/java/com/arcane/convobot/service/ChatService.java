@@ -51,11 +51,11 @@ public class ChatService {
                 chatbot.getTotalInputTokensSoFar()
                         + chatCompletionResponse.getUsage().getPromptTokens()
         );
-        chatbot.setTotalInputTokensSoFar(
+        chatbot.setTotalOutputTokensSoFar(
                 chatbot.getTotalOutputTokensSoFar()
                         + chatCompletionResponse.getUsage().getCompletionTokens()
         );
-        chatbot.setTotalInputTokensSoFar(
+        chatbot.setTotalTokensSoFar(
                 chatbot.getTotalTokensSoFar()
                         + chatCompletionResponse.getUsage().getTotalTokens()
         );
@@ -64,11 +64,11 @@ public class ChatService {
                 apiKeyObject.getTotalInputTokensSoFar()
                         + chatCompletionResponse.getUsage().getPromptTokens()
         );
-        apiKeyObject.setTotalInputTokensSoFar(
+        apiKeyObject.setTotalOutputTokensSoFar(
                 apiKeyObject.getTotalOutputTokensSoFar()
                         + chatCompletionResponse.getUsage().getCompletionTokens()
         );
-        apiKeyObject.setTotalInputTokensSoFar(
+        apiKeyObject.setTotalTokensSoFar(
                 apiKeyObject.getTotalTokensSoFar()
                         + chatCompletionResponse.getUsage().getTotalTokens()
         );

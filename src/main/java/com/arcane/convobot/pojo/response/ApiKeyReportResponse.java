@@ -10,16 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApiKeyReportResponse {
-    private Integer apiKeyId;
+    private Integer id;
     private String apiKeyName;
     private String value;
-    private String restrictions;
-    private String description;
     private Integer totalInputTokensSoFar;
     private Integer totalOutputTokensSoFar;
     private Integer totalTokensSoFar;
     public ApiKeyReportResponse(ApiKey apiKey) {
-        this.apiKeyId = apiKey.getId();
+        this.id = apiKey.getId();
         this.apiKeyName = apiKey.getName();
         this.value = apiKey.getValue();
         this.totalInputTokensSoFar = apiKey.getTotalInputTokensSoFar();
