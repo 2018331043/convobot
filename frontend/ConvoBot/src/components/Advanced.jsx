@@ -35,6 +35,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/system'
+import BuildIcon from '@mui/icons-material/Build';
 
 
 export default function Advanced({
@@ -52,6 +53,10 @@ export default function Advanced({
     const handleModelChange = (event) => {
       setSelectedModel(event.target.value);
     };
+
+    useEffect(()=>{
+        // console.log(selectedChatbotInfo)
+    },[])
   
     return (
         <>
@@ -85,7 +90,17 @@ export default function Advanced({
                         //   ),
                         // }}
                         />
-                        <Divider sx={{marginTop:'35px'}}/>
+                        <Button
+                        variant="contained"
+                        sx={{width:'fit-content',marginTop:'20px',marginLeft:'auto'}}
+                        color="primary"
+                        startIcon={<BuildIcon />} // Add the TrainIcon as a startIcon
+                        // onClick={handleTrainClick}
+                        >
+                        Train
+                        </Button>
+                        
+                        <Divider sx={{marginTop:'50px'}}/>
                         <Typography variant='h6' sx={{marginTop:'25px',fontWeight:'600'}}>Website Reference</Typography>
                         <Typography sx={{marginTop:'10px'}}> Provide a websiite link from which we can retrieve data to provide context for the chatbot. </Typography>
                         <TextField
@@ -102,8 +117,17 @@ export default function Advanced({
                             ),
                         }}
                         />
-                        <Divider sx={{marginTop:'35px'}}/>
-                        <div style={{display:'flex',justifyContent:'flex-start',marginTop:'35px',marginBottom:'50px'}}>
+                        <Button
+                        variant="contained"
+                        sx={{width:'fit-content',marginTop:'20px',marginLeft:'auto'}}
+                        color="primary"
+                        startIcon={<BuildIcon />} // Add the TrainIcon as a startIcon
+                        // onClick={handleTrainClick}
+                        >
+                        Train
+                        </Button>
+                        <Divider sx={{marginTop:'50px'}}/>
+                        <div style={{display:'flex',justifyContent:'flex-start',marginTop:'45px',marginBottom:'50px'}}>
                             <div style={{display:'flex',alignItems:'center'}}>
                             <Typography>Limit Input Size:</Typography>
                             <TextField

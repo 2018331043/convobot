@@ -1,14 +1,17 @@
 .advanced-body-container{
     height:calc(100vh - 220px);
-    width: calc(100% - 60px);
+    width: calc(100% - 65px);
+    margin-left: 20px;
     /* background: red; */
-    padding: 10px;
+    padding: 10px 30px 10px 10px;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: scroll;
     scrollbar-width: thin; 
     scrollbar-color: rgba(0, 0, 0, 0.2) transparent; 
+    bottom: 0; /* Start at the bottom */
+  animation: scrollUp 5s linear infinite;
 }
 
 .advanced-body-containerr::-webkit-scrollbar { /* WebKit */
@@ -17,8 +20,4 @@
     width: 10px !important;
     height: 10px !important;
     border-radius: 1500px !important;
-}
-.advanced-body-container::-webkit-scrollbar-thumb {
-  background: rgba(75, 77, 73, 0.252)  !important;
-  border-radius: 1500px !important;
 }
