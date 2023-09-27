@@ -48,7 +48,7 @@ export default function Advanced({
     const [loadingTitle,setLoadingTitle] = useState('Loading')
     const [selectedModel, setSelectedModel] = useState('gpt-3');
     const [text,setText] = useState('')
-    const [url,setUrl] = useState('')
+    const [urlData,setUrlData] = useState('')
     const [inputSize,setInputSize] = useState(400)
     const [openName, setOpenName] = useState(false);
     const [contextName, setContextName] = useState('');
@@ -111,6 +111,34 @@ export default function Advanced({
             }
         }
 
+        const websiteAttach = ()=>{
+            console.log(urlData)
+            console.log(selectedChatbot)
+            if(urlData===''){
+                displayToast.info('Please provide a url.')
+            }else{
+                setIsLoading(true)
+                setLoadingTitle('Fetching data from the website in progress.')
+                advancedOpenApiService.attachWebInfoToChatbot((res)=>{
+                    console.log(res)
+                    setTimeout(()=>{
+                        setIsLoading(false)
+                        setLoadingTitle('')
+                        displayToast.success('Chatbot fetched data successfully')
+                    },1000)
+                },(e)=>{
+                    setTimeout(()=>{
+                        setIsLoading(false)
+                        setLoadingTitle('')
+                        displayToast.error('Error occured!')
+                    },1000)
+                },{
+                    id:selectedChatbot,
+                    url:urlData
+                })
+            }
+        }
+
     return (
         <>
              <div className='chatbotInfo-body' style={{display:'flex',flexDirection:'column',
@@ -163,7 +191,7 @@ export default function Advanced({
                         variant="outlined"
                         fullWidth
                         onChange={(e)=>{
-                            setUrl(e.target.value)
+                            setUrlData(e.target.value)
                         }}
                         InputProps={{
                             startAdornment: (
@@ -173,6 +201,7 @@ export default function Advanced({
                         />
                         <Button
                         variant="contained"
+                        onClick={websiteAttach}
                         sx={{width:'fit-content',marginTop:'20px',marginLeft:'auto'}}
                         color="primary"
                         startIcon={<BuildIcon />} // Add the TrainIcon as a startIcon
