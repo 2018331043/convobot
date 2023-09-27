@@ -52,7 +52,7 @@ export default function Advanced({
     const handleModelChange = (event) => {
       setSelectedModel(event.target.value);
     };
-  
+
     return (
         <>
              <div className='chatbotInfo-body' style={{display:'flex',flexDirection:'column',
@@ -63,7 +63,7 @@ export default function Advanced({
                     </div>
                     <div className='advanced-body-container'>
                         <Typography variant='h6' sx={{marginTop:'10px',fontWeight:'600'}}>Context Input</Typography>
-                        <Typography sx={{marginTop:'10px'}}> Provide a text to let us know the context of the chatbot. </Typography>
+                        <Typography sx={{marginTop:'10px'}}> You can provide a textual data to <b>train</b> your chatbot. Your chatbot will be able to use these data as a context to answer user's queries. Note that this data can be very large textual data. </Typography>
                         <TextField
                         // className='chatbotInfo-body-container-textfield'
                         id="outlined-multiline-static"
@@ -74,7 +74,7 @@ export default function Advanced({
                         onChange={(e)=>{
                             setText(e.target.value)
                         }}
-                        className="custom-scroll-style" 
+                        className="custom-scroll-style"
                         // InputProps={{
                         //   startAdornment: (
                         //     // <InputAdornment position="start">
@@ -87,7 +87,7 @@ export default function Advanced({
                         />
                         <Divider sx={{marginTop:'35px'}}/>
                         <Typography variant='h6' sx={{marginTop:'25px',fontWeight:'600'}}>Website Reference</Typography>
-                        <Typography sx={{marginTop:'10px'}}> Provide a websiite link from which we can retrieve data to provide context for the chatbot. </Typography>
+                        <Typography sx={{marginTop:'10px'}}> Add your or any other website url to your chatbot. Your chatbot will be able to map the provided website automatically and answer any questions with data from that website. </Typography>
                         <TextField
                         sx={{marginTop:'20px'}}
                         label="URL"
