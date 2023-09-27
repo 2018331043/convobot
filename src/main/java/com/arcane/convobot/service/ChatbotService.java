@@ -5,6 +5,7 @@ import com.arcane.convobot.pojo.Chatbot;
 import com.arcane.convobot.pojo.Embedding;
 import com.arcane.convobot.pojo.TextEmbedding;
 import com.arcane.convobot.pojo.request.*;
+import com.arcane.convobot.pojo.response.AllEmbeddingOfAChatbotResponse;
 import com.arcane.convobot.pojo.response.ChatbotReportResponse;
 import com.arcane.convobot.pojo.response.CreateEmbeddingResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
@@ -96,6 +97,17 @@ public class ChatbotService {
         }));
 
         return new GenericResponseREST("Successfully Added Data to your chatbot");
+    }
+
+    public List<AllEmbeddingOfAChatbotResponse> getAllEmbeddingOfChatbot(Integer chatbotId) {
+        List<Embedding> embeddingList = embeddingRepository.findAllByChatbotId(chatbotId);
+        List<AllEmbeddingOfAChatbotResponse> allEmbeddingOfAChatbotResponseList = new ArrayList<>();
+        embeddingList.forEach(embedding -> {
+            allEmbeddingOfAChatbotResponseList.add(
+                    new AllEmbeddingOfAChatbotResponse(embedding.getId(), embedding.getName(), embedding.getLength())
+            );
+        });
+        return allEmbeddingOfAChatbotResponseList;
     }
 
     @Transactional
