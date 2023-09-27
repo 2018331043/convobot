@@ -21,9 +21,9 @@ const apiKeyService = {
     getApiKeys(success,error){
       axios.get('api-key/get-all-api-keys')
       .then( (res) =>{
-        console.log(res.data.apiKeyResponseList)
+        // console.log(res.data.apiKeyResponseList)
         let data = res.data.apiKeyResponseList
-        console.log(data)
+        // console.log(data)
         success(data)
       } )
       .catch(
