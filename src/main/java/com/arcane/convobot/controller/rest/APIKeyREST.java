@@ -1,6 +1,7 @@
 package com.arcane.convobot.controller.rest;
 
 import com.arcane.convobot.pojo.Chatbot;
+import com.arcane.convobot.pojo.request.GenerateApiKeyRequest;
 import com.arcane.convobot.pojo.response.ApiKeyReportResponse;
 import com.arcane.convobot.pojo.response.ChatbotReportResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
@@ -18,9 +19,9 @@ public class APIKeyREST {
     private final APIKeyService apiKeyService;
     @PostMapping("/generate-api-key")
     public ResponseEntity<GenericResponseREST> generateApiKey(
-            @RequestBody String apikeyName
+            @RequestBody GenerateApiKeyRequest request
     ) {
-        return ResponseEntity.ok(apiKeyService.generateApiKey(apikeyName));
+        return ResponseEntity.ok(apiKeyService.generateApiKey(request.getApikeyName()));
     }
     @GetMapping("/get-all-api-keys")
     public ResponseEntity<GenericResponseREST> getAllApiKeys(

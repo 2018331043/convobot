@@ -14,4 +14,5 @@ public class ChatbotCreationRequest {
     private String restriction;
     private String chatbotName;
     private String description;
+    private String model;
 }
