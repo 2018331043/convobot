@@ -3,6 +3,7 @@ package com.arcane.convobot.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,16 @@ public class UtilService {
                 .map(String::trim)
                 .collect(Collectors.toList());
 
-        return  sentenceList;
+        //Chunking them in two sentences each
+        List<String> chunkedSentenceList = new ArrayList<>();
+        for(Integer i =0; i<sentenceList.size();i+=2){
+            String chunkedSentence = sentenceList.get(i);
+            if(i+1 < sentenceList.size()){
+                chunkedSentence =  chunkedSentence + sentenceList.get(i+1);
+            }
+            chunkedSentenceList.add(chunkedSentence);
+        }
+
+        return  chunkedSentenceList;
     }
 }

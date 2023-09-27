@@ -83,7 +83,7 @@ public class ChatService {
         chatMessages.add(new ChatCompletionMessage(
                 "system",
                 chatbot.getPrompt() + chatbot.getRestriction() +
-                        "Also use the context below if it is relevant to the questions\n" +
+                        "Also use the context below if it is relevant to the question\n" +
                         "Context: "+ context)
         );
         List<ChatMessage> previousChatMessageList = chatMessageRepository

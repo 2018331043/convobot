@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OpenAiService {
-    public static final Integer CONTEXT_LENGTH = 200;
+    public static final Integer CONTEXT_LENGTH = 1000;
     @Value("${openapi.apikey}")
     private String apiKey;
     private final RestTemplate restTemplate;
