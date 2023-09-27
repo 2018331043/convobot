@@ -9,10 +9,7 @@ import com.arcane.convobot.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
@@ -60,6 +57,18 @@ public class OpenAiREST {
             ) {
         try {
             return ResponseEntity.ok(chatbotService.attachEmbeddingToChatbot(request));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));
+        }
+    }
+
+    @PostMapping("/delete-embedding/{embeddingId}")
+    public ResponseEntity<GenericResponseREST> deleteEmbeddingFromAChatbot(
+            @PathVariable Integer embeddingId
+    ) {
+        try {
+            return ResponseEntity.ok(chatbotService.deleteEmbeddingFromChatbot(embeddingId));
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericResponseREST(e.getMessage()));

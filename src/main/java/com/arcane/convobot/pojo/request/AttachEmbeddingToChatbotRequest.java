@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class AttachEmbeddingToChatbotRequest {
     private Integer chatbotId;
     private String inputText;
+    private String embeddingName;
 }
