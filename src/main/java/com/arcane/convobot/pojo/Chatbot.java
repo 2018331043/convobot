@@ -46,6 +46,8 @@ public class Chatbot{
 
     private String name;
 
+    private String model;
+
     private Integer totalInputTokensSoFar;
 
     private Integer totalOutputTokensSoFar;
@@ -66,6 +68,7 @@ public class Chatbot{
         this.totalInputTokensSoFar = 0;
         this.totalOutputTokensSoFar = 0;
         this.totalTokensSoFar = 0;
+        this.model = request.getModel();
     }
 
 }
