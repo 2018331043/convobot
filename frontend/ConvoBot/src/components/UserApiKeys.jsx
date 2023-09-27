@@ -63,13 +63,13 @@ export default function UserApiKeys({listItems, setListItems, openApiKeys, setOp
       handleGenerateDialogClose()
       setIsLoading(true)
       setLoadingTitle('API creation in prgress')
-      apiKeyService.generateApiKey((res) =>{ 
+      apiKeyService.generateApiKey((res) =>{
         apiKeyService.getApiKeys(
             (res)=>{
-                setListItems(res)
                 setTimeout(()=>{
+                  setListItems(res)
                   setIsLoading(false)
-                  displayToast.success('Api successfully created') 
+                  displayToast.success('Api successfully created')
                 },2000)
             },
             (e)=>{
