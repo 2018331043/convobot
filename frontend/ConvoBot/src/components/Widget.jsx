@@ -47,6 +47,14 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
   style="position: absolute;bottom: 1px;right: 1px;z-index: 9000">
 </iframe>`
 
+const userApiLink =
+`curl http://127.0.0.1:5173/chatbot/${userApi}/${selectedChatbot} \
+-H "Content-Type: application/json" \
+-d '{
+  "inputText": "YOUR TEXT INPUT",
+  "chatbotId": ${selectedChatbot}
+}'`
+
   const customTheme = createTheme({
     palette: {
       primary: {
@@ -103,15 +111,6 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
             {/* Convo<span className="chatbox-span-1">Bot</span> */}
             {chatbotName}
           </Typography>
-          {/* <IconButton
-              aria-label="open menu"
-              aria-controls="menu"
-              aria-haspopup="true"
-              onClick={backButtonClicked}
-              sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'40px',width:'40px'}}
-            >
-            <ArrowBackIcon sx={{color:'white',marginRight:'20px',paddingLeft:'10px'}}/>
-          </IconButton> */}
 
         </div>
         <ThemeProvider theme={darkTheme}>
@@ -125,7 +124,18 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
                   </Button>
                 </Tooltip>
                 </div>
-                <pre style={{color:'white',marginLeft:'40px',marginBottom:'20px'}}>{iframeCode}</pre>
+                <pre style={{color:'white',marginLeft:'40px',marginBottom:'20px',fontSize:'14px'}}>{iframeCode}</pre>
+            </div>
+            <Typography variant="h6" sx={{marginTop:'20px'}}>Chatbot API</Typography>
+            <div className="widget-code">
+                <div className="widget-code-copy">
+                <Tooltip title='Copy to Clipboard'>
+                  <Button onClick={copyToClipboard} sx={{margin:'10px 5px -20px'}}>
+                      <ContentCopyIcon sx={{color:'white'}}/>
+                  </Button>
+                </Tooltip>
+                </div>
+                <pre style={{color:'white',marginLeft:'40px',marginBottom:'20px',fontSize:'14px'}}>{userApiLink}</pre>
             </div>
         </div>
         </ThemeProvider>

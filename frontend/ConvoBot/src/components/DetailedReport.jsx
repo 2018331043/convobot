@@ -141,25 +141,16 @@ export default function DetailedReport({reportType}) {
    
     
     return (
-    <div className="chatbox-container" style={{zIndex:1000, overflowX:'auto'}}>
+    <div className="chatbox-container" style={{zIndex:1000}}>
         <div className="chatbox-nav" style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',borderBottom:'solid',
             borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>
             <Typography variant="h6" sx={{ color: 'white', marginLeft: '30px', fontSize:'17px'}}>
                 {reportType === 'chatbot'? 'Chatbot Report':'Api Key Report'}
             </Typography>
-            <IconButton
-                aria-label="open menu"
-                aria-controls="menu"
-                aria-haspopup="true"
-                onClick={backButtonClicked}
-                sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'40px',width:'40px'}}
-            >
-                <ArrowBackIcon sx={{color:'white',marginRight:'20px',paddingLeft:'10px'}}/>
-            </IconButton>
 
         </div>
         <ThemeProvider theme={customTheme}>
-            {reportType === 'chatbot'? <div style={{ height: '80%', width: '100%',display:"flex",flexDirection:"column", marginTop:"20px"}}>
+            {reportType === 'chatbot'? <div style={{ overflow:'auto', height: '80%', width: '100%',display:"flex",flexDirection:"column", marginTop:"20px"}}>
                 <div style={{ height: '80%', width: '100%',display:"flex",flexDirection:"row", marginTop:"20px"}}>
                     <BarChart
                         dataset={chatbotListForReport}
@@ -186,7 +177,7 @@ export default function DetailedReport({reportType}) {
                         rowHeight={100}
                     />
                 </div>
-            </div>:<div style={{ height: '80%', width: '100%',display:"flex",flexDirection:"column", marginTop:"20px"}}>
+            </div>:<div style={{ overflow:'auto', height: '80%', width: '100%',display:"flex",flexDirection:"column", marginTop:"20px"}}>
                 <div style={{ height: '80%', width: '100%',display:"flex",flexDirection:"row", marginTop:"20px"}}>
                     <BarChart
                         dataset={apiKeyListForReport}
