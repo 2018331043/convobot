@@ -31,10 +31,8 @@ export default function Dashboard(){
     const customTheme = createTheme({
         palette: {
           primary: {
-            main: "rgb(255, 189, 6)", // Change this to your desired color
-            // main: "rgb(0,0,0,.9)",
+            main: "rgb(255, 189, 6)",
           },
-          // You can also customize other colors like secondary, error, etc.
         },
       });
       const signOutUser = () => {
@@ -58,18 +56,6 @@ export default function Dashboard(){
           axiosInstance.interceptors.response.eject(responseInterceptor);
         };
       }, [])
-
-    // useEffect(()=>{
-    //   console.log(selectedChatbot)
-    //   console.log(selectedChatbotInfo)
-    // },[selectedChatbot])
-    // useEffect(()=>{
-    //   apiKeyService.apiKey((res)=>{
-    //     console.log(res)
-    //   },(e)=>{
-    //     console.log(e)
-    //   })
-    // },[])
     return (
         <div className="dashboard-body">
             <Sidebar setOpenReport={setOpenReport} chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot}

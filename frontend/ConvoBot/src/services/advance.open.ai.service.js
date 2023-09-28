@@ -63,8 +63,6 @@ const advancedOpenApiService = {
         }
     },
     deleteEmbedding(success,error,data){
-        // data = parseInt(data)
-        // console.log(typeof(data))
         try{
             axios.post(`/open-ai/delete-embedding/${data}`).then(
                 (res)=>{

@@ -2,25 +2,20 @@ import logo from '../assets/bot.png'
 import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-// import AssistantIcon from '@mui/icons-material/Assistant';
 import { InputAdornment } from '@mui/material';
 import { IconButton, Avatar } from '@mui/material';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-// import Tooltip from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
-import { useEffect } from 'react';
 import * as React from "react";
 import { v4 as uuidv4 } from 'uuid';
 import SendIcon from "@mui/icons-material/Send";
 import minimizeImg from '../assets/minimize.png'
 import MicOffIcon from "@mui/icons-material/MicOff.js";
-import { useParams } from 'react-router-dom';
-import Lottie from 'lottie-react'
 import '../styling/components/DemoChatbot.css'
 
 export default function DemoChatbot( {themeColor}){
@@ -29,9 +24,9 @@ export default function DemoChatbot( {themeColor}){
 
     const [messages, setMessages] = useState([
         { id: uuidv4(), text: "Hi there!", sender: "bot" },
-        { id: uuidv4(), text: "How can I assist you today?", sender: "bot" },
+        { id: uuidv4(), text: "How can I assist you?", sender: "bot" },
         // { id: uuidv4(), text: backgroundColor, sender: "bot"},
-        {id: uuidv4(), text: 'hello', sender: "user" },
+        {id: uuidv4(), text: 'Tell me about yourself', sender: "user" },
       ]);
 
       const customTheme = createTheme({

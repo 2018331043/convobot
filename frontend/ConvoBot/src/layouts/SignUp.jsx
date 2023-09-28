@@ -16,10 +16,6 @@ import '../styling/SignUp.css'
 import { useState,useEffect } from 'react';
 import authService from '../services/auth.service.js';
 
-// http://localhost:8080/convobot/api/v1/register
-// private String userName;
-// private String email;
-// private String password;
 
 function Copyright(props) {
   return (
@@ -39,7 +35,6 @@ const theme = createTheme({
       primary: {
         main: "rgb(255, 189, 6)", // Change this to your desired color
       },
-      // You can also customize other colors like secondary, error, etc.
     },
   });
 
@@ -59,14 +54,7 @@ export default function SignUp() {
       }))
       console.log(userData)
     }else{
-      // console.log("wow!")
     }
-    // console.log({
-    //   userName: firstName + " " + lastName,
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
-    
   };
 
   const [userData,setUserData] = useState({})

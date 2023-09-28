@@ -2,19 +2,16 @@ import logo from '../assets/bot.png'
 import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField';
 import { createTheme, rgbToHex, ThemeProvider } from "@mui/material/styles"
-// import AssistantIcon from '@mui/icons-material/Assistant';
 import { InputAdornment } from '@mui/material';
 import { IconButton, Avatar } from '@mui/material';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-// import Tooltip from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
-import '../styling/components/ExternalChatbox.css'
 import * as React from "react";
 import { v4 as uuidv4 } from 'uuid';
 import SendIcon from "@mui/icons-material/Send";
@@ -22,7 +19,6 @@ import '../styling/components/Chatbox.css';
 import minimizeImg from '../assets/minimize.png'
 import MicOffIcon from "@mui/icons-material/MicOff.js";
 import chatService from "../services/chat.service";
-import apiKeyService from "../services/api.key.service";
 import { useParams } from 'react-router-dom';
 import Lottie from 'lottie-react'
 import loading from '../assets/lottieLoading.json'
@@ -52,7 +48,7 @@ export default function ExternalChatbox(){
 
     }
   },[themeColor])
-  
+
     const [anchorEl, setAnchorEl] = useState(null);
       const [open, setOpen] = useState(false);
       const [placement, setPlacement] = useState();
@@ -68,8 +64,6 @@ export default function ExternalChatbox(){
     const [messages, setMessages] = useState([
         { id: uuidv4(), text: "Hi there!", sender: "bot" },
         { id: uuidv4(), text: "How can I assist you today?", sender: "bot" },
-        // { id: uuidv4(), text: backgroundColor, sender: "bot"},
-        {id: uuidv4(), text: themeColor, sender: "user" },
       ]);
 
       const [input, setInput] = useState("");
@@ -83,22 +77,16 @@ export default function ExternalChatbox(){
 
       const handleSend = () => {
         if (input.trim() !== "") {
-          // console.log(input);
           const newMessage = { id: uuidv4(), text: input, sender: "user" };
           const updatedMessages = [...messages, newMessage];
-          setMessages(updatedMessages); // Create a new array with the existing messages and the new message
+          setMessages(updatedMessages);
           setIsBotLoading(true)
-          // console.log(input)
-          // console.log(selectedChatbot)
-          // console.log(userApi)
           chatService.sendText((res)=>{
-            // console.log(res.data.outputText)
             const newReplyMessage = { id: uuidv4(), text: res.data.outputText, sender: "bot" }
             const updatedMessagesWithReply = [...updatedMessages, newReplyMessage];
             setIsBotLoading(false)
             setMessages(updatedMessagesWithReply);
           },(err)=>{
-            // console.log('error')
             setIsBotLoading(false)
           },{
             text:input,

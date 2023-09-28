@@ -61,14 +61,10 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
 
   const handleSend = () => {
     if (input.trim() !== "") {
-      // console.log(input);
       const newMessage = { id: uuidv4(), text: input, sender: "user" };
       const updatedMessages = [...messages, newMessage];
-      setMessages(updatedMessages); // Create a new array with the existing messages and the new message
+      setMessages(updatedMessages);
       setIsBotLoading(true)
-      // console.log(input)
-      // console.log(selectedChatbot)
-      // console.log(userApi)
       chatService.sendText((res)=>{
         console.log(res.data.outputText)
         const newReplyMessage = { id: uuidv4(), text: res.data.outputText, sender: "bot" }
@@ -90,20 +86,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   const handleInputChange = (event) => {
     setInput(event.target.value);
   };
-
-  // const startListeningInMic = () => {
-  //   console.log("isMicOn")
-  //   setIsMicOn(!isMicOn);
-  //   // if(isMicOn)
-  //     SpeechRecognition.startListening()
-  //   // else {
-  //   //   SpeechRecognition.stopListening()
-  //   //   // setInput(input + transcript)
-  //   // };
-  // };
-
   useEffect(()=>{
-    //console.log(transcript)
     setInput(transcript)
   },[transcript])
 
@@ -117,28 +100,20 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   useEffect(()=>{
     apiKeyService.getApiKeys((res)=>{
         setApiList(res)
-        // console.log(res.length)
         if(res.length===0){
-          // console.log(('wow'))
           apiKeyService.generateApiKey((res)=>{
             setUserApi(res.value)
           },(err)=>{
 
           })
         }
-        // else{
-        //   setUserApi(apiList[0].value)
-        // }
-
       },(err)=>{
         console.log(err)
       })
 
     chatService.getChat((res)=>{
-      // console.log(res)
       const transformedMessages = res.map((item) => {
         if (item.role === 'system') {
-          // Skip creating a message for 'system' role
           return null;
         }
 
@@ -162,7 +137,6 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   useEffect(()=>{
     if(apiList.length>0){
       setUserApi(apiList[0].value)
-      // console.log(userApi)
     }
   },[apiList])
 
@@ -172,7 +146,6 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   },[tempList])
 
   const scrollBottom = (e) => {
-    // console.log('ohhhhhh')
     var targetDiv = document.querySelector('.chatbox-messages-container')
     try{
         targetDiv.scrollTop = targetDiv.scrollHeight
@@ -189,23 +162,12 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
         <div className="chatbox-nav" style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',borderBottom:'solid',
         borderBottomColor:'rgba(255, 189, 6, 0.849)',height:'60px'}}>
           <Typography variant="h6" sx={{ color: 'white', marginLeft: '30px',marginBottom:'0', display: 'flex', alignItems: 'center'}}>
-            {/* Convo<span className="chatbox-span-1">Bot</span> */}
             {chatbotName}
           </Typography>
-          {/* <IconButton
-              aria-label="open menu"
-              aria-controls="menu"
-              aria-haspopup="true"
-              onClick={backButtonClicked}
-              sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'40px',width:'40px'}}
-            >
-            <ArrowBackIcon sx={{color:'white',marginRight:'20px'}}/>
-          </IconButton> */}
 
         </div>
         <Box
           sx={{
-            // paddingTop: '10px',
             height: "calc(100% - 60px )",
             width: "100%",
             display: "flex",
@@ -297,7 +259,6 @@ const Message = ({ message }) => {
 }
 
 const LoadingAnim = ({ isLoading }) => {
-  // console.log("isLoading:", isLoading);
   const isBot = 'bot'
   return isLoading ? (
     <Box
@@ -323,7 +284,6 @@ const LoadingAnim = ({ isLoading }) => {
             padding:'0px 0px' ,
             ml: isBot ? 1 : 0,
             mr: isBot ? 0 : 1,
-            // backgroundColor: isBot ? "primary.light" : "",
             borderRadius: isBot ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
           }}
         >

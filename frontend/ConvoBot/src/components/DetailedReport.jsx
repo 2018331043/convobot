@@ -88,7 +88,6 @@ const customTheme = createTheme({
         primary: {
             main: "rgb(255, 189, 6)", // Change this to your desired color
         },
-        // You can also customize other colors like secondary, error, etc.
     },
 });
 const backButtonClicked = () =>{
@@ -132,8 +131,6 @@ export default function DetailedReport({reportType}) {
         authService.getAllApiKeyReport((res)=>{
             let list = res.data
             setApiKeyListForReport(list)
-            // console.log(list)
-            // setChatBotList(list)
         },(err)=>{
             console.log(err)
         })

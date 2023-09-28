@@ -1,18 +1,14 @@
 import '../styling/components/ChatbotInfo.css'
-import logo from '../assets/bot.png'
 import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from "@mui/material/styles"
-// import AssistantIcon from '@mui/icons-material/Assistant';
 import { InputAdornment } from '@mui/material';
 import { IconButton } from '@mui/material';
 import AdbIcon from '@mui/icons-material/Adb';
-// import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import BlockIcon from '@mui/icons-material/Block';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import Tooltip from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import Dialog from '@mui/material/Dialog';
@@ -27,7 +23,6 @@ import authService from '../services/auth.service.js';
 import LoadingDialog from './LoadingDialog';
 import displayToast from '../services/toast.service.js';
 import chatService from '../services/chat.service';
-import widgetImg from '../assets/open_menu.png'
 import Widget from './Widget';
 import Advanced from './Advanced';
 
@@ -56,9 +51,8 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
     const customTheme = createTheme({
         palette: {
           primary: {
-            main: "rgb(255, 189, 6)", // Change this to your desired color
+            main: "rgb(255, 189, 6)", 
           },
-          // You can also customize other colors like secondary, error, etc.
         },
       });
       const autoPromptButtonClicked =()=>{
@@ -66,38 +60,30 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
         setIsLoading(true)
         try{
           authService.generatePrompt((res)=>{
-            // console.log(res)
             setChatbotPrompt(res)
             setIsLoading(false)
             setLoadingTitle('Loading')
           },(e)=>{
-            // console.log(e)
           },chatbotName)
         }catch(e){
-          //pls try again
+          displayToast.info('please try again')
         }
       }
 
       useEffect(()=>{
-        // console.log(selectedChatbotInfo)
         try{
           setChatbotName(selectedChatbotInfo.name)
           setChatbotPrompt(selectedChatbotInfo.prompt)
           setChatbotRestriction(selectedChatbotInfo.restriction)
-          // console.log(selectedChatbotInfo)
         }catch(e){
           setChatbotName("")
           setChatbotPrompt("")
           setChatbotRestriction("")
-          // window.location.reload()
         }
-        // console.log('wwow')
       },[selectedChatbotInfo])
 
       const generateChatbot = ()=>{
         if(selectedChatbot===-3){
-          // selectedChatbotInfo.prompt = chatbotPrompt
-          // selectedChatbotInfo.restriction = chatbotRestriction
           setLoadingTitle('Chatbot creation in progress!')
           setIsLoading(true)
           chatService.createChatbot((res)=>{
@@ -105,11 +91,9 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
               let list = res.data
               setChatBotList(list)
             },(err)=>{
-                // console.log(err)
             })
             setSelectedChatbot(chatbotList[chatbotList.length-1].id)
             setIsLoading(false)
-            // window.location.reload()
             displayToast.success('Successfully Chatbot Created!')
           },
           (e)=>{
@@ -123,8 +107,6 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
           })
         }else{
           if(selectedChatbotInfo.prompt!==chatbotPrompt||selectedChatbotInfo.restriction!==chatbotRestriction){
-            // selectedChatbotInfo.prompt = chatbotPrompt
-            // selectedChatbotInfo.restriction = chatbotRestriction
             setLoadingTitle('Chatbot updating in progress!')
             setIsLoading(true)
             chatService.updateChatbot((res)=>{
@@ -132,7 +114,6 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                   let list = res.data
                   setChatBotList(list)
               },(err)=>{
-                  // console.log(err)
               })
               setSelectedChatbot(chatbotList[chatbotList.length-1].id)
               setTimeout(() => {
@@ -148,7 +129,6 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
               chatbotName:selectedChatbotInfo.name,
               description:selectedChatbotInfo.description,})
           }
-          // console.log(selectedChatbot)
         }
       }
 
@@ -169,7 +149,6 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
           },(err)=>{
             setIsLoading(false)
             setLoadingTitle('')
-              // console.log(err)
           })
           setSelectedChatbot(chatbotList[chatbotList.length-1].id)
         },(e)=>{
@@ -217,7 +196,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                         label="Base Prompt"
                         multiline
                         rows={7}
-                        value= {chatbotPrompt} //"Write a prompt for your chatbot."
+                        value= {chatbotPrompt}
                         onChange={(e)=>{
                           setChatbotPrompt(e.target.value)
                         }}
@@ -238,7 +217,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                         label="Restrictions for the Chatbot"
                         multiline
                         rows={7}
-                        value= {chatbotRestriction}   //"Write if there any restrictions for the chatbot"
+                        value= {chatbotRestriction}
                         onChange={(e)=>{
                           setChatbotRestriction(e.target.value)
                         }}
@@ -255,25 +234,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                     </div>
                     </Box>
                     </div>
-                    <div className='chatbotInfo-body-footer'>
-                      {/* {
-                        selectedChatbot!==-3&&(
-                        <div className='chatbotInfo-body-footer-button-group'>
-                          <Tooltip title='Open widget menu'>
-                          <Button onClick={openWidgetClicked} variant='outlined' sx={{marginLeft:'25px',paddingTop:'10px',
-                          paddingBottom:'10px',paddingRight:'8px'}}><img src={widgetImg} style={{height:'25px',marginRight:'8px'}} /></Button>
-                          </Tooltip>
-                          <Tooltip title="Tap to chat">
-                            <Button onClick={()=>{
-                              setChatActive(true)
-                            }} sx={{borderRadius:'100px',marginRight:'20px'}}>
-                                <img src={logo} style={{height:'40px',width:'40px'}}/>
-                            </Button>
-                          </Tooltip>
-                        </div>
-                        )
-                      } */}
-                    
+                    <div className='chatbotInfo-body-footer'>         
                         <Button variant='contained' size='string' className='chatbotInfo-body-footer-button' onClick={generateChatbot} sx={{marginLeft:'auto'}}><SettingsSuggestIcon sx={{marginRight:'5px',marginBottom:'3px'}}/>Generate Chatbot</Button>
                     </div>       
                 </div>
@@ -290,7 +251,6 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
                         <Button onClick={deleteItem}>Ok</Button>
                         </DialogActions>
                  </Dialog>
-                 {/* <ToastContainer /> */}
                  </>
                   ))
           )

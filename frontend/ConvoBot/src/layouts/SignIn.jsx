@@ -40,7 +40,6 @@ export default function SignIn() {
           primary: {
             main: "rgb(255, 189, 6)", // Change this to your desired color
           },
-          // You can also customize other colors like secondary, error, etc.
         },
       });
 
@@ -48,10 +47,6 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // })
     let emailData = data.get('email')
     let passwordData = data.get('password')
     if(emailData!==null&&passwordData!==null){

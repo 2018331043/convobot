@@ -43,7 +43,6 @@ export default function UserApiKeys({listItems, setListItems, openApiKeys, setOp
   });
 
   const generateApiKeyClicked = () => {
-    // Show the generate API key dialog when the button is clicked
     handleGenerateDialogOpen();
   };
 

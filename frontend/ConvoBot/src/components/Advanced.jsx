@@ -1,19 +1,8 @@
 import '../styling/components/Advanced.css'
 import '../styling/components/ChatbotInfo.css'
-import logo from '../assets/bot.png'
-import { Box } from '@mui/material'
 import TextField from '@mui/material/TextField';
-import { createTheme, ThemeProvider } from "@mui/material/styles"
-// import AssistantIcon from '@mui/icons-material/Assistant';
-import { InputAdornment } from '@mui/material';
-import { IconButton } from '@mui/material';
-import AdbIcon from '@mui/icons-material/Adb';
-// import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import BlockIcon from '@mui/icons-material/Block';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-// import Tooltip from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import Dialog from '@mui/material/Dialog';
@@ -22,19 +11,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import React, { useState } from 'react';
-import ChatBox from './Chatbox.jsx'
 import { useEffect,useRef } from 'react';
-import authService from '../services/auth.service.js';
 import LoadingDialog from './LoadingDialog';
 import displayToast from '../services/toast.service.js';
-import chatService from '../services/chat.service';
 import Divider from '@mui/material/Divider';
 import LinkIcon from '@mui/icons-material/Link';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import { styled } from '@mui/system'
 import BuildIcon from '@mui/icons-material/Build';
 import advancedOpenApiService from '../services/advance.open.ai.service.js';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';

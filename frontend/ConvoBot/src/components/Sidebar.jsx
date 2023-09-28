@@ -1,5 +1,4 @@
 import '../styling/components/Sidebar.css'
-// import { useState } from 'react';
 import logo from '../assets/bot.png'
 import Typography from '@mui/material/Typography';
 import IconButton from "@mui/material/IconButton";
@@ -17,8 +16,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import authService from '../services/auth.service';
 import { useParams } from 'react-router-dom';
 import displayToast from '../services/toast.service';
-import chatService from "../services/chat.service";
-import apiKeyService from "../services/api.key.service";
 
 export default function Sidebar({setOpenReport,chatActive,setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
     chatbotList,setChatBotList,openWidget,setOpenWidget,openAdvanced,setOpenAdvanced}){
@@ -40,8 +37,6 @@ export default function Sidebar({setOpenReport,chatActive,setChatActive,selected
         const newChatbotButtonClicked = ()=>{
             console.log(chatbotList)
             if(newChatbotName!==""&&newChatbotDescription!==""){
-                // console.log(newChatbotName)
-                // console.log(newChatbotDescription)
                 setChatBotList(chatbotList.filter(item=>item.id!==-3))
                 handleClose()
                 setTempChatName(newChatbotName)
@@ -72,14 +67,11 @@ export default function Sidebar({setOpenReport,chatActive,setChatActive,selected
             palette: {
               primary: {
                 main: "rgb(255, 189, 6)", // Change this to your desired color
-                // main: "rgb(0,0,0,.9)",
               },
-              // You can also customize other colors like secondary, error, etc.
             },
           });
 
           const itemClicked = useCallback((item) => {
-            // console.log(item);
             setOpenAdvanced((false))
             setChatActive(false)
             setSelectedChatbot(item.id)
@@ -89,12 +81,8 @@ export default function Sidebar({setOpenReport,chatActive,setChatActive,selected
             setOpenReport(false)
           }, [setSelectedChatbot,openWidget,chatActive]);
 
-        //   const itemClicked = useCallback((id)=>{
-        //     console.log(id)
-        //     // props.setSelectedChatbot(id)
-        //   },[])
+
         useEffect(()=>{
-            // console.log(chatbotList)
             try{
                 let x = chatbotList[chatbotList.length - 1]
                 setSelectedChatbot(x.id)
@@ -109,7 +97,6 @@ export default function Sidebar({setOpenReport,chatActive,setChatActive,selected
                 let list = res.data
                 setChatBotList(list)
             },(err)=>{
-                // console.log(err)
             })
 
           },[])
@@ -122,11 +109,6 @@ export default function Sidebar({setOpenReport,chatActive,setChatActive,selected
             <div className='sidebar-body-chats'>
                 <Typography className='sidebar-body-chats-title'>ALL CHATBOTS</Typography>
                 <div className='sidebar-body-chats-container'>
-                    {/* {
-                        tempChatName!==''&&tempChatDes!==''?(
-                            <ChatName name={tempChatName} />
-                        ):null
-                    } */}
                     {
                         chatbotList.map(item =>{
                             return (
