@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 const advancedOpenApiService = {
-    generateEmbedding(success,error,data){
+    attachEmbedding(success,error,data){
         // console.log(data)
         try{
-            axios.post('/open-ai/generate-embedding',{
+            axios.post('/open-ai/attach-embedding-to-chatbot',{
                 chatbotId:data.id,
-                inputText:data.text,
+                inputText:data.textInput,
                 embeddingName:data.name
             }).then(
                 (res)=>{
@@ -38,6 +38,48 @@ const advancedOpenApiService = {
             
  
        }
+    },
+    getAllEmbeddings(success,error,data){
+        // data = parseInt(data)
+        // console.log(typeof(data))
+        try{
+            axios.post('/open-ai/get-all-embedding',{},{
+                params:{
+                    chatbotId:data
+                }
+            }).then(
+                (res)=>{
+                    console.log(res.data)
+                    success(res.data)
+                }
+            ).catch(
+                (err)=>{
+                    console.log(err)
+                    error(err)
+                }
+            )
+        }catch(e){
+
+        }
+    },
+    deleteEmbedding(success,error,data){
+        // data = parseInt(data)
+        // console.log(typeof(data))
+        try{
+            axios.post(`/open-ai/delete-embedding/${data}`).then(
+                (res)=>{
+                    console.log(res)
+                    success(res)
+                }
+            ).catch(
+                (err)=>{
+                    console.log(err)
+                    error(err)
+                }
+            )
+        }catch(e){
+
+        }
     }
 }
 
