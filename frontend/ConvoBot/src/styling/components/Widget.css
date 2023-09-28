@@ -1,5 +1,5 @@
 .widget-body{
-    width: calc(100%-60px);
+    width: calc(100%-60px) !important;
     display: flex;
     flex-direction: column;
     padding: 30px;
@@ -24,3 +24,7 @@
     margin-left: auto;
 
 }
+.custom-dialog-content {
+    width: 80vw;
+  }
+  

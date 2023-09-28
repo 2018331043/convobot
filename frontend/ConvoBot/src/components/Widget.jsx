@@ -20,6 +20,17 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import displayToast from "../services/toast.service";
 import apiKeyService
  from "../services/api.key.service";
+ import TuneIcon from '@mui/icons-material/Tune';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import CloseIcon from '@mui/icons-material/Close';
+import DemoChatbot from "./DemoChatbot";
+import {SketchPicker} from 'react-color'
+
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -36,13 +47,14 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
   const [userApi,setUserApi] = useState('')
 
   const [isCopied, setIsCopied] = useState(false);
+  const [mainTheme,setMainTheme] = useState('ffbd06')
   const iframeCode =
 `<iframe
   id="my-iframe"
   width="500px"
   height="650px"
   title="ConvoBot Chatbot"
-  src="http://127.0.0.1:5173/chatbot/${userApi}/${selectedChatbot}"
+  src="http://127.0.0.1:5173/chatbot/${userApi}/${selectedChatbot}?setTheme=${mainTheme}"
   sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
   style="position: absolute;bottom: 1px;right: 1px;z-index: 9000">
 </iframe>`
@@ -64,6 +76,15 @@ const userApiLink =
     },
   });
 
+  const [openCustom, setOpenCustom] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenCustom(true);
+  };
+
+  const handleClose = () => {
+    setOpenCustom(false);
+  };
 
 
   const copyToClipboard = () => {
@@ -107,6 +128,7 @@ const userApiLink =
     },(err)=>{
       console.log(err)
     })
+    setMainTheme('ffbd06')
   },[])
   useEffect(()=>{
     if(apiList.length>0){
@@ -114,6 +136,30 @@ const userApiLink =
       // console.log(userApi)
     }
   },[apiList])
+
+  const openCustomize = ()=>{
+    handleClickOpen()
+  }
+
+  const [themeColor,setThemeColor]=useState('#ffbd06')
+  const handleThemeChange = (color)=>{
+    setThemeColor(color.hex)
+  }
+
+  const handleDefaultTheme = () =>{
+    setThemeColor('#ffbd06')
+  }
+
+  const confirmTheme = () =>{
+    displayToast.info('Theme integration successful, copy the code or it will be restored to default theme soon',4000)
+    let s = themeColor
+    let str = s.replace('#','')
+    setMainTheme(str)
+    console.log(str)
+    setThemeColor('#ffbd06')
+    handleClose()
+  }
+
   return (
 
       <div className="chatbox-container" style={{zIndex:1000}}>
@@ -127,7 +173,13 @@ const userApiLink =
         </div>
         <ThemeProvider theme={darkTheme}>
         <div className="widget-body">
-            <Typography variant="h6">Show popup chat widget in your website</Typography>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <Typography variant="h6">Show popup chat widget in your website</Typography>
+              <Tooltip title='Customize'>
+                <TuneIcon onClick={openCustomize} sx={{marginRight:'2px',cursor:'pointer'}}/>
+              </Tooltip>
+            </div>
+            
             <div className="widget-code">
                 <div className="widget-code-copy">
                 <Tooltip title='Copy to Clipboard'>
@@ -151,6 +203,33 @@ const userApiLink =
             </div>
         </div>
         </ThemeProvider>
+        <Dialog
+          open={openCustom}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          
+        >
+          <DialogContent>
+            <div style={{width:'100%',display:'flex',flexDirection:'column'}}>
+              <div style={{width:'100%',display:'flex',height:'60px'}}>
+                <CloseIcon onClick={handleClose} sx={{marginLeft:'auto',cursor:'pointer'}}/>
+              </div>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-around'}}>
+                <DemoChatbot themeColor={themeColor}/>
+                <Typography variant="h5" sx={{marginRight:'16px'}}>Customize the chatbot <span style={{fontWeight:'bold'}}>theme</span></Typography>
+                <SketchPicker color={themeColor}
+                onChangeComplete={handleThemeChange}/>
+              </div>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDefaultTheme}>Default Theme</Button>
+            <Button onClick={confirmTheme} autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
   );
 }
