@@ -114,7 +114,11 @@ const chartSetting = {
         '#f28e2c',
         '#e15759']
 };
-export default function DetailedReport() {
+export default function DetailedReport({reportType}) {
+    const [chatbotListForReport,setChatbotListForReport] = useState([{id:20,chatbotName:"Yoga Instructor",prompt:"You are my personal asisstant who answers question about my current research works","restrictions":"- Do not answer any questions out of the topic.\n\n- Be brief and  precise with your answers","description":"A yoga instructor chatbot","totalInputTokensSoFar":0,"totalOutputTokensSoFar":0,"totalTokensSoFar":0}])
+     const [apiKeyListForReport,setApiKeyListForReport] = useState(rows)
+   
+
     useEffect(()=>{
         authService.getAllChatbotReport((res)=>{
             let list = res.data
@@ -134,11 +138,10 @@ export default function DetailedReport() {
             console.log(err)
         })
     },[])
-    const [chatbotListForReport,setChatbotListForReport] = useState([{id:20,chatbotName:"Yoga Instructor",prompt:"You are my personal asisstant who answers question about my current research works","restrictions":"- Do not answer any questions out of the topic.\n\n- Be brief and  precise with your answers","description":"A yoga instructor chatbot","totalInputTokensSoFar":0,"totalOutputTokensSoFar":0,"totalTokensSoFar":0}])
-    const [apiKeyListForReport,setApiKeyListForReport] = useState(rows)
-    const [reportType,setreportType] = useState('catbot')
+   
+    
     return (
-    <div className="chatbox-container" style={{zIndex:1000, overflow:'scroll'}}>
+    <div className="chatbox-container" style={{zIndex:1000, overflowX:'auto'}}>
         <div className="chatbox-nav" style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',borderBottom:'solid',
             borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>
             <Typography variant="h6" sx={{ color: 'white', marginLeft: '30px', fontSize:'17px'}}>

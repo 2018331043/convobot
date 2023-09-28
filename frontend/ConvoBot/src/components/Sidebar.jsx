@@ -20,7 +20,7 @@ import displayToast from '../services/toast.service';
 import chatService from "../services/chat.service";
 import apiKeyService from "../services/api.key.service";
 
-export default function Sidebar({chatActive,setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
+export default function Sidebar({setOpenReport,chatActive,setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
     chatbotList,setChatBotList,openWidget,setOpenWidget,openAdvanced,setOpenAdvanced}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
     
@@ -55,6 +55,7 @@ export default function Sidebar({chatActive,setChatActive,selectedChatbot,setSel
                     prompt:'- Write a base prompt for your chatbot.',
 
                 }
+                setOpenReport(false)
                 setChatActive(false)
                 setOpenWidget(false)
                 setOpenAdvanced(false)
@@ -85,6 +86,7 @@ export default function Sidebar({chatActive,setChatActive,selectedChatbot,setSel
             setSelectedChatbotInfo(item)
             setOpenWidget(false)
             setOpenAdvanced(false)
+            setOpenReport(false)
           }, [setSelectedChatbot,openWidget,chatActive]);
 
         //   const itemClicked = useCallback((id)=>{

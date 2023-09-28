@@ -17,14 +17,15 @@ import localStorageService from '../services/LocalStorageService.js';
 import apiImg from '../assets/api.png'
 import UserApiKeys from './UserApiKeys.jsx';
 import Badge from '@mui/material/Badge';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
-export default function Navbar(){
+export default function Navbar({chatbotList,selectedChatbot,setSelectedChatbot,openReport,setOpenReport}){
         const [listItems, setListItems] = useState([]);
         const [openApiKeys, setOpenApiKeys] = useState(false)
         const [anchorEl, setAnchorEl] = useState(null);
         const [image, setImage] = useState(userProfileImage);
         const [userInfo,setUserInfo] = useState()
-        
+
         const openApiModal = () =>{
           setOpenApiKeys(true)
         }
@@ -43,6 +44,9 @@ export default function Navbar(){
             inputRef.current.click();
           }
         };
+
+
+
         const customTheme = createTheme({
           palette: {
             primary: {
@@ -92,10 +96,25 @@ export default function Navbar(){
           setUserInfo(localStorageService.getUserInfo())
           // console.log(userInfo)
         }, []);
+
+        const reportButtonClicked = () =>{
+          if(openReport===true){
+            let l = chatbotList.length
+            setSelectedChatbot(chatbotList[l-1].id)
+            setOpenReport(false)
+          }else{
+            setSelectedChatbot(-10)
+            setOpenReport(true)
+          }
+        }
     return (
         <ThemeProvider theme={customTheme}>
         <div className="nav-body">
             <div className='nav-body-items'>
+              <Tooltip title='Report'>
+              <AssessmentIcon onClick={reportButtonClicked} fontSize='large' 
+              sx={openReport?{color:'rgba(255, 189, 6, 0.849)',marginRight:'15px',cursor:'pointer'}:{color:'rgba(0,0,0,.9)',marginRight:'15px',cursor:'pointer'}} />
+              </Tooltip>
                 <Tooltip title="Api key list">
                 <Badge badgeContent={listItems.length} color="primary" sx={{marginRight:'30px'}}>
                     <Button variant='outlined' onClick={openApiModal} sx={{color:'black'}} >

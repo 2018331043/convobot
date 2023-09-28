@@ -26,6 +26,7 @@ export default function Dashboard(){
     const [openWidget,setOpenWidget] = useState(false)
     const [openReport,setOpenReport] = useState(false)
     const [openAdvanced,setOpenAdvanced] = useState(false)
+    const [reportType,setReportType] = useState('chatbot')
 
     const customTheme = createTheme({
         palette: {
@@ -71,7 +72,7 @@ export default function Dashboard(){
     // },[])
     return (
         <div className="dashboard-body">
-            <Sidebar chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot}
+            <Sidebar setOpenReport={setOpenReport} chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot}
              setSelectedChatbotInfo={setSelectedChatbotInfo} chatbotList={chatbotList} setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} setOpenAdvanced={setOpenAdvanced}/>
             <div className='dashboard-right'>
                 {loading? (<ThemeProvider theme={customTheme}>
@@ -79,12 +80,12 @@ export default function Dashboard(){
                 <LinearProgress />
                 </Box>
                 </ThemeProvider>):null}
-                <Navbar/>
+                <Navbar chatbotList={chatbotList} selectedChatbot={selectedChatbot} setSelectedChatbot={setSelectedChatbot} openReport={openReport} setOpenReport={setOpenReport}/>
                 <div className='dashboard-right-container'>
-                <ChildSiidebar chatActive={chatActive} setChatActive={setChatActive} 
+                <ChildSiidebar reportType={reportType} setReportType={setReportType} openReport={openReport} chatActive={chatActive} setChatActive={setChatActive} 
                 openWidget={openWidget} setOpenWidget={setOpenWidget} 
                 selectedChatbot={selectedChatbot} openAdvanced={openAdvanced} setOpenAdvanced={setOpenAdvanced}/>
-                {(openReport ? <DetailedReport/> : <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot}
+                {(openReport ? <DetailedReport reportType={reportType}/> : <ChatbotInfo chatActive={chatActive} setChatActive={setChatActive} selectedChatbot={selectedChatbot}
                 setSelectedChatbot={setSelectedChatbot} selectedChatbotInfo={selectedChatbotInfo}
                 setChatBotList={setChatBotList} openWidget={openWidget} setOpenWidget={setOpenWidget} chatbotList={chatbotList}
                 openAdvanced={openAdvanced} setOpenAdvanced={setOpenAdvanced} />)}
