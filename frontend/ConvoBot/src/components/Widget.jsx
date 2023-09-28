@@ -36,7 +36,7 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
   const [userApi,setUserApi] = useState('')
 
   const [isCopied, setIsCopied] = useState(false);
-  const iframeCode = 
+  const iframeCode =
 `<iframe
   id="my-iframe"
   width="500px"
@@ -48,11 +48,15 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
 </iframe>`
 
 const userApiLink =
-`curl http://127.0.0.1:5173/chatbot/${userApi}/${selectedChatbot} \
--H "Content-Type: application/json" \
+`curl http://127.0.0.1:5173/convobot/api/v1/chat/post-text?apiKey=${userApi} \\
+
+-H "Content-Type: application/json" \\
+
 -d '{
+
   "inputText": "YOUR TEXT INPUT",
   "chatbotId": ${selectedChatbot}
+  
 }'`
 
   const customTheme = createTheme({
@@ -62,7 +66,7 @@ const userApiLink =
       },
     },
   });
- 
+
 
 
   const copyToClipboard = () => {
@@ -91,7 +95,7 @@ const userApiLink =
       // else{
       //   setUserApi(apiList[0].value)
       // }
-    
+
     },(err)=>{
       console.log(err)
     })
@@ -103,7 +107,7 @@ const userApiLink =
     }
   },[apiList])
   return (
-    
+
       <div className="chatbox-container" style={{zIndex:1000}}>
         <div className="chatbox-nav" style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',borderBottom:'solid',
         borderBottomColor:'rgba(255, 189, 6, 0.849)',height:'60px'}}>
