@@ -60,10 +60,10 @@ export default function ExternalChatbox(){
       const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
           event.preventDefault();
-          handleSend(); 
+          handleSend();
         }
       };
-    
+
       const handleSend = () => {
         if (input.trim() !== "") {
           // console.log(input);
@@ -91,11 +91,11 @@ export default function ExternalChatbox(){
         }
         setInput("");
       };
-    
+
       const handleInputChange = (event) => {
         setInput(event.target.value);
       };
-    
+
       const customTheme = createTheme({
         palette: {
           primary: {
@@ -103,14 +103,38 @@ export default function ExternalChatbox(){
           },
         },
       });
-    
+    useEffect(()=>{
+        setMessages(tempList)
+        scrollBottom()
+    },[tempList])
+    useEffect(()=>{
+        chatService.getChat((res)=>{
+                // console.log(res)
+                const transformedMessages =[
+                    {
+                        id: uuidv4(),
+                        text: res[1].content,
+                        sender: res[1].role === 'assistant' ? 'bot' : item.role,
+                    }
+                ]
+                setTempList(transformedMessages)
+            },
+            (err)=>{
+
+            },
+            {
+                id:chatbotId
+            }
+        )
+    },[])
+
       const scrollBottom = (e) => {
         var targetDiv = document.querySelector('.chatbox-messages-container')
         try{
             targetDiv.scrollTop = targetDiv.scrollHeight
         }catch(e){
             console.log(e)
-        } 
+        }
     }
       useEffect(()=>{
         scrollBottom()
@@ -178,7 +202,7 @@ export default function ExternalChatbox(){
                     color="primary"
                     variant="text"
                     onClick={handleSend}
-                    style={{ marginRight: '-15px' }} 
+                    style={{ marginRight: '-15px' }}
                   >
                     <MicOffIcon sx={{ color: 'primary', marginTop: '0px' }} />
                   </Button>

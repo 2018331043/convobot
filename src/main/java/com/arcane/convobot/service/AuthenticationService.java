@@ -60,4 +60,14 @@ public class AuthenticationService {
                 .userId(user.getId())
                 .build();
     }
+
+    public String verifyEmail(String token) {
+        User user = userRepository.findUserByVerificationToken(token);
+        if(user!=null) {
+            user.setIsVerified(true);
+            userRepository.save(user);
+            return "Verified Your Email Successfully";
+        }
+        else return "User Not Found";
+    }
 }

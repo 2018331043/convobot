@@ -64,9 +64,9 @@ export default function Advanced({
     const [flag,setFlag] = useState(false)
 
     const [nameList,setNameList] = useState([
-      
+
     ]);
-  
+
     const handleClick = (newPlacement) => (event) => {
         setAnchorEl(event.currentTarget);
         setOpen((prev) => placement !== newPlacement || !prev);
@@ -93,12 +93,12 @@ export default function Advanced({
         setSelectedModel(event.target.value);
         };
 
-        
+
 
         const handleContextNameChange = (event) => {
         setContextName(event.target.value);
         };
-        
+
         const embeddingConfirmation = ()=>{
             setOpenName(false)
             if(contextName!==''){
@@ -163,13 +163,13 @@ export default function Advanced({
             const handleScroll = () => {
                 setOpen(false);
             };
-    
+
             const containerElement = containerRef.current;
 
             if (containerElement) {
                 containerElement.addEventListener('scroll', handleScroll);
             }
-    
+
             return () => {
                 if (containerElement) {
                     containerElement.removeEventListener('scroll', handleScroll);
@@ -226,7 +226,7 @@ export default function Advanced({
                                         >
                                     {nameList.map((name, index) => (
                                     <Tooltip key={index} title='Tap to delete'>
-                                    
+
                                     <MenuItem value={name} onClick={()=>deleteItem(name)}  sx={{
                                         minWidth: '200px',
                                         justifyContent: 'flex-end',
@@ -239,7 +239,7 @@ export default function Advanced({
                                             backgroundColor: 'rgba(0,0,0,.1)', // Change background color on hover
                                         },
                                     }}>
-                                    <Typography>{name.embeddingName} ({name.embeddingLength})</Typography>
+                                    <Typography>{name.embeddingName} ({name.embeddingLength+' letters'})</Typography>
                                     </MenuItem>
                                     </Tooltip>
                                     ))}
@@ -248,7 +248,7 @@ export default function Advanced({
                                 </Fade>
                                 )}
                             </Popper>
-                                </div>                
+                                </div>
                         </div>
                         <Typography sx={{marginTop:'10px'}}> You can provide a textual data to <b>train</b> your chatbot. Your chatbot will be able to use these data as a context to answer user's queries. Note that this data can be very large textual data. </Typography>
                         <TextField
@@ -282,7 +282,7 @@ export default function Advanced({
                         >
                         Train
                         </Button>
-                        
+
                         <Divider sx={{marginTop:'50px'}}/>
                         <Typography variant='h6' sx={{marginTop:'25px',fontWeight:'600'}}>Website Reference</Typography>
                         <Typography sx={{marginTop:'10px'}}> Add your or any other website url to your chatbot. Your chatbot will be able to map the provided website automatically and answer any questions with data from that website. </Typography>
