@@ -36,9 +36,12 @@ public class User implements UserDetails {
 
     private String verificationToken;
 
+    private Boolean isVerified;
+
     @PrePersist
     protected void onCreate() {
         this.verificationToken = UUID.randomUUID().toString();
+        this.isVerified = false;
     }
 
     @Override
