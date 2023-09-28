@@ -49,11 +49,8 @@ export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
 
 const userApiLink =
 `curl http://127.0.0.1:5173/convobot/api/v1/chat/post-text?apiKey=${userApi} \\
-
 -H "Content-Type: application/json" \\
-
 -d '{
-
   "inputText": "YOUR TEXT INPUT",
   "chatbotId": ${selectedChatbot}
   
@@ -79,6 +76,17 @@ const userApiLink =
     setIsCopied(true);
     displayToast.default('Code copied to clipboard',2000)
   };
+
+  const copyToClipboard2 = ()=>{
+    const textArea = document.createElement('textarea');
+    textArea.value = userApiLink;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    setIsCopied(true);
+    displayToast.default('Code copied to clipboard', 2000);
+  }
 
   useEffect(()=>{
     apiKeyService.getApiKeys((res)=>{
@@ -134,7 +142,7 @@ const userApiLink =
             <div className="widget-code">
                 <div className="widget-code-copy">
                 <Tooltip title='Copy to Clipboard'>
-                  <Button onClick={copyToClipboard} sx={{margin:'10px 5px -20px'}}>
+                  <Button onClick={copyToClipboard2} sx={{margin:'10px 5px -20px'}}>
                       <ContentCopyIcon sx={{color:'white'}}/>
                   </Button>
                 </Tooltip>
