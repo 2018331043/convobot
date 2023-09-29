@@ -138,7 +138,7 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
       const deleteItem = ()=>{
         handleClose()
         setIsLoading(true)
-        setLoadingTitle('Deletiion in progress!')
+        setLoadingTitle('Deletion in progress!')
 
         chatService.deleteChatbot((res)=>{
           authService.getAllChatbots((res)=>{
