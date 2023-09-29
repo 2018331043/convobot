@@ -2,11 +2,13 @@ package com.arcane.convobot.service;
 
 import com.arcane.convobot.pojo.ApiKey;
 import com.arcane.convobot.pojo.Chatbot;
+import com.arcane.convobot.pojo.request.ChattingRequest;
 import com.arcane.convobot.pojo.response.AllApiKeysResponse;
 import com.arcane.convobot.pojo.response.ApiKeyReportResponse;
 import com.arcane.convobot.pojo.response.ChatbotReportResponse;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
 import com.arcane.convobot.repo.ApiKeyRepository;
+import com.arcane.convobot.repo.ChatbotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class APIKeyService {
     private final ApiKeyRepository apiKeyRepository;
+    private final ChatbotRepository chatbotRepository;
     private final UserInfoProviderService userInfoProviderService;
 
     public GenericResponseREST generateApiKey(String keyName){
@@ -36,13 +39,18 @@ public class APIKeyService {
                 .findApiKeyByOwnerIdAndStatus(userInfoProviderService.getRequestUser().getId(), ApiKey.STATUS_ACTIVE);
 
     }
-    public void checkIfApiIsValid(String requestedKey){
-        List<ApiKey> apiKeyList = getAllKeysForAUser();
-        Boolean isValidApiKey = false;
-        for(ApiKey apiKey : apiKeyList){
-            if(apiKey.getValue().equals(requestedKey)) isValidApiKey = true;
+    public void checkIfApiIsValid(String requestedKey, ChattingRequest chattingRequest){
+//        List<ApiKey> apiKeyList = getAllKeysForAUser();
+        ApiKey apiKey = apiKeyRepository.findApiKeyByValue(requestedKey);
+//        Boolean isValidApiKey = false;
+//        for(ApiKey apiKey : apiKeyList){
+//            if(apiKey.getValue().equals(requestedKey)) isValidApiKey = true;
+//        }
+        if(apiKey == null) throw new RuntimeException("The provided api key is not valid");
+        else{
+            Chatbot chatbot = chatbotRepository.findById(chattingRequest.getChatbotId()).orElseThrow(()->new RuntimeException("Chatbot Not Found"));
+            if(!chatbot.getOwnerId().equals(apiKey.getOwnerId()))throw new RuntimeException("You are not authorized to access this chatbot");
         }
-        if(!isValidApiKey) throw new RuntimeException("The provided api key is not valid");
     }
 
     public List<ApiKeyReportResponse> getAllApiKeyReport() {

@@ -29,7 +29,7 @@ public class ChatService {
     @Transactional
     public ChattingResponse chat(ChattingRequest request, String apiKey){
 
-        apiKeyService.checkIfApiIsValid(apiKey);//Access Control
+        apiKeyService.checkIfApiIsValid(apiKey, request);//Access Control
 
         Chatbot chatbot = chatbotRepository.findById(request.getChatbotId()).orElseGet(()->null);
 
