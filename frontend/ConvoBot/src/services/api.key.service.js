@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const apiKeyService = {
     generateApiKey(success,error,data){
-        console.log(data.apikeyName)
+        console.log(data)
         try{
             axios.post('api-key/generate-api-key',data.apikeyName)
               .then((res)=>{

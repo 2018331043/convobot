@@ -83,7 +83,10 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
       },[selectedChatbotInfo])
 
       const generateChatbot = ()=>{
-        if(selectedChatbot===-3){
+        if(selectedChatbot===null){
+          displayToast.warning('Please create a chatbot first')
+        }
+        else if(selectedChatbot===-3){
           setLoadingTitle('Chatbot creation in progress!')
           setIsLoading(true)
           chatService.createChatbot((res)=>{
