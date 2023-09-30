@@ -36,10 +36,10 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-        User newUser = userRepository.save(user);
-        String verificationEmail = "http://localhost:8080/convobot/api/v1/email/" + newUser.getVerificationToken();
-        emailService.sendEmail(user.getEmail(), "Please verify your email for the Convo Bot application",
-                "Click on the following link to verify your email:\n " + verificationEmail);
+         userRepository.save(user);
+//        String verificationEmail = "http://localhost:8080/convobot/api/v1/email/" + newUser.getVerificationToken();
+//        emailService.sendEmail(user.getEmail(), "Please verify your email for the Convo Bot application",
+//                "Click on the following link to verify your email:\n " + verificationEmail);
         String jwtToken = jwtService.generateToken(user);
         return RegistrationResponse.builder()
                 .token(jwtToken)
