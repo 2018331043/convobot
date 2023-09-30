@@ -114,14 +114,15 @@ const chartSetting = {
         '#e15759']
 };
 export default function DetailedReport({reportType}) {
-    const [chatbotListForReport,setChatbotListForReport] = useState([{id:20,chatbotName:"Yoga Instructor",prompt:"You are my personal asisstant who answers question about my current research works","restrictions":"- Do not answer any questions out of the topic.\n\n- Be brief and  precise with your answers","description":"A yoga instructor chatbot","totalInputTokensSoFar":0,"totalOutputTokensSoFar":0,"totalTokensSoFar":0}])
+    const [chatbotListForReport,setChatbotListForReport] = useState([{id:1,chatbotName:"",prompt:"","restrictions":"","description":"","totalInputTokensSoFar":0,"totalOutputTokensSoFar":0,"totalTokensSoFar":0}])
      const [apiKeyListForReport,setApiKeyListForReport] = useState(rows)
-   
+
 
     useEffect(()=>{
         authService.getAllChatbotReport((res)=>{
+            console.log(res.data)
             let list = res.data
-            setChatbotListForReport(list)
+            setChatbotListForReport(list.length==0?chatbotListForReport:list)
         },(err)=>{
             console.log(err)
         })
@@ -130,13 +131,13 @@ export default function DetailedReport({reportType}) {
     useEffect(()=>{
         authService.getAllApiKeyReport((res)=>{
             let list = res.data
-            setApiKeyListForReport(list)
+            setApiKeyListForReport(list.length==0?chatbotListForReport:list)
         },(err)=>{
             console.log(err)
         })
     },[])
-   
-    
+
+
     return (
     <div className="chatbox-container" style={{zIndex:1000}}>
         <div className="chatbox-nav" style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',borderBottom:'solid',
