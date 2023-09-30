@@ -2,11 +2,11 @@ import axios from 'axios'
 
 const apiKeyService = {
     generateApiKey(success,error,data){
-        console.log(data)
+        // console.log(data)
         try{
             axios.post('api-key/generate-api-key',data.apikeyName)
               .then((res)=>{
-                console.log(res)
+                // console.log(res)
                 success(res)
               })
               .catch(
@@ -15,7 +15,7 @@ const apiKeyService = {
                 }
               )
             }catch(err){
-            console.log(err)
+            // console.log(err)
           }
     },
     getApiKeys(success,error){

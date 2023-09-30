@@ -2,7 +2,7 @@ import axios from "axios";
 
 const chatService = {
     sendText(success,error,data){
-        console.log(data)
+        // console.log(data)
         try{
             axios.post('/chat/post-text',{
                 inputText:data.text,

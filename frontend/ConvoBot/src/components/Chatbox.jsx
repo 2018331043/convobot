@@ -59,7 +59,10 @@ export default function Chatbox({apiList,selectedChatbot,chatbotName,setChatActi
 
   const handleSend = () => {
     if (input.trim() !== "") {
-      const newMessage = { id: uuidv4(), text: input, sender: "user" };
+      if(input.length>4000){
+        displayToast.error('4000 letter limiit exceeded!')
+      }else{
+        const newMessage = { id: uuidv4(), text: input, sender: "user" };
       const updatedMessages = [...messages, newMessage];
       setMessages(updatedMessages);
       setIsBotLoading(true)
@@ -79,8 +82,10 @@ export default function Chatbox({apiList,selectedChatbot,chatbotName,setChatActi
         id:selectedChatbot,
         api: userApi
       })
+      setInput("");
     }
-    setInput("");
+    }
+      
   };
 
   const handleInputChange = (event) => {

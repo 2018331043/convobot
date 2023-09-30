@@ -77,7 +77,7 @@ const authService = {
                 error(e)
             })
         }catch(e){
-            console.log(e)
+            // console.log(e)
         }
     },
     createChatbot(success,error,data){
@@ -107,7 +107,7 @@ const authService = {
           error()
         })
       }catch(e){
-        console.log(e)
+        // console.log(e)
       }
     }
 

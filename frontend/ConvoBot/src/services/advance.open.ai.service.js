@@ -28,7 +28,7 @@ const advancedOpenApiService = {
                 url:data.url
             }).then(
                 (res)=>{
-                    console.log(res)
+                    // console.log(res)
                     success(res)
                 }
             ).catch((e)=>{
@@ -49,7 +49,7 @@ const advancedOpenApiService = {
                 }
             }).then(
                 (res)=>{
-                    console.log(res.data)
+                    // console.log(res.data)
                     success(res.data)
                 }
             ).catch(
@@ -66,12 +66,12 @@ const advancedOpenApiService = {
         try{
             axios.post(`/open-ai/delete-embedding/${data}`).then(
                 (res)=>{
-                    console.log(res)
+                    // console.log(res)
                     success(res)
                 }
             ).catch(
                 (err)=>{
-                    console.log(err)
+                    // console.log(err)
                     error(err)
                 }
             )

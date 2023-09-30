@@ -90,7 +90,7 @@ export default function Navbar({setApiList,chatbotList,selectedChatbot,setSelect
 
         useEffect(()=>{
           setApiList(listItems)
-          console.log(listItems)
+          // console.log(listItems)
         },[listItems])
 
         const reportButtonClicked = () =>{

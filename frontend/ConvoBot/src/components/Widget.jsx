@@ -124,7 +124,7 @@ const userApiLink =
   useEffect(()=>{
     if(apiList.length>0){
       setUserApi(apiList[0].value)
-      console.log(apiList[0].value)
+      // console.log(apiList[0].value)
     }
   },[apiList])
 
