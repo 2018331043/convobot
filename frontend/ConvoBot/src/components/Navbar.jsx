@@ -19,7 +19,7 @@ import UserApiKeys from './UserApiKeys.jsx';
 import Badge from '@mui/material/Badge';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 
-export default function Navbar({chatbotList,selectedChatbot,setSelectedChatbot,openReport,setOpenReport}){
+export default function Navbar({setApiList,chatbotList,selectedChatbot,setSelectedChatbot,openReport,setOpenReport}){
         const [listItems, setListItems] = useState([]);
         const [openApiKeys, setOpenApiKeys] = useState(false)
         const [anchorEl, setAnchorEl] = useState(null);
@@ -85,7 +85,13 @@ export default function Navbar({chatbotList,selectedChatbot,setSelectedChatbot,o
             setImage(localStorage.getItem('navImage'))
           }
           setUserInfo(localStorageService.getUserInfo())
+          // setApiList(listItems)
         }, []);
+
+        useEffect(()=>{
+          setApiList(listItems)
+          console.log(listItems)
+        },[listItems])
 
         const reportButtonClicked = () =>{
           if(openReport===true){

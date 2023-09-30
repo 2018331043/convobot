@@ -23,9 +23,7 @@ import Lottie from 'lottie-react'
 import loading from '../assets/lottieLoading.json'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
-
-  const [apiList,setApiList] = useState([])
+export default function Chatbox({apiList,selectedChatbot,chatbotName,setChatActive}) {
   const [userApi,setUserApi] = useState('')
   const [tempList,setTempList] = useState([])
   const [isBotLoading,setIsBotLoading] = useState(false)
@@ -72,7 +70,9 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
         setIsBotLoading(false)
         setMessages(updatedMessagesWithReply);
       },(err)=>{
-        console.log('error')
+        if(apiList.length===0){
+          displayToast.warning('Please generate an API key',2000)
+        }
         setIsBotLoading(false)
       },{
         text:input,
@@ -98,18 +98,11 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
     },
   });
   useEffect(()=>{
-    apiKeyService.getApiKeys((res)=>{
-        setApiList(res)
-        if(res.length===0){
-          apiKeyService.generateApiKey((res)=>{
-            setUserApi(res.value)
-          },(err)=>{
-
-          })
-        }
-      },(err)=>{
-        console.log(err)
-      })
+    if(apiList.length===0){
+      displayToast.warning('Please generate an API key to chat with the chatbot',4000)
+    }else{
+      setUserApi(apiList[0].value)
+    }
 
     chatService.getChat((res)=>{
       const transformedMessages = res.map((item) => {
@@ -137,6 +130,7 @@ export default function Chatbox({selectedChatbot,chatbotName,setChatActive}) {
   useEffect(()=>{
     if(apiList.length>0){
       setUserApi(apiList[0].value)
+      // console.log(apiList[0].value)
     }
   },[apiList])
 

@@ -10,8 +10,10 @@ apiService.init()
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-    <ToastContainer />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <div>
+     <App />
+    <ToastContainer limit={2}/>
+  </div>
+  // </React.StrictMode>,
 )

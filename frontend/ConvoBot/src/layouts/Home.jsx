@@ -12,9 +12,6 @@ export default function Home(){
         window.location.assign('/signin')
     }
 
-    useEffect(()=>{
-        
-    },[])
     return (
         <>
             <div className='home-body'>

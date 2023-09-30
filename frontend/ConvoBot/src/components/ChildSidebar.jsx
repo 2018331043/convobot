@@ -51,7 +51,7 @@ export default function ChildSiidebar({reportType,setReportType,openReport,chatA
                     (<>
                         <Typography onClick={TrainButtonClicked} sx={!chatActive&&!openWidget&&!openAdvanced?backStyle:null} className='child-item'>Train</Typography>
                         {
-                            selectedChatbot!==-3?(
+                            selectedChatbot!==-3&&selectedChatbot!==null?(
                                 <div>
                                 <Typography onClick={ConversationButtonClicked} sx={chatActive?backStyle:null} className='child-item'>Conversation</Typography>
                                 <Typography onClick={PublishButtonClicked} sx={openWidget?backStyle:null} className='child-item'>Publish</Typography>

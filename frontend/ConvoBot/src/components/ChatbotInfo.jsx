@@ -26,7 +26,7 @@ import chatService from '../services/chat.service';
 import Widget from './Widget';
 import Advanced from './Advanced';
 
-export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,setSelectedChatbot,
+export default function ChatbotInfo({apiList,chatActive,setChatActive,selectedChatbot,setSelectedChatbot,
   selectedChatbotInfo,setChatBotList,openWidget,setOpenWidget,chatbotList,
   openAdvanced,setOpenAdvanced}){
   const [openAddChatbot, setOpenAddChatbot] = useState(false);
@@ -168,8 +168,8 @@ export default function ChatbotInfo({chatActive,setChatActive,selectedChatbot,se
             openAdvanced= {openAdvanced} setOpenAdvanced={setOpenAdvanced}/>):(
             
               openWidget?(
-                <Widget selectedChatbot={selectedChatbot} chatbotName={chatbotName} setOpenWidget={setOpenWidget}/>
-              ):(chatActive? (<ChatBox selectedChatbot={selectedChatbot} chatbotName={chatbotName} setChatActive={setChatActive}/>) : (<>
+                <Widget apiList={apiList} selectedChatbot={selectedChatbot} chatbotName={chatbotName} setOpenWidget={setOpenWidget}/>
+              ):(chatActive? (<ChatBox apiList={apiList} selectedChatbot={selectedChatbot} chatbotName={chatbotName} setChatActive={setChatActive}/>) : (<>
                 <div className='chatbotInfo-body'>
                     <div className='chatbotInfo-body-head' style={{borderTopRightRadius:'13px',borderTopLeftRadius:'13px',
                     borderBottom:'solid', borderBottomColor:'rgba(255, 189, 6, 0.849)'}}>

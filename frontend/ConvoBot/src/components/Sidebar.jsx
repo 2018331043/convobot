@@ -17,7 +17,7 @@ import authService from '../services/auth.service';
 import { useParams } from 'react-router-dom';
 import displayToast from '../services/toast.service';
 
-export default function Sidebar({setOpenReport,chatActive,setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
+export default function Sidebar({apiList,setOpenReport,chatActive,setChatActive,selectedChatbot,setSelectedChatbot,setSelectedChatbotInfo,
     chatbotList,setChatBotList,openWidget,setOpenWidget,openAdvanced,setOpenAdvanced}){
     const [openAddChatbot, setOpenAddChatbot] = useState(false);
     
@@ -28,6 +28,9 @@ export default function Sidebar({setOpenReport,chatActive,setChatActive,selected
     const {userId} = useParams()
 
         const handleClickOpen = () => {
+            if(apiList.length===0){
+                displayToast.warning('You do not have any API key, please generate a API key')
+            }
             setOpenAddChatbot(true);
         };
 
@@ -35,7 +38,6 @@ export default function Sidebar({setOpenReport,chatActive,setChatActive,selected
             setOpenAddChatbot(false);
         };
         const newChatbotButtonClicked = ()=>{
-            console.log(chatbotList)
             if(newChatbotName!==""&&newChatbotDescription!==""){
                 setChatBotList(chatbotList.filter(item=>item.id!==-3))
                 handleClose()

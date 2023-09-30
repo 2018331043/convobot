@@ -37,17 +37,19 @@ const darkTheme = createTheme({
   },
 });
 
-export default function Widget({selectedChatbot,chatbotName,setOpenWidget}) {
+export default function Widget({apiList,selectedChatbot,chatbotName,setOpenWidget}) {
 
   const backButtonClicked = () =>{
     setOpenWidget(false)
   }
-
-  const [apiList,setApiList] = useState([])
-  const [userApi,setUserApi] = useState('')
+  const [userApi,setUserApi] = useState('API KEY')
 
   const [isCopied, setIsCopied] = useState(false);
   const [mainTheme,setMainTheme] = useState('ffbd06')
+
+  const [f,setF]=useState(true)
+
+
   const iframeCode =
 `<iframe
   id="my-iframe"
@@ -109,35 +111,20 @@ const userApiLink =
     displayToast.default('Code copied to clipboard', 2000);
   }
 
-  useEffect(()=>{
-    apiKeyService.getApiKeys((res)=>{
-      setApiList(res)
-      console.log(res.length)
-      if(res.length===0){
-         console.log(('wow'))
-        apiKeyService.generateApiKey((res)=>{
-          setUserApi(res.value)
-          console.log(res.value)
-          displayToast.info("As you do not have any API keys, a new API key has been created by the system",5000)
-        },(err)=>{
-          console.log(err)
-        },{
-          apikeyName:'System'
-        })
-      }
-      // else{
-      //   setUserApi(apiList[0].value)
-      // }
 
-    },(err)=>{
-      console.log(err)
-    })
+  useEffect(()=>{
+     if(apiList.length===0){
+      displayToast.warning('Please generate an API key',2000)
+     }else{
+      setUserApi(apiList[0].value)
+     }
     setMainTheme('ffbd06')
   },[])
+
   useEffect(()=>{
     if(apiList.length>0){
       setUserApi(apiList[0].value)
-      // console.log(userApi)
+      console.log(apiList[0].value)
     }
   },[apiList])
 
