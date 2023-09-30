@@ -1,6 +1,5 @@
 package com.arcane.convobot.controller.rest;
 
-import com.arcane.convobot.controller.async.AuthenticationControllerAsync;
 import com.arcane.convobot.pojo.request.LoginRequest;
 import com.arcane.convobot.pojo.request.RegisterRequest;
 import com.arcane.convobot.pojo.response.GenericResponseREST;
@@ -20,7 +19,6 @@ import org.springframework.web.context.request.async.DeferredResult;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthenticationREST {
-    private final AuthenticationControllerAsync authenticationControllerAsync;
     private final AuthenticationService authenticationService;
     @PostMapping("/register")
     public ResponseEntity<GenericResponseREST> registerUser(
