@@ -112,13 +112,17 @@ const userApiLink =
   useEffect(()=>{
     apiKeyService.getApiKeys((res)=>{
       setApiList(res)
-      // console.log(res.length)
+      console.log(res.length)
       if(res.length===0){
-        // console.log(('wow'))
+         console.log(('wow'))
         apiKeyService.generateApiKey((res)=>{
           setUserApi(res.value)
+          console.log(res.value)
+          displayToast.info("As you do not have any API keys, a new API key has been created by the system",5000)
         },(err)=>{
-
+          console.log(err)
+        },{
+          apikeyName:'System'
         })
       }
       // else{
